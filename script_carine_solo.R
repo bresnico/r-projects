@@ -2,8 +2,6 @@
 library(readxl)
 library(tidyverse)
 
-#modification github !!!
-
 #Importation des données brutes----
 data1 <- read_excel("data_raw_carine_roche.xlsx") #on note la présence de données manquantes. Les deux scores aberrants ont été transformés en NA dans le fichier excel.
 data2 <- data1 #data2 utilisé pour les échantillons dans le markdown.
