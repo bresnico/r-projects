@@ -1,0 +1,40 @@
+---
+title: "Rapport d'analyse A Nous les Forces - CRIPS 2019"
+author: "Nicolas Bressoud"
+date: "juin 2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Préparation des données à la source (Qualtrics)
+
+En date du XXX, la base de données dédiée au projet "A Nous les Forces 2019" a été préparée directement sur Qualtrics.com en vue de son importation dans R, au format .xlsx.
+
+Voici les étapes de préparation des données réalisée dans Qualtrics :
+
+* suppression des observations sans code (id) :
+* suppression des observations avec code dans une forme erronée : 
+* en cas de présence de 3 observations avec le même code, on supprime respectivement l'observation qui contient des données extrêmes ou l'observation qui en enregistrée à une date comprise entre les deux autres observations : 
+* on demande à Qualtrics de calculer les scores de chaque échelle en prenant en compte les items inversés. Ceci implique que le travail dans R ne garde pas trace du calcul des scores. Un contrôle manuel aléatoire sur 3 observations permet de s'assurer que Qualitrcs a fait son travail correctement.
+* Lors de l'extraction du fichier .xlsx, on supprime les colonnes inutiles à savoir : 
+
+A ce moment, le fichier `crips2019_lv_raw.xlsx` est importé dans R.
+
+
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
