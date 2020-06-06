@@ -6,35 +6,88 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
+source("crips2019_lv_script.R")
 ```
 
-# Préparation des données à la source (Qualtrics)
+# Téléchargement des données à la source (Qualtrics) et premier nettoyage
 
-En date du XXX, la base de données dédiée au projet "A Nous les Forces 2019" a été préparée directement sur Qualtrics.com en vue de son importation dans R, au format .xlsx.
+En date du 6 juin 2020, la base de données dédiée au projet "A Nous les Forces 2019" a été téléchargée depuis `qualtrics.com` en vue de son importation dans R, au format `.xlsx`.
 
-Voici les étapes de préparation des données réalisée dans Qualtrics :
+La base de données est constituée de deux fichiers : l'un pour le temps 1 et l'autre pour le temps 2. Les fichiers ont été pré-nettoyés de la manière suivante :
 
-* suppression des observations sans code (id) :
-* suppression des observations avec code dans une forme erronée : 
-* en cas de présence de 3 observations avec le même code, on supprime respectivement l'observation qui contient des données extrêmes ou l'observation qui en enregistrée à une date comprise entre les deux autres observations : 
-* on demande à Qualtrics de calculer les scores de chaque échelle en prenant en compte les items inversés. Ceci implique que le travail dans R ne garde pas trace du calcul des scores. Un contrôle manuel aléatoire sur 3 observations permet de s'assurer que Qualitrcs a fait son travail correctement.
-* Lors de l'extraction du fichier .xlsx, on supprime les colonnes inutiles à savoir : 
+- les entrées de Qualtrics considérées comme *not finished* ont été ignorées.
+- les entrées contenant des *id* vides ont été supprimées à la main dans Microsoft Excel.
+- les entrées contenant des *id* non-valables ont été supprimées. **On identifie les ID non valables en observant le début du code qui doit correspondre à la séquence attendue (numéro de classe).**
+- les colonnes *meta* générées automatiquement par Qualtrics ont été supprimées à la main.
 
-A ce moment, le fichier `crips2019_lv_raw.xlsx` est importé dans R.
+Avant importation dans R, nous avons encore attribué le groupe *con* (contrôle) ou le groupe *exp* (expérimental) dans une nouvelle variable, sur chaque fichier. Nous nous sommes basé sur les indications reçues, à savoir :
 
+- groupe expérimental : id commence par *21, 210, 22, 23, 25, 26, 2SPVL*.
+- groupe contrôle : id commence par *ASSP1, ASSP2, 24, 27, 28, 29*.
 
+En cas de doute (id incomplet mais authenticité vraisemblable) nous avons conservé l'entrée correspondante et cherché à la corriger à la main.
 
-```{r cars}
-summary(cars)
+Les deux fichiers de données sont prêts et s'appellent respectivement `crips2019_lv_raw_t1.xlsx` et `crips2019_lv_raw_t2.xlsx`.
+Les items inversés sont repérés et concernent les numéros suivants :
+
+* HBSC : 7
+* PEC : 5
+* Bien-être scolaire : 4, 5, 8
+* estime de soi : 3, 5, 7, 10
+* climat scolaire : aucun
+* style de motivation du prof : 6, 9
+* motivation de l'élève : 4, 8, 12, 15, 16 (on doute des items à inverser sur ce questionnaire)
+
+Le recodage est géré dans R.
+
+# Importation des deux fichiers de données et poursuite du nettoyage dans R
+
+Les données sont encore brutes. Les garçons ont le code 1 et les filles le code 2.
+
+## Aperçu des données au *temps 1* avant mise en correspondance avec le *temps 2*.
+
+Le tableau suivant présente `r sum(d_t1_sum[1:2,3])` participants dans le groupe contrôle et `r sum(d_t1_sum[3:4,3])` particpants dans le groupe expérimental, ce qui constitue un échantillon de `r sum(d_t1_sum$n)` personnes.
+
+```{r table_t1, echo=FALSE}
+
+knitr::kable(d_t1_sum, caption="résumé des données de l'échantillon au temps 1 avant mise en lien", label="temps1")
 ```
 
-## Including Plots
+## Aperçu des données au *temps 2* avant mise en correspondance avec le *temps 1*.
 
-You can also embed plots, for example:
+Le tableau suivant présente `r sum(d_t2_sum[1:2,3])` participants dans le groupe contrôle et `r sum(d_t2_sum[3:4,3])` particpants dans le groupe expérimental, ce qui constitue un échantillon de `r sum(d_t2_sum$n)` personnes. 
+```{r table_t2, echo=FALSE}
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+knitr::kable(d_t2_sum, caption="résumé des données de l'échantillon au temps 2 avant mise en lien", label="temps2")
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+# Réduction de l'échantillon.
+
+On procède à présent à un ajustement des *id* là où c'est possible puis on génère un tableau qui ne contient que les id dont on a exactement une observation au temps 1 et une observation au temps 2.
+
+On obtient la synthèse suivante :
+
+
+```{r long_sum}
+knitr::kable(d_long_paired_sum, caption="résumé des données de l'échantillon pairé temps 1 et temps 2", label="sample_final")
+```
+
+On observe finalement que notre groupe contrôle se compose de `r sum(d_long_paired_sum[1:2,"n"])` indvidus et le groupe expérimental se compose de `r sum(d_long_paired_sum[3:4,"n"])` individus.
+
+## Scores HBSC - régulation des émotions - bien-être - estime de soi - climat scolaire - soutien du prof - motivation - question 1 - question 2 -question 3 - question 4
+
+```{r vis}
+vis_hbs_boxplot
+vis_pec_boxplot
+vis_be_boxplot
+vis_est_boxplot
+vis_cli_boxplot
+vis_sou_boxplot
+vis_mot_boxplot
+vis_sho_1_boxplot
+vis_sho_2_boxplot
+vis_sho_3_boxplot
+vis_sho_4_boxplot
+```
+
