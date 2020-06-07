@@ -75,19 +75,23 @@ knitr::kable(d_long_paired_sum, caption="résumé des données de l'échantillon
 
 On observe finalement que notre groupe contrôle se compose de `r sum(d_long_paired_sum[1:2,"n"])` indvidus et le groupe expérimental se compose de `r sum(d_long_paired_sum[3:4,"n"])` individus.
 
-## Scores HBSC - régulation des émotions - bien-être - estime de soi - climat scolaire - soutien du prof - motivation - question 1 - question 2 -question 3 - question 4
+## Scores HBSC - régulation des émotions - bien-être - estime de soi - climat scolaire - soutien du prof - motivation
 
-```{r vis}
-vis_hbs_boxplot
-vis_pec_boxplot
-vis_be_boxplot
-vis_est_boxplot
-vis_cli_boxplot
-vis_sou_boxplot
-vis_mot_boxplot
-vis_sho_1_boxplot
-vis_sho_2_boxplot
-vis_sho_3_boxplot
-vis_sho_4_boxplot
+```{r vis, fig.show = "hold", out.width = "50%", fig.align = "default"}
+vis_hbs
+vis_pec
+vis_be
+vis_est
+vis_cli
+vis_sou
+vis_mot
 ```
 
+## - Question finales : amitié - humeur - intérêt - énergie
+
+```{r vis2, fig.show = "hold", out.width = "50%", fig.align = "default"}
+vis_sho_1
+vis_sho_2
+vis_sho_3
+vis_sho_4
+```

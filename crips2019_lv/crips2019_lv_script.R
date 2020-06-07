@@ -114,10 +114,13 @@ d_long_paired_sum2 <- d_long_paired %>%
 #Repérage des données extrêmes----
 #On verra plus tard.
 
-#visualisation
+###############
+#visualisation#
+###############
 
 #HBSC
 
+# comme ZOE mais inutle GRACE A stat_summary MAIS a voir les barres derreur quand je voudrai faire avec la fonction dédiée.
 #vis_hbs <- d_long_paired %>% 
 #  group_by(temps, group) %>% 
 #  summarise(moy=mean(hbs_sco, na.rm=T),
@@ -127,7 +130,9 @@ d_long_paired_sum2 <- d_long_paired %>%
 #  mutate(moy=round(moy, digits = 2))
 
 
-#préparation du plot pour le HBSC - essai à partir de l'aide de Zoé
+#préparation du plot pour le HBSC
+
+# 1- essai à partir de l'aide de Zoé
 #essai <- ggplot(d_long_paired) +
 #  geom_jitter(aes(x = temps, y = hbs_sco, color = group), size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.5, jitter.width = .2)) +
 #  geom_errorbar(data = vis_hbs, aes(x=temps, ymin=sd_low, ymax=sd_up), width = .1) +
@@ -136,49 +141,139 @@ d_long_paired_sum2 <- d_long_paired %>%
 #  geom_label(data=vis_hbs, aes(x=temps, y=moy, label=moy, fill=temps), nudge_x = .3, nudge_y = -.02, size = 8, color = "white")+
 #  guides(fill=FALSE)
 
-#Essai avec un autre angle d'attaque.
-vis_hbs_boxplot <- ggplot(d_long_paired) +
-  geom_boxplot(aes(x = temps, y = hbs_sco, color = group, fill = group), alpha = .2) +
-  geom_jitter(aes(x = temps, y = hbs_sco, color = group), size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2))
+# 2.1- essai à partir de https://sebastiansauer.github.io/vis_interaction_effects/
+
+#essai2 <- d_long_paired %>% 
+#  group_by(temps, group) %>% 
+#  summarise(hbs_sco_essai2 = mean(hbs_sco))
+#plot2 <- essai2 %>% 
+#  ggplot() +
+#  aes(x = temps, y = hbs_sco_essai2, color = group) +
+#  geom_line(aes(group = group)) +
+#  geom_point()
+
+#3- Essais avec un autre angle d'attaque.
+#vis_hbs_boxplot <- ggplot(d_long_paired) +
+#  geom_jitter(aes(x = temps, y = hbs_sco, color = group), size = 3, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2)) +
+#  geom_line(data=essai2, aes(group = group, x = temps, y = hbs_sco_essai2, color = group), position = position_jitterdodge(dodge.width=.7, jitter.width = .2)) +
+#  geom_point(data=essai2, aes(x = temps, y = hbs_sco_essai2, color = group), position = position_jitterdodge(dodge.width=.7, jitter.width = .2), shape = 24)
   
-vis_pec_boxplot <- ggplot(d_long_paired) +
-  geom_boxplot(aes(x = temps, y = pec_sco, color = group, fill = group), alpha = .2) +
-  geom_jitter(aes(x = temps, y = pec_sco, color = group), size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2))
+#2.2- CHOIX FINAL OK :-) à partir de https://sebastiansauer.github.io/vis_interaction_effects/ avec stat_summary et fun
 
-vis_be_boxplot <- ggplot(d_long_paired) +
-  geom_boxplot(aes(x = temps, y = be_sco, color = group, fill = group), alpha = .2) +
-  geom_jitter(aes(x = temps, y = be_sco, color = group), size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2))
+vis_hbs <- d_long_paired %>% 
+  ggplot() +
+  aes(x = temps, color = group, y = hbs_sco) +
+  geom_boxplot(alpha = .5) +
+  geom_jitter(size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2)) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
+  stat_summary(fun = mean, aes(group = group), geom = "line") +
+  labs(title = "Mesure des CPS", y = "Score au HBSC") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  scale_color_brewer("Groupe", palette = "Set1")
 
-vis_est_boxplot <- ggplot(d_long_paired) +
-  geom_boxplot(aes(x = temps, y = est_sco, color = group, fill = group), alpha = .2) +
-  geom_jitter(aes(x = temps, y = est_sco, color = group), size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2))
+vis_pec <- d_long_paired %>% 
+  ggplot() +
+  aes(x = temps, color = group, y = pec_sco) +
+  geom_boxplot(alpha = .5) +
+  geom_jitter(size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2)) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
+  stat_summary(fun = mean, aes(group = group), geom = "line") +
+  labs(title = "Mesure de régulation émotionnelle", y = "Score au PEC (5 items") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  scale_color_brewer("Groupe", palette = "Set1")
 
-vis_cli_boxplot <- ggplot(d_long_paired) +
-  geom_boxplot(aes(x = temps, y = cli_sco, color = group, fill = group), alpha = .2) +
-  geom_jitter(aes(x = temps, y = cli_sco, color = group), size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2))
+vis_be <- d_long_paired %>% 
+  ggplot() +
+  aes(x = temps, color = group, y = be_sco) +
+  geom_boxplot(alpha = .5) +
+  geom_jitter(size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2)) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
+  stat_summary(fun = mean, aes(group = group), geom = "line") +
+  labs(title = "Mesure du bien-être scolaire", y = "Score aux 8 items du bien-être scolaire") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  scale_color_brewer("Groupe", palette = "Set1")
 
-vis_sou_boxplot <- ggplot(d_long_paired) +
-  geom_boxplot(aes(x = temps, y = sou_sco, color = group, fill = group), alpha = .2) +
-  geom_jitter(aes(x = temps, y = sou_sco, color = group), size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2))
+vis_est <- d_long_paired %>% 
+  ggplot() +
+  aes(x = temps, color = group, y = est_sco) +
+  geom_boxplot(alpha = .5) +
+  geom_jitter(size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2)) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
+  stat_summary(fun = mean, aes(group = group), geom = "line") +
+  labs(title = "Mesure de motivation scolaire", y = "Score") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  scale_color_brewer("Groupe", palette = "Set1")
 
-vis_mot_boxplot <- ggplot(d_long_paired) +
-  geom_boxplot(aes(x = temps, y = mot_sco, color = group, fill = group), alpha = .2) +
-  geom_jitter(aes(x = temps, y = mot_sco, color = group), size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2))
+vis_cli <- d_long_paired %>% 
+  ggplot() +
+  aes(x = temps, color = group, y = cli_sco) +
+  geom_boxplot(alpha = .5) +
+  geom_jitter(size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2)) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
+  stat_summary(fun = mean, aes(group = group), geom = "line") +
+  labs(title = "Mesure de climat scolaire", y = "Score") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  scale_color_brewer("Groupe", palette = "Set1")
 
-vis_sho_1_boxplot <- ggplot(d_long_paired) +
-  geom_boxplot(aes(x = temps, y = sho_1, color = group, fill = group), alpha = .2) +
-  geom_jitter(aes(x = temps, y = sho_1, color = group), size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2))
+vis_sou <- d_long_paired %>% 
+  ggplot() +
+  aes(x = temps, color = group, y = sou_sco) +
+  geom_boxplot(alpha = .5) +
+  geom_jitter(size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2)) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
+  stat_summary(fun = mean, aes(group = group), geom = "line") +
+  labs(title = "Mesure du sentiment de soutien de l'enseignant·e", y = "Score") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  scale_color_brewer("Groupe", palette = "Set1")
 
-vis_sho_2_boxplot <- ggplot(d_long_paired) +
-  geom_boxplot(aes(x = temps, y = sho_2, color = group, fill = group), alpha = .2) +
-  geom_jitter(aes(x = temps, y = sho_2, color = group), size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2))
+vis_mot <- d_long_paired %>% 
+  ggplot() +
+  aes(x = temps, color = group, y = mot_sco) +
+  geom_boxplot(alpha = .5) +
+  geom_jitter(size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2)) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
+  stat_summary(fun = mean, aes(group = group), geom = "line") +
+  labs(title = "Mesure de motivation", y = "Score") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  scale_color_brewer("Groupe", palette = "Set1")
 
-vis_sho_3_boxplot <- ggplot(d_long_paired) +
-  geom_boxplot(aes(x = temps, y = sho_3, color = group, fill = group), alpha = .2) +
-  geom_jitter(aes(x = temps, y = sho_3, color = group), size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2))
+vis_sho_1 <- d_long_paired %>% 
+  ggplot() +
+  aes(x = temps, color = group, group = group, y = sho_1) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
+  stat_summary(fun = mean, geom = "line") +
+  geom_jitter(size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.8, jitter.width = .4)) +
+  labs(title = "Mesure du sentiment d'amitié", y = "Score") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  scale_color_brewer("Groupe", palette = "Dark2")
 
-vis_sho_4_boxplot <- ggplot(d_long_paired) +
-  geom_boxplot(aes(x = temps, y = sho_4, color = group, fill=group), alpha = .2) +
-  geom_jitter(aes(x = temps, y = sho_4, color = group), size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2))
+vis_sho_2 <- d_long_paired %>% 
+  ggplot() +
+  aes(x = temps, color = group, group = group, y = sho_2) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
+  stat_summary(fun = mean, geom = "line") +
+  geom_jitter(size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.8, jitter.width = .4)) +
+  labs(title = "Mesure d'humeur", y = "Score") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  scale_color_brewer("Groupe", palette = "Dark2")
 
+vis_sho_3 <- d_long_paired %>% 
+  ggplot() +
+  aes(x = temps, color = group, group = group, y = sho_3) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
+  stat_summary(fun = mean, geom = "line") +
+  geom_jitter(size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.8, jitter.width = .4)) +
+  labs(title = "Mesure d'intérêt", y = "Score") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  scale_color_brewer("Groupe", palette = "Dark2")
+
+vis_sho_4 <- d_long_paired %>% 
+  ggplot() +
+  aes(x = temps, color = group, group = group, y = sho_4) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
+  stat_summary(fun = mean, geom = "line") +
+  geom_jitter(size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.8, jitter.width = .4)) +
+  labs(title = "Mesure d'énergie", y = "Score") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  scale_color_brewer("Groupe", palette = "Dark2")
 
