@@ -168,7 +168,7 @@ vis_hbs <- d_long_paired %>%
   stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
   stat_summary(fun = mean, aes(group = group), geom = "line") +
   labs(title = "Mesure des CPS", y = "Score au HBSC") +
-  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.title = element_text(hjust = 0.5)) +
   scale_color_brewer("Groupe", palette = "Set1")
 
 vis_pec <- d_long_paired %>% 
@@ -179,7 +179,7 @@ vis_pec <- d_long_paired %>%
   stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
   stat_summary(fun = mean, aes(group = group), geom = "line") +
   labs(title = "Mesure de régulation émotionnelle", y = "Score au PEC (5 items") +
-  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")+
   scale_color_brewer("Groupe", palette = "Set1")
 
 vis_be <- d_long_paired %>% 
@@ -190,7 +190,7 @@ vis_be <- d_long_paired %>%
   stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
   stat_summary(fun = mean, aes(group = group), geom = "line") +
   labs(title = "Mesure du bien-être scolaire", y = "Score aux 8 items du bien-être scolaire") +
-  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")+
   scale_color_brewer("Groupe", palette = "Set1")
 
 vis_est <- d_long_paired %>% 
@@ -201,7 +201,7 @@ vis_est <- d_long_paired %>%
   stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
   stat_summary(fun = mean, aes(group = group), geom = "line") +
   labs(title = "Mesure de motivation scolaire", y = "Score") +
-  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")+
   scale_color_brewer("Groupe", palette = "Set1")
 
 vis_cli <- d_long_paired %>% 
@@ -212,7 +212,7 @@ vis_cli <- d_long_paired %>%
   stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
   stat_summary(fun = mean, aes(group = group), geom = "line") +
   labs(title = "Mesure de climat scolaire", y = "Score") +
-  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")+
   scale_color_brewer("Groupe", palette = "Set1")
 
 vis_sou <- d_long_paired %>% 
@@ -223,7 +223,7 @@ vis_sou <- d_long_paired %>%
   stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
   stat_summary(fun = mean, aes(group = group), geom = "line") +
   labs(title = "Mesure du sentiment de soutien de l'enseignant·e", y = "Score") +
-  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")+
   scale_color_brewer("Groupe", palette = "Set1")
 
 vis_mot <- d_long_paired %>% 
@@ -234,7 +234,7 @@ vis_mot <- d_long_paired %>%
   stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
   stat_summary(fun = mean, aes(group = group), geom = "line") +
   labs(title = "Mesure de motivation", y = "Score") +
-  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")+
   scale_color_brewer("Groupe", palette = "Set1")
 
 vis_sho_1 <- d_long_paired %>% 
@@ -254,7 +254,7 @@ vis_sho_2 <- d_long_paired %>%
   stat_summary(fun = mean, geom = "line") +
   geom_jitter(size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.8, jitter.width = .4)) +
   labs(title = "Mesure d'humeur", y = "Score") +
-  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")+
   scale_color_brewer("Groupe", palette = "Dark2")
 
 vis_sho_3 <- d_long_paired %>% 
@@ -264,7 +264,7 @@ vis_sho_3 <- d_long_paired %>%
   stat_summary(fun = mean, geom = "line") +
   geom_jitter(size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.8, jitter.width = .4)) +
   labs(title = "Mesure d'intérêt", y = "Score") +
-  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")+
   scale_color_brewer("Groupe", palette = "Dark2")
 
 vis_sho_4 <- d_long_paired %>% 
@@ -274,6 +274,6 @@ vis_sho_4 <- d_long_paired %>%
   stat_summary(fun = mean, geom = "line") +
   geom_jitter(size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.8, jitter.width = .4)) +
   labs(title = "Mesure d'énergie", y = "Score") +
-  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")+
   scale_color_brewer("Groupe", palette = "Dark2")
 
