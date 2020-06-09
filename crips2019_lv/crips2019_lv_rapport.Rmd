@@ -1,7 +1,7 @@
 ---
-title: "Rapport d'analyse A Nous les Forces - CRIPS 2019"
+title: "Rapport d'analyse A Nous les Forces - CRIPS 2019 \n (version de travail)"
 author: "Nicolas Bressoud"
-date: "juin 2020"
+date: "version 1 - juin 2020"
 output: pdf_document
 ---
 
@@ -9,6 +9,8 @@ output: pdf_document
 knitr::opts_chunk$set(echo = FALSE)
 source("crips2019_lv_script.R")
 ```
+
+<!-- RELIRE LE RAPPORT DE ZOE POUR COMPLETER -->
 
 # Téléchargement des données à la source (Qualtrics) et premier nettoyage
 
