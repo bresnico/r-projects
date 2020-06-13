@@ -62,7 +62,7 @@ d_long <- d_long %>%
          est_sco = rowMeans(select(.,starts_with("est")),na.rm =T),
          cli_sco = rowMeans(select(.,starts_with("cli")),na.rm =T),
          sou_sco = rowMeans(select(.,starts_with("sou")),na.rm =T),
-         mot_sco = rowMeans(select(.,starts_with("hbs")),na.rm =T))
+         mot_sco = rowMeans(select(.,starts_with("mot")),na.rm =T))
 
 
 #suppression des id non strictement membre d'une paire (t1, t2) par création d'un df de comparaison.

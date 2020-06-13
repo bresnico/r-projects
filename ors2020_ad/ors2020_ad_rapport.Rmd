@@ -1,0 +1,58 @@
+---
+title: "Analyse des données pour Adeline Derivaz"
+author: "Nicolas Bressoud"
+date: "6/13/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+source("ors2020_ad_script.R")
+```
+
+# Contexte et mesures
+
+Ce rapport analyse l'évolution des scores à différentes échelles dans 1 classe du cycle 2 des écoles primaires valaisannes (code commence par *fc*). Les données couvrent deux temps de mesure, en août (temps 1) et en juin (temps 2).
+
+Dans le fichier brut de données, on repère encore une série d'observations en septembre avec des autre types de code. On ne les utilise pas dans ce présent rapport.
+
+Voici les étapes de préparation des données avec importation dans le logiciel R : 
+
+- importation des données depuis Qualtrics le 13 juin 2020 : 64 observations retenues
+- traitement manuel du fichier `.xlsx` : suppression des *metadata* (excepté la date de passation) et des *scores automatisés*.
+
+# Statistiques descriptives
+
+On a exactement 8 filles et 1 garçons qui ont participé aux deux temps de mesure. Le tableau ci-dessous synthétise cette participation:
+
+```{r paired_sum}
+knitr::kable(d_paired_sum, caption="résumé des données de l'échantillon pairé temps 1 et temps 2", label="sample_final")
+```
+
+## Scores aux principaux questionnaires
+
+```{r vis, fig.show = "hold", out.width = "50%", fig.align = "default"}
+vis_hbs
+vis_sem
+vis_be
+vis_kid
+```
+
+## Question finales + amis/ennemis
+
+```{r vis2, fig.show = "hold", out.width = "50%", fig.align = "default"}
+vis_sho1
+vis_sho2
+vis_sho3
+vis_ami
+```
+
+# Statistiques inférentielles
+
+D'autres analyses sont nécessaires pour pouvoir conclure à des différences de moyennes statistiquement significatives.
+
+Mais l'analyse des graphs est riche en enseignements. A titre d'exemple, la différence de scores en ce qui concerne l'engagement scolaire semble être significative (sans contrôle des conditions d'applications).
+
+# Interprétation et conclusion
+
+Le baisse presque systématique des scores mérite d'être interprétée. Quelle en est la cause ? Et comment peut-on montrer des effets d'interventions si, en général, les scores baissent un peu "naturellement" en cours d'année scolaire ?
