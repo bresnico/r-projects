@@ -1,7 +1,7 @@
 ---
-title: "Rapport d'analyse A Nous les Forces - CRIPS 2019 \n (version de travail)"
+title: "Rapport d'analyse A Nous les Forces - CRIPS 2019 (version publiée)"
 author: "Nicolas Bressoud"
-date: "version 1 - juin 2020"
+date: "v2.0 - 25 juin 2020"
 output: pdf_document
 ---
 
