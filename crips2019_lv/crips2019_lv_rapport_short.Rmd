@@ -1,0 +1,92 @@
+---
+title: "Rapport court *A Nous les Forces* - CRIPS 2019 (version publiée)"
+author: "Nicolas Bressoud"
+date: "v2.0 - 29 juin 2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+source("crips2019_lv_script.R")
+```
+
+
+# Contexte
+
+En date du 6 juin 2020, la base de données dédiée au projet "A Nous les Forces 2019" a été téléchargée depuis `qualtrics.com` en vue de son importation dans R, au format `.xlsx`. Les données proviennent de l'étude mise en oeuvre par le CRIPS Île de France sous la responsabilité de Léan Vanbuckhave.
+
+Les données sont scindées en :
+
+* deux temps de mesures (avant intervention et après intervention)
+* deux groupes (expérimental et contôle)
+* divers questionnaires 
++ Adaptation du HBSC (compétences psychosociales)
++ Adaotation du PEC (régulation émotionnelle)
++ Bien-être scolaire
++ Estime de soi
++ Climat scolaire
++ Style motivationnel de l'enseignant·e
++ Motivation de l'élève
++ 4 petites questions générales sur le sentiment d'amitié, l'humeur, l'intérêt, l'énergie.
+
+## Aperçu des données au *temps 1* avant mise en correspondance avec le *temps 2*.
+
+Le tableau suivant présente `r sum(d_t1_sum[1:2,3])` participants dans le groupe contrôle et `r sum(d_t1_sum[3:4,3])` particpants dans le groupe expérimental, ce qui constitue un échantillon de `r sum(d_t1_sum$n)` personnes.
+
+```{r table_t1, echo=FALSE}
+
+knitr::kable(d_t1_sum, caption="résumé des données de l'échantillon au temps 1 avant mise en lien", label="temps1")
+```
+
+## Aperçu des données au *temps 2* avant mise en correspondance avec le *temps 1*.
+
+Le tableau suivant présente `r sum(d_t2_sum[1:2,3])` participants dans le groupe contrôle et `r sum(d_t2_sum[3:4,3])` particpants dans le groupe expérimental, ce qui constitue un échantillon de `r sum(d_t2_sum$n)` personnes. 
+```{r table_t2, echo=FALSE}
+
+knitr::kable(d_t2_sum, caption="résumé des données de l'échantillon au temps 2 avant mise en lien", label="temps2")
+```
+
+# Présentation détaillée de l'échantillon. 
+On procède à présent à un ajustement des *id* là où c'est possible puis on génère un tableau qui ne contient que les id dont on a exactement une observation au temps 1 et une observation au temps 2.
+
+On obtient la synthèse suivante :
+
+
+```{r long_sum}
+knitr::kable(d_long_paired_sum, caption="résumé des données de l'échantillon pairé temps 1 et temps 2", label="sample_final")
+```
+
+On observe finalement que notre groupe contrôle se compose de `r sum(d_long_paired_sum[1:2,"n"])` indvidus et le groupe expérimental se compose de `r sum(d_long_paired_sum[3:4,"n"])` individus.
+
+# Présentation des scores *avant* et *après* aux différentes questionnaire
+
+## Scores HBSC - régulation des émotions - bien-être - estime de soi - climat scolaire - soutien du prof - motivation
+
+```{r vis, fig.show = "hold", out.width = "50%", fig.align = "default"}
+vis_hbs
+vis_pec
+vis_be
+vis_est
+vis_cli
+vis_sou
+vis_mot
+```
+
+## - Question finales : amitié - humeur - intérêt - énergie
+
+```{r vis2, fig.show = "hold", out.width = "50%", fig.align = "default"}
+vis_sho_1
+vis_sho_2
+vis_sho_3
+vis_sho_4
+```
+
+# Discussion
+
+L'observation des différences de scores n'indique pas d'effets particuliers du programme *A Nous les Forces* chez le groupe expérimental, que ce soit dans le temps ou en comparaison au groupe contrôle.
+
+Une discussion doit mener à une amélioration de l'implémentation du programme en visant, par exemple, une intensification du temps d'exposition et une plus grande implication du personnel enseignant (formation, temps à disposition, stabilité du personnel sur le temps).
+
+Une analyse qualitative des retours des élèves peut également permettre d'identifier le potentiel du programme (ce qui a été bien perçu, ce qui peut être amélioré). Les données brutes concernant les retours des élèves sont jointes à ce présent rapport.
+
+*Nicolas BRESSOUD, 29 juin 2020*
