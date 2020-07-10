@@ -1,0 +1,52 @@
+---
+title: Rapport de progression des étudiant·es dans les compétences en pédagogie spécialisée
+  - 5.3 SP2020
+author: "Nicolas Bressoud"
+date: "10 juillet 2020"
+output: pdf_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+source("hepvs2020_ib_script.R")
+```
+
+# Contexte et mesures
+
+Ce rapport analyse l'évolution des scores à différentes questions concernant l'autoévaluation des étudiant·es de première année, semestre 2, de leurs compétences en pédagogie spécialisée. Les données couvrent toute la volée étudiant sur le site de St-Maurice entre février et juin 2020.
+
+
+# Statistiques descriptives
+
+On a exactement 24 personnes qui ont participé aux deux temps de mesure, sur une population de 57 étudiant·es (42 % de participation). Le tableau ci-dessous synthétise cette participation:
+
+```{r paired_sum}
+knitr::kable(d_paired_sum, caption="résumé des données de l'échantillon pairé temps 1 et temps 2", label="sample_final")
+```
+
+## Scores
+
+```{r vis, fig.show = "hold", out.width = "50%", fig.align = "default", warning=FALSE}
+vis_a
+vis_b
+vis_c
+vis_d
+vis_e
+vis_f
+vis_g
+vis_h
+vis_i
+vis_j
+vis_k
+vis_l
+vis_m
+vis_n
+vis_o
+vis_p
+````
+
+
+# Interprétation
+
+... possibilité de repérer là où les productions sont statistiquement significatives.
