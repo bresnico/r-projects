@@ -14,8 +14,10 @@ source("hepvs2020_ib_script.R")
 
 # Contexte et mesures
 
-Ce rapport analyse l'évolution des scores à différentes questions concernant l'autoévaluation des étudiant·es de première année, semestre 2, de leurs compétences en pédagogie spécialisée. Les données couvrent toute la volée étudiant sur le site de St-Maurice entre février et juin 2020.
+Ce rapport analyse l'évolution des scores à différentes questions concernant l'autoévaluation des étudiant·es de première année, semestre 2, de leurs compétences en pédagogie spécialisée. Les données couvrent toute la volée 2019 sur le site de St-Maurice entre février et juin 2020.
 
+Le premier temps de mesure a été réalisé le : *21 février 2020*.
+Le second temps de mesure a été réalisé dans le cadre de l'enseignement à distance (pandémie) entre les : *8 mai et 23 juin 2020*.
 
 # Statistiques descriptives
 
@@ -26,6 +28,15 @@ knitr::kable(d_paired_sum, caption="résumé des données de l'échantillon pair
 ```
 
 ## Scores
+
+Le tableau suivant résume la moyenne des scores avant/après à chaque item.
+
+````{r paired_sum2}
+knitr::kable(d_paired_sum2, caption="résumé des données de l'échantillon pairé temps 1 et temps 2", label="sample_final2")
+
+````
+
+Les graphiques suivants présentent les scores avant/après avec indication de la moyenne et de la différence des moyennes (pente de la droite).
 
 ```{r vis, fig.show = "hold", out.width = "50%", fig.align = "default", warning=FALSE}
 vis_a

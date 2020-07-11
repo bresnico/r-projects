@@ -57,7 +57,7 @@ d_paired_sum <- d_paired %>%
 
 d_paired_sum2 <- d_paired %>% 
   group_by(dat) %>% 
-  summarise(n=n(),
+  summarize(n=n(),
             mean_1=mean(a),
             mean_2=mean(b),
             mean_3=mean(c),
@@ -71,7 +71,7 @@ d_paired_sum2 <- d_paired %>%
             mean_11=mean(k),
             mean_12=mean(l),
             mean_13=mean(m, na.rm=T),
-            mean_14=mean(n),
+            mean_14=mean(n_),
             mean_15=mean(o),
             mean_16=mean(p))
             
@@ -213,7 +213,7 @@ vis_m <- d_paired %>%
 
 vis_n <- d_paired %>% 
   ggplot() +
-  aes(x = dat, y = n) +
+  aes(x = dat, y = n_) +
   #geom_boxplot(alpha = .5, outlier.colour = NA) +
   geom_jitter(size = 5, alpha = .5, width = 0.3) +
   stat_summary(fun = mean, geom = "point", size = 3, shape = 4, color = "red") +
@@ -240,4 +240,98 @@ vis_p <- d_paired %>%
   stat_summary(fun = mean, geom = "line", aes(group = 1), color = "red") + #Le group = 1 est nécessaire pour dire à la ligne de connecter tous les points.
   labs(title = "Mesure item 16", y = "Score") +
   theme(plot.title = element_text(hjust = 0.5))
+
+#########################
+#comparaison de moyennes#
+#########################
+
+#On doit arranger les données de d_paired par groupe de temps et par ID en ordre alphabétique pour que R compare les bons duos.
+
+d_paired_arranger <- d_paired %>% 
+  group_by(dat) %>% 
+  arrange(id, .by_group = TRUE)
+
+#test.t pour long format
+
+stu_a <- t.test(a ~ dat, 
+       data=d_paired, 
+       paired=TRUE, 
+       conf.level=0.95)
+
+stu_b <- t.test(b ~ dat, 
+                data=d_paired, 
+                paired=TRUE, 
+                conf.level=0.95)
+
+stu_c <- t.test(c ~ dat, 
+                data=d_paired, 
+                paired=TRUE, 
+                conf.level=0.95)
+
+stu_d <- t.test(d ~ dat, 
+                data=d_paired, 
+                paired=TRUE, 
+                conf.level=0.95)
+
+stu_e <- t.test(e ~ dat, 
+                data=d_paired, 
+                paired=TRUE, 
+                conf.level=0.95)
+
+# stu_f <- t.test(f ~ dat, #gestion des NA ???
+#                data=d_paired, 
+#                paired=TRUE, 
+#                conf.level=0.95)
+
+stu_g <- t.test(g ~ dat, 
+                data=d_paired, 
+                paired=TRUE, 
+                conf.level=0.95)
+
+stu_h <- t.test(h ~ dat, 
+                data=d_paired, 
+                paired=TRUE, 
+                conf.level=0.95)
+
+stu_i <- t.test(i ~ dat, 
+                data=d_paired, 
+                paired=TRUE, 
+                conf.level=0.95)
+
+stu_j <- t.test(j ~ dat, 
+                data=d_paired, 
+                paired=TRUE, 
+                conf.level=0.95)
+
+stu_k <- t.test(k ~ dat, 
+                data=d_paired, 
+                paired=TRUE, 
+                conf.level=0.95)
+
+stu_l <- t.test(l ~ dat, 
+                data=d_paired, 
+                paired=TRUE, 
+                conf.level=0.95)
+
+# stu_m <- t.test(m ~ dat, #gestion des NA ???
+#                data=d_paired, 
+#                paired=TRUE, 
+#                na.rm=TRUE,
+#                conf.level=0.95)
+
+stu_n <- t.test(n_ ~ dat, 
+                data=d_paired, 
+                paired=TRUE, 
+                conf.level=0.95)
+
+stu_o <- t.test(o ~ dat, 
+                data=d_paired, 
+                paired=TRUE, 
+                conf.level=0.95)
+
+
+stu_p <- t.test(p ~ dat, 
+                data=d_paired, 
+                paired=TRUE, 
+                conf.level=0.95)
 
