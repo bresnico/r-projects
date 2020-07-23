@@ -1,12 +1,12 @@
 ---
-title: "Untitled"
+title: "Essai d'article complet avec toutes les contraintes"
 author: "Nicolas Bressoud"
-date: "6/30/2020"
+date: "juin 2020"
 output: 
+  bookdown::pdf_document2:
+    keep_tex: true 
   bookdown::word_document2:
     toc: true
-  bookdown::pdf_document2:
-    keep_tex: true
   bookdown::html_document2: default
 ---
 
@@ -14,12 +14,41 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+# Titre de niveau 1
 
-*Test :
+*Test :*
 
-- introduire références, biblio, report à un tableau.
-- procédure depuis scrivener*
+1- ajouter image interne (générée par R) avec référence dans le texte, légende
+2- ajouter table avec référence dans le texte, légende (kable)
+3- ajouter image externe, avec référence dans le texte, légende
+4- ajouter référence biblio dans texte
+5- ajouter biblio
+
+1-
+Si on se réfère au tableau \@ref(tab:iris), on voit que c'est beau.
+
+```{r iris}
+iris2 <- head(iris)
+knitr::kable(iris2, col.names = gsub("[.]", " ", names(iris)))
+```
+
+2-
+Si on se réfère à l'image interne ??, on voit que c'est beau.
+
+```{r}
+```
+
+3-
+Si on se réfère à l'image externe ??, on voit que c'est beau.
+
+```{r}
+```
+
+4- 
+Comme le dit ?? Shankland (2020), on aime bien les saucissons (Bressoud, 2020). Et aussi le parmesan (Gay, 2019 ; Lucciarini, 2020).
+
+Biblio doit contenir les 4 références :
+
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
@@ -29,7 +58,7 @@ When you click the **Knit** button a document will be generated that includes bo
 summary(cars)
 ```
 
-## Including Plots
+# Including Plots
 
 You can also embed plots, for example:
 

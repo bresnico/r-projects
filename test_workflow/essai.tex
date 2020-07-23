@@ -36,7 +36,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdftitle={Untitled},
+  pdftitle={Essai d'article complet avec toutes les contraintes},
   pdfauthor={Nicolas Bressoud},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
@@ -109,9 +109,9 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 
-\title{Untitled}
+\title{Essai d'article complet avec toutes les contraintes}
 \author{Nicolas Bressoud}
-\date{6/30/2020}
+\date{juin 2020}
 
 \begin{document}
 \maketitle
@@ -120,8 +120,55 @@
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
-\hypertarget{r-markdown}{%
-\subsection{R Markdown}\label{r-markdown}}
+\hypertarget{titre-de-niveau-1}{%
+\section{Titre de niveau 1}\label{titre-de-niveau-1}}
+
+\emph{Test :}
+
+1- ajouter image interne (générée par R) avec référence dans le texte, légende
+2- ajouter table avec référence dans le texte, légende (kable)
+3- ajouter image externe, avec référence dans le texte, légende
+4- ajouter référence biblio dans texte
+5- ajouter biblio
+
+1-
+Si on se réfère au tableau \ref{tab:iris}, on voit que c'est beau.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris2 <{-}}\StringTok{ }\KeywordTok{head}\NormalTok{(iris)}
+\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(iris2, }\DataTypeTok{col.names =} \KeywordTok{gsub}\NormalTok{(}\StringTok{"[.]"}\NormalTok{, }\StringTok{" "}\NormalTok{, }\KeywordTok{names}\NormalTok{(iris)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{r|r|r|r|l}
+\hline
+Sepal Length & Sepal Width & Petal Length & Petal Width & Species\\
+\hline
+5.1 & 3.5 & 1.4 & 0.2 & setosa\\
+\hline
+4.9 & 3.0 & 1.4 & 0.2 & setosa\\
+\hline
+4.7 & 3.2 & 1.3 & 0.2 & setosa\\
+\hline
+4.6 & 3.1 & 1.5 & 0.2 & setosa\\
+\hline
+5.0 & 3.6 & 1.4 & 0.2 & setosa\\
+\hline
+5.4 & 3.9 & 1.7 & 0.4 & setosa\\
+\hline
+\end{tabular}
+
+2-
+Si on se réfère à l'image interne ??, on voit que c'est beau.
+
+3-
+Si on se réfère à l'image externe ??, on voit que c'est beau.
+
+4-
+Comme le dit ?? Shankland (2020), on aime bien les saucissons (Bressoud, 2020). Et aussi le parmesan (Gay, 2019 ; Lucciarini, 2020).
+
+Biblio doit contenir les 4 références :
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see \url{http://rmarkdown.rstudio.com}.
 
@@ -144,7 +191,7 @@ When you click the \textbf{Knit} button a document will be generated that includ
 \end{verbatim}
 
 \hypertarget{including-plots}{%
-\subsection{Including Plots}\label{including-plots}}
+\section{Including Plots}\label{including-plots}}
 
 You can also embed plots, for example:
 
