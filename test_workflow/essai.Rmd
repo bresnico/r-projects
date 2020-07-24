@@ -5,19 +5,19 @@ date: "juin 2020"
 lang: fr
 toc-title: "Table des matières"
 output: 
+  bookdown::pdf_document2:
+    citation_package: none
+    pandoc_args: [ "--csl", "apa.csl" ]
+    keep_tex: true
+  bookdown::html_document2:
+    pandoc_args: [ "--csl", "apa.csl" ]
+    citation_package: none
+    toc: true
   bookdown::word_document2:
     pandoc_args: [ "--csl", "apa.csl" ]
     citation_package: none
     toc: true
     reference_docx: "template.docx"
-  bookdown::html_document2:
-    pandoc_args: [ "--csl", "apa.csl" ]
-    citation_package: none
-    toc: true
-  bookdown::pdf_document2:
-    citation_package: none
-    pandoc_args: [ "--csl", "apa.csl" ]
-    keep_tex: true
 bibliography: biblio.bib
 ---
 
