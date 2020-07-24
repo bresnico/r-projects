@@ -6,7 +6,7 @@ lang: fr
 toc-title: "Table des matières"
 output: 
   bookdown::pdf_document2:
-    citation_package: none
+    citation_package: default
     pandoc_args: [ "--csl", "apa.csl" ]
     keep_tex: true
   bookdown::html_document2:
