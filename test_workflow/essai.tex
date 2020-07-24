@@ -3,6 +3,7 @@
 \PassOptionsToPackage{hyphens}{url}
 %
 \documentclass[
+  french,
 ]{article}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
@@ -38,6 +39,7 @@
 \hypersetup{
   pdftitle={Essai d'article complet avec toutes les contraintes},
   pdfauthor={Nicolas Bressoud},
+  pdflang={fr},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
@@ -108,6 +110,19 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
+\ifxetex
+  % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
+  \usepackage{polyglossia}
+  \setmainlanguage[]{french}
+\else
+  \usepackage[shorthands=off,main=french]{babel}
+\fi
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newenvironment{cslreferences}%
+  {\setlength{\parindent}{0pt}%
+  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces}%
+  {\par}
 
 \title{Essai d'article complet avec toutes les contraintes}
 \author{Nicolas Bressoud}
@@ -116,32 +131,44 @@
 \begin{document}
 \maketitle
 
+\renewcommand*\contentsname{Table des matières}
 {
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
-\hypertarget{titre-de-niveau-1}{%
-\section{Titre de niveau 1}\label{titre-de-niveau-1}}
+\hypertarget{titre-de-niveau-1-salut}{%
+\section{Titre de niveau 1 salut}\label{titre-de-niveau-1-salut}}
 
-\emph{Test :}
+\begin{itemize}
+\tightlist
+\item
+  ajouter image interne (générée par R) avec référence dans le texte, légende
+\item
+  ajouter table avec référence dans le texte, légende (kable)
+\item
+  ajouter image externe, avec référence dans le texte, légende
+\item
+  ajouter référence biblio dans texte
+\item
+  ajouter biblio
+\end{itemize}
 
-1- ajouter image interne (générée par R) avec référence dans le texte, légende
-2- ajouter table avec référence dans le texte, légende (kable)
-3- ajouter image externe, avec référence dans le texte, légende
-4- ajouter référence biblio dans texte
-5- ajouter biblio
+PDF et Word énumèrent pas.
 
-1-
-Si on se réfère au tableau \ref{tab:iris}, on voit que c'est beau.
+\begin{quote}
+à gérer la langue de ``table of contents'' et ``table'' au lieu de ``tableau''.
+\end{quote}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{iris2 <{-}}\StringTok{ }\KeywordTok{head}\NormalTok{(iris)}
-\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(iris2, }\DataTypeTok{col.names =} \KeywordTok{gsub}\NormalTok{(}\StringTok{"[.]"}\NormalTok{, }\StringTok{" "}\NormalTok{, }\KeywordTok{names}\NormalTok{(iris)))}
-\end{Highlighting}
-\end{Shaded}
+\hypertarget{tableau}{%
+\section{tableau}\label{tableau}}
 
-\begin{tabular}{r|r|r|r|l}
+Si on se réfère au tableau \ref{tab:iris-lol}, on voit que c'est beau. Ou \ref{tab:table-single}
+
+\begin{table}
+
+\caption{\label{tab:iris-lol}A table of the first 10 rows of the mtcars data.}
+\centering
+\begin{tabular}[t]{r|r|r|r|l}
 \hline
 Sepal Length & Sepal Width & Petal Length & Petal Width & Species\\
 \hline
@@ -158,45 +185,81 @@ Sepal Length & Sepal Width & Petal Length & Petal Width & Species\\
 5.4 & 3.9 & 1.7 & 0.4 & setosa\\
 \hline
 \end{tabular}
+\end{table}
 
-2-
-Si on se réfère à l'image interne ??, on voit que c'est beau.
+\begin{table}
 
-3-
-Si on se réfère à l'image externe ??, on voit que c'est beau.
+\caption{\label{tab:table-single}A table of the first 10 rows of the mtcars data.}
+\centering
+\begin{tabular}[t]{rrrrl}
+\toprule
+Sepal.Length & Sepal.Width & Petal.Length & Petal.Width & Species\\
+\midrule
+5.1 & 3.5 & 1.4 & 0.2 & setosa\\
+4.9 & 3.0 & 1.4 & 0.2 & setosa\\
+4.7 & 3.2 & 1.3 & 0.2 & setosa\\
+4.6 & 3.1 & 1.5 & 0.2 & setosa\\
+5.0 & 3.6 & 1.4 & 0.2 & setosa\\
+\addlinespace
+5.4 & 3.9 & 1.7 & 0.4 & setosa\\
+\bottomrule
+\end{tabular}
+\end{table}
 
-4-
-Comme le dit ?? Shankland (2020), on aime bien les saucissons (Bressoud, 2020). Et aussi le parmesan (Gay, 2019 ; Lucciarini, 2020).
+La mise en forme et l'emplacement des tableaux diffèrent selon le type de sorties. Voir aussi Andy Field pour ajouter du KableExtra ?
 
-Biblio doit contenir les 4 références :
+WORD fait pas de différences entre les deux mises en page de tableaux.
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see \url{http://rmarkdown.rstudio.com}.
+\hypertarget{image-interne}{%
+\section{image interne}\label{image-interne}}
 
-When you click the \textbf{Knit} button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+Si on se réfère à l'image interne \ref{fig:pressure}, on voit que c'est beau.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(cars)}
+\KeywordTok{plot}\NormalTok{(pressure)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00
-\end{verbatim}
+\begin{figure}
+\includegraphics[width=0.7\linewidth]{essai_files/figure-latex/pressure-1} \caption{A figure example with a relative width 70\%.}\label{fig:pressure}
+\end{figure}
 
-\hypertarget{including-plots}{%
-\section{Including Plots}\label{including-plots}}
+\hypertarget{image-externe}{%
+\section{Image externe}\label{image-externe}}
 
-You can also embed plots, for example:
+Figure \ref{fig:knitr-logo} is an example of three \textbf{knitr} logos included in a figure environment.
 
-\includegraphics{essai_files/figure-latex/pressure-1.pdf}
+\begin{figure}
+\includegraphics[width=0.328\linewidth]{images/knit-logo} \includegraphics[width=0.328\linewidth]{images/knit-logo} \includegraphics[width=0.328\linewidth]{images/knit-logo} \caption{Three knitr logos included in the document from an external PNG image file.}\label{fig:knitr-logo}
+\end{figure}
 
-Note that the \texttt{echo\ =\ FALSE} parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Word réduit pas les tailles.
+
+\hypertarget{citations}{%
+\section{Citations}\label{citations}}
+
+La vie est belle (Shankland, 2015 ; Shankland \& Lamboy, 2011). Et aime bien le discours de Shankland (2015). Shankland (2012) pense aussi cela. Mais pas tout le temps (voir Shankland, 2015, pp.~33-35, également 2012, ch.~1). Salut la vie (Shankland et al., 2018).
+
+\hypertarget{biblio}{%
+\section{Biblio}\label{biblio}}
+
+Biblio doit contenir les 4 références :
+Mais aussi voir pour faire la biblio d'office en entier à partir du fichier bibtex (bio CV).
+
+\hypertarget{refs}{}
+\begin{cslreferences}
+\leavevmode\hypertarget{ref-shankland2012}{}%
+Shankland, R. (2012). Bien-Être Subjectif et Comportements Altruistes : Les Individus Heureux Sont-Ils plus Généreux ? \emph{Cips}, \emph{n}, 77‑88. \url{https://doi.org/10.3917/cips.093.0077}
+
+\leavevmode\hypertarget{ref-shankland2015}{}%
+Shankland, R. (2015). \emph{La Psychologie Positive}. Dunod.
+
+\leavevmode\hypertarget{ref-shankland2018a}{}%
+Shankland, R., Bressoud, N., Tessier, D., \& Gay, P. (2018). La Bienveillance~: Une Compétence Socio-Émotionnelle de l'enseignant Au Service Du Bien-Être et Des Apprentissages~? \emph{Questions vives recherches en éducation}, \emph{N 29}, 0‑23. \url{https://doi.org/10.4000/questionsvives.3601}
+
+\leavevmode\hypertarget{ref-shankland2011}{}%
+Shankland, R., \& Lamboy, B. (2011). Utilité Des Modles Théoriques Pour La Conception et l'évaluation de Programmes En Prévention et Promotion de La Santé. \emph{Pratiques Psychologiques}, \emph{17}(2), 153‑172. \url{https://doi.org/10.1016/j.prps.2010.11.001}
+\end{cslreferences}
 
 \end{document}

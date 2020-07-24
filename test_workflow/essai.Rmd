@@ -2,68 +2,88 @@
 title: "Essai d'article complet avec toutes les contraintes"
 author: "Nicolas Bressoud"
 date: "juin 2020"
+lang: fr
+toc-title: "Table des matières"
 output: 
-  bookdown::pdf_document2:
-    keep_tex: true 
   bookdown::word_document2:
+    pandoc_args: [ "--csl", "apa.csl" ]
+    citation_package: none
     toc: true
-  bookdown::html_document2: default
+    reference_docx: "template.docx"
+  bookdown::html_document2:
+    pandoc_args: [ "--csl", "apa.csl" ]
+    citation_package: none
+    toc: true
+  bookdown::pdf_document2:
+    citation_package: none
+    pandoc_args: [ "--csl", "apa.csl" ]
+    keep_tex: true
+bibliography: biblio.bib
 ---
 
+<!-- jouer avec les options du yaml : https://cran.r-project.org/web/packages/ymlthis/vignettes/yaml-fieldguide.html -->
+
+<!-- bidouille mon template https://bookdown.org/yihui/rmarkdown-cookbook/word-template.html -->
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
-# Titre de niveau 1
+# Titre de niveau 1 salut
 
-*Test :*
++ ajouter image interne (générée par R) avec référence dans le texte, légende
++ ajouter table avec référence dans le texte, légende (kable)
++ ajouter image externe, avec référence dans le texte, légende
++ ajouter référence biblio dans texte
++ ajouter biblio
 
-1- ajouter image interne (générée par R) avec référence dans le texte, légende
-2- ajouter table avec référence dans le texte, légende (kable)
-3- ajouter image externe, avec référence dans le texte, légende
-4- ajouter référence biblio dans texte
-5- ajouter biblio
+PDF et Word énumèrent pas.
 
-1-
-Si on se réfère au tableau \@ref(tab:iris), on voit que c'est beau.
+> à gérer la langue de "table of contents" et "table" au lieu de "tableau".
 
-```{r iris}
+# tableau
+Si on se réfère au tableau \@ref(tab:iris-lol), on voit que c'est beau. Ou \@ref(tab:table-single)
+
+```{r iris-lol}
 iris2 <- head(iris)
-knitr::kable(iris2, col.names = gsub("[.]", " ", names(iris)))
+knitr::kable(iris2, col.names = gsub("[.]", " ", names(iris)), caption = 'A table of the first 10 rows of the mtcars data.')
 ```
 
-2-
-Si on se réfère à l'image interne ??, on voit que c'est beau.
-
-```{r}
+```{r table-single, tidy=FALSE}
+knitr::kable(
+  head(iris), booktabs = TRUE,
+  caption = 'A table of the first 10 rows of the mtcars data.'
+)
 ```
 
-3-
-Si on se réfère à l'image externe ??, on voit que c'est beau.
+La mise en forme et l'emplacement des tableaux diffèrent selon le type de sorties. Voir aussi Andy Field pour ajouter du KableExtra ?
 
-```{r}
-```
+WORD fait pas de différences entre les deux mises en page de tableaux.
 
-4- 
-Comme le dit ?? Shankland (2020), on aime bien les saucissons (Bressoud, 2020). Et aussi le parmesan (Gay, 2019 ; Lucciarini, 2020).
+# image interne
 
-Biblio doit contenir les 4 références :
+Si on se réfère à l'image interne \@ref(fig:pressure), on voit que c'est beau.
 
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-# Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
+```{r pressure, echo=TRUE, out.width='70%', fig.cap='A figure example with a relative width 70\\%.'}
 plot(pressure)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+# Image externe
+
+Figure \@ref(fig:knitr-logo) is an example of three **knitr** logos included in a figure environment. 
+
+```{r knitr-logo, out.width='32.8%', fig.show='hold', fig.cap='Three knitr logos included in the document from an external PNG image file.'}
+knitr::include_graphics(rep('images/knit-logo.png', 3))
+```
+
+Word réduit pas les tailles.
+
+# Citations
+
+La vie est belle [@shankland2015 ; @shankland2011]. Et aime bien le discours de Shankland [-@shankland2015]. @shankland2012 pense aussi cela. Mais pas tout le temps [voir @shankland2015, pp. 33-35 ; également @shankland2012, ch. 1]. Salut la vie [@shankland2018a].
+
+
+# Biblio
+
+Biblio doit contenir les 4 références :
+Mais aussi voir pour faire la biblio d'office en entier à partir du fichier bibtex (bio CV).
