@@ -74,6 +74,8 @@ d_paired_sum2 <- d_paired %>%
             mean_14=mean(n_),
             mean_15=mean(o),
             mean_16=mean(p))
+d_paired_sum2[,3:18] <- round(d_paired_sum2[,3:18], 2)
+
             
 
 #######################

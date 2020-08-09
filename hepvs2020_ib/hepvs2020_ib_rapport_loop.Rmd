@@ -1,0 +1,52 @@
+---
+title: Rapport de progression des étudiant·es dans les compétences en pédagogie spécialisée
+  - 5.3 SP2020
+author: "Nicolas Bressoud"
+date: "10 juillet 2020"
+output: pdf_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+source("hepvs2020_ib_script_loop.R")
+```
+
+# Contexte et mesures
+
+Ce rapport analyse l'évolution des scores à différentes questions concernant l'autoévaluation des étudiant·es de première année, semestre 2, de leurs compétences en pédagogie spécialisée. Les données couvrent toute la volée 2019 sur le site de St-Maurice entre février et juin 2020.
+
+Le premier temps de mesure a été réalisé le : *21 février 2020*.
+Le second temps de mesure a été réalisé dans le cadre de l'enseignement à distance (pandémie) entre les : *8 mai et 23 juin 2020*.
+
+# Statistiques descriptives
+
+On a exactement 24 personnes qui ont participé aux deux temps de mesure, sur une population de 57 étudiant·es (42 % de participation). Le tableau ci-dessous synthétise cette participation:
+
+```{r paired_sum}
+knitr::kable(d_paired_sum, caption="résumé des données de l'échantillon pairé temps 1 et temps 2", label="sample_final")
+```
+
+## Scores
+
+Le tableau suivant résume la moyenne des scores avant/après à chaque item.
+
+<!-- gestion de ce vilan tableau avec KableExtra. Pas encore réglé.... --> 
+````{r paired_sum2, out.width = "100%", message=FALSE}
+library(kableExtra)
+knitr::kable(d_paired_sum2, caption="résumé des données de l'échantillon pairé temps 1 et temps 2", label="sample_final2") %>%
+  kable_styling(latex_options = "scale_down")
+````
+
+Les graphiques suivants présentent les scores avant/après avec indication de la moyenne et de la différence des moyennes (pente de la droite).
+
+<!-- on ajoute results = 'hide' pour gérer l'affichage des numéros de la liste. beau. --> 
+
+```{r vis, fig.show = "hold", out.width = "50%", fig.align = "default", warning=FALSE, results='hide'}
+plot_list
+````
+
+
+# Interprétation
+
+... possibilité de repérer là où les productions sont statistiquement significatives.
