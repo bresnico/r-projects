@@ -22,6 +22,11 @@ d <- d %>%
   mutate(ks_sco = rowMeans(select(.,starts_with("ks_")) ,na.rm =T),
          ks_sco = round(ks_sco,2)) # score arrondi à deux décimales
 
+# Création du score spécifique aux items liés au bien-être psychologique et ajout à d----
+d <- d %>% 
+  mutate(ks_bep = rowMeans(select(.,ks_6,ks_7,ks_8,ks_9,ks_10,ks_11) ,na.rm =T),
+  )
+
 # Création du score spécifique aux items liés à l'amitié et ajout à d----
 d <- d %>% 
   mutate(ks_ami = rowMeans(select(.,ks_19,ks_20,ks_21,ks_22) ,na.rm =T),
@@ -65,50 +70,110 @@ d_paired_sum2 <- d_paired %>%
   group_by(tim) %>% 
   summarise(n=n(),
             mean_ks=round(mean(ks_sco),2),
+            mean_ks_bep=round(mean(ks_bep),2),
             mean_ks_ami=round(mean(ks_ami),2),
             mean_ks_bes=round(mean(ks_bes),2),
             sd_ks=round(sd(ks_sco),2),
+            sd_ks_bep=round(sd(ks_bep),2),
             sd_ks_ami=round(sd(ks_ami),2),
             sd_ks_bes=round(sd(ks_bes),2),
             )
 
 # Retour sur d pour observer qualitativement les dispersions des participants d'origine (avant pairage, élimination)----
 
+#########################
+# Visualisation en loop #
+#########################
 
-# set.seed(42) # pour figer le nombre de départ fixe de la génération et retrouver le même résultat à chaque compilation
-# créer une position qui sera reprise par jitter et aussi text_repel (donc set.seed est plus utile)
+# créer une position qui sera reprise par jitter et aussi text_repel (donc set.seed n'est plus nécessaire)
 pos <- position_jitter(width = 0.2, seed = 2)
+
+# Préparation de la boucle titre----
+tit <- c("bien-être total",
+            "bien-être psychologique",
+            "amis et soutien social",
+            "environnement scolaire"
+           ) # vecteur pour le titre de chaque plot
+
+# Préparation de la boucle des variables----
+var <- names(d)[30:33]
+
+# Préparation de la liste de plots----
+plot_list <- list()
+
+# chaque liste est dans le même ordre !
+
+for (i in 1:4) {
+p <- d %>% 
+    ggplot() +
+    aes(x = tim, colour = tim) +
+    aes_string(y = var[i]) +
+    geom_boxplot(outlier.shape = NA, alpha = .2, aes(fill = tim), show.legend = FALSE) +
+    geom_jitter(data = subset(d, id!="gui" & id!="ben" & id!="ken" & id!="nor" & id!="mar"), position = pos, size = 5, alpha = .5, show.legend = FALSE) + # On détermine visuellement la limite qui nous intéresse pour les labels
+    ylim(0, 5) +
+    geom_jitter(data = subset(d, id=="gui" | id=="ben" | id=="ken" | id=="nor" | id=="mar"), position = pos, size = 5, alpha = 1, color = "red", show.legend = FALSE) +
+    geom_label_repel(data = subset(d, id=="gui" | id=="ben" | id=="ken" | id=="nor" | id=="mar"), position = pos, aes(label=id), size = 4, color = "black") +
+    labs(y="Score", x = "Temps de mesure", title = paste("Résultats au Kidscreen (27 items)", tit[i])) +
+    theme(plot.title = element_text(hjust = 0.5)) 
+    plot_list[[i]] <- p
+    }
+dev.off()  
+
+
+# enregistrement des plots en png par fichier séparé avec un nom correspondant au nom de la dimension.
+for (i in 1:4) {
+  temp_plot = plot_list[[i]]
+  ggsave(temp_plot, file=paste0("plot_", tit[[i]],".png"), width = 14, height = 10, units = "cm")
+}
+
+dev.off()  
+
+
+#############################
+# Visualisation sans boucle #
+#############################
+set.seed(2)
 
 vis_sco <- d %>% 
   ggplot() +
   aes(x = tim, y = ks_sco, colour = tim) +
   geom_boxplot(outlier.shape = NA, alpha = .2, aes(fill = tim), show.legend = FALSE) +
-  geom_jitter(data = subset(d, ks_sco > 3 & id!="mar"), position = pos, size = 5, alpha = .5, show.legend = FALSE) + # On détermine visuellement la limite qui nous intéresse pour les labels
+  geom_jitter(data = subset(d, id!="gui" & id!="ben" & id!="ken" & id!="nor" & id!="mar"), position = pos, size = 5, alpha = .5, show.legend = FALSE) + # On détermine visuellement la limite qui nous intéresse pour les labels
   ylim(0, 5) +
-  geom_jitter(data = subset(d, ks_sco <= 3 | id=="mar"), position = pos, size = 5, alpha = 1, color = "red", show.legend = FALSE) +
-  geom_label_repel(data = subset(d, ks_sco <= 3 | id=="mar"), position = pos, aes(label=id), size = 4, color = "black") +
-  labs(y="Score", x = "Temps de mesure", title = "Résultats au Kidscreen (27 items)") +
+  geom_jitter(data = subset(d, id=="gui" | id=="ben" | id=="ken" | id=="nor" | id=="mar"), position = pos, size = 5, alpha = 1, color = "red", show.legend = FALSE) +
+  geom_label_repel(data = subset(d, id=="gui" | id=="ben" | id=="ken" | id=="nor" | id=="mar"), position = pos, aes(label=id), size = 4, color = "black") +
+  labs(y="Score", x = "Temps de mesure", title = "Résultats au Kidscreen (26 items)") +
   theme(plot.title = element_text(hjust = 0.5))
 
 vis_ami <- d %>% 
   ggplot() +
   aes(x = tim, y = ks_ami, colour = tim) +
   geom_boxplot(outlier.shape = NA, alpha = .2, aes(fill = tim), show.legend = FALSE) +
-  geom_jitter(data = subset(d, ks_ami > 1 & id!="mar"), position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
-  geom_jitter(data = subset(d, ks_ami <= 1 | id=="mar"), position = pos, size = 5, alpha = 1, color = "red", show.legend = FALSE) +
-  geom_label_repel(data = subset(d, ks_ami <= 1 | id=="mar"), position = pos, aes(label=id), size = 4, color = "black") +
-  labs(y="Score", x = "Temps de mesure", title = "Résultats au Kidscreen - dimension amitié") +
+  geom_jitter(data = subset(d, id!="gui" & id!="ben" & id!="ken" & id!="nor" & id!="mar"), position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
+  geom_jitter(data = subset(d, id=="gui" | id=="ben" | id=="ken" | id=="nor" | id=="mar"), position = pos, size = 5, alpha = 1, color = "red", show.legend = FALSE) +
+  geom_label_repel(data = subset(d, id=="gui" | id=="ben" | id=="ken" | id=="nor" | id=="mar"), position = pos, aes(label=id), size = 4, color = "black") +
+  labs(y="Score", x = "Temps de mesure", title = "Résultats au Kidscreen - dimension amitié et soutien social") +
   theme(plot.title = element_text(hjust = 0.5))
 
 vis_bes <- d %>% 
   ggplot() +
   aes(x = tim, y = ks_bes, colour = tim) +
   geom_boxplot(outlier.shape = NA, alpha = .2, aes(fill = tim), show.legend = FALSE) +
-  geom_jitter(data = subset(d, ks_bes > 2 & id!="mar"), position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
-  geom_jitter(data = subset(d, ks_bes <= 2 | id=="mar"), position = pos, size = 5, alpha = 1, color = "red", show.legend = FALSE) +
-  geom_label_repel(data = subset(d, ks_bes <= 2 | id=="mar"), position = pos, aes(label=id), size = 4, color = "black") +
+  geom_jitter(data = subset(d, id!="gui" & id!="ben" & id!="ken" & id!="nor" & id!="mar"), position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
+  geom_jitter(data = subset(d, id=="gui" | id=="ben" | id=="ken" | id=="nor" | id=="mar"), position = pos, size = 5, alpha = 1, color = "red", show.legend = FALSE) +
+  geom_label_repel(data = subset(d, id=="gui" | id=="ben" | id=="ken" | id=="nor" | id=="mar"), position = pos, aes(label=id), size = 4, color = "black") +
   ylim(0, 5) +
-  labs(y="Score", x = "Temps de mesure", title = "Résultats au Kidscreen - dimension bien-être scolaire") +
+  labs(y="Score", x = "Temps de mesure", title = "Résultats au Kidscreen - dimension environnement scolaire") +
   theme(plot.title = element_text(hjust = 0.5))
 
 
+vis_bep <- d %>% 
+  ggplot() +
+  aes(x = tim, y = ks_bep, colour = tim) +
+  geom_boxplot(outlier.shape = NA, alpha = .2, aes(fill = tim), show.legend = FALSE) +
+  geom_jitter(data = subset(d, id!="gui" & id!="ben" & id!="ken" & id!="nor" & id!="mar"), position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
+  geom_jitter(data = subset(d, id=="gui" | id=="ben" | id=="ken" | id=="nor" | id=="mar"), position = pos, size = 5, alpha = 1, color = "red", show.legend = FALSE) +
+  geom_label_repel(data = subset(d, id=="gui" | id=="ben" | id=="ken" | id=="nor" | id=="mar"), position = pos, aes(label=id), size = 4, color = "black") +
+  ylim(0, 5) +
+  labs(y="Score", x = "Temps de mesure", title = "Résultats au Kidscreen - dimension bien-être psychologique") +
+  theme(plot.title = element_text(hjust = 0.5))
