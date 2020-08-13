@@ -1,0 +1,54 @@
+---
+title: "Données - classe pilote 2016-2017"
+author: "Nicolas Bressoud"
+date: "8/10/2020"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+source("stm2017_nb_script.R")
+```
+
+# Contexte
+
+Ces données proviennent du test pilote réalisé en 2016-2017 en 7H à St-Maurice (Valais) dans une classe. La classe contenait  24 élèves. 22 ont complété le temps 1 et 23 ont complété le temps 2. En mettant les identités en commun, on a pu pairer strictement les données de 14 élèves. C'est sur la base des 14 que les statistiques sont réalisées.
+
+# Données descriptives
+
+Le pré-test a été réalisé en octobre 2016 et le post-test a eu lieu en avril 2017.
+
+On a exactement 7 filles et 7 garçons qui ont participé aux deux temps de mesure. Le tableau ci-dessous synthétise cette participation:
+
+```{r description}
+knitr::kable(d_paired_sum, caption="résumé des données de l'échantillon pairé temps 1 et temps 2", label="sample_final")
+```
+
+Les moyennes et écarts-types sont les suivants :
+
+```{r description2}
+knitr::kable(d_paired_sum2, caption="résumé des données descriptives de l'échantillon pairé temps 1 et temps 2", label="sample_final2")
+```
+
+## Prise en considération des données perdues.
+
+Les graphs suivants donnent une idée de la dispersion des scores sur les trois variables (Kidscreen général, amitié, bien-être scolaire) dans les échantillons non-pairés. Ils permettent d'identifier des scores extrêmes et enrichir l'analyse qualitative.
+
+<!-- dispersion aux 3 scores au temps 1 puis au temps 2 via d. -->
+
+```{r vis, fig.show = "hold", out.width = "33.3%", fig.align = "default", warning=FALSE, results='hide'}
+vis_sco
+vis_ami
+vis_bes
+```
+
+Comment on interprète cela ???
+
+# Analyse du retour qualitatif des élèves
+
+reprendre les noms "chauds" et entrer en analyse.
+ken ben mar, et encore ??
+
