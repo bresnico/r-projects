@@ -28,7 +28,7 @@ d <- d %>%
 
 d <- d %>% filter(date =="temps 1" | date == "temps 2")
 
-#Recondage des variables au score inversé
+#Recodage des variables au score inversé
 
 d <- d %>% 
   mutate(hbs20_7 = 6 - hbs20_7,

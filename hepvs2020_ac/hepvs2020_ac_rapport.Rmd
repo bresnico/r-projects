@@ -1,0 +1,37 @@
+---
+title: "Analyse des données pour Amélie Cassaz"
+author: "Nicolas Bressoud"
+date: "septembre 2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+source("hepvs2020_ac_script.R")
+```
+
+# Contexte et mesures
+
+Ce rapport analyse l'évolution des scores dans deux groupes (expérimental / contrôle) impliquant au total 6 classes. Les classes A, C et E sont des classes expérimentales. Les classes B, D et F sont des classes contrôle.
+
+# Statistiques descriptives
+
+Le tableau ci-dessous synthétise la participation:
+
+```{r sum}
+knitr::kable(d_sum, caption="résumé des données de l'échantillon au temps 1", label="sample_final")
+```
+
+## Scores
+
+```{r vis, fig.show = "hold", out.width = "50%", fig.align = "default"}
+vis_sco
+vis_sco2
+```
+
+# Statistiques inférentielles
+
+
+
+# Interprétation et conclusion
+
