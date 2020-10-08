@@ -18,10 +18,10 @@ La saisie de données se déroule dans le cadre de la formation-recherche-action
 Le design proposait un système de liste d'attente (2x2 classes). On renonce à traiter les données pour vérifier l'utilisation du programme. Celui-ci n'a pas été monitoré. En effet, on ne sait pas qui a fait les forces de quelle manière et à quel moment.
 
 Voici un état des données brutes avant nettoyage :
-Première série (n=96) : entre le 21 octobre 2019 et le 4 novembre 2019
+Première série (n=91) : entre le 21 octobre 2019 et le 4 novembre 2019
 Deuxième série (n=14) : entre le 17 et le 19 décembre 2019
 Troisième série (n=33) : entre le 20 et le 23 janvier 2020
-Quatrième série (n=18) : entre le 19 mars et le 2 avril 2020
+Quatrième série (n=17) : entre le 19 mars et le 2 avril 2020
 
 # Principes du nettoyage
 Dans la perspective de la recherche corrélationnelle, nous nettoyons les données en gardant toutes les observations qui obéissent aux règles suivantes :
@@ -32,11 +32,13 @@ Les analyse devront prendre en compte les données aux ID identiques (variation 
 
 # Mesures
 Les données mesurent :
-- l'engagement scolaire (SEM) : 17 items éparses en 3 sous-dimensions (comportemental, affectif, cognitif)
-- le bien-être (Kidscreen adapté) : 17 items en 4 sous-dimensions (bien-être physique 4/7 , bien-être psychologique 3/7, pairs et support social 4/4, env. scolaire 4/4, bullying 3 items) <!-- vérifier les noms corrects des dimensions du kidscreen -->
+- l'engagement scolaire (SEM) : 17 items en 3 sous-dimensions (comportemental, affectif, cognitif) <!-- Calculer les sous-dimensions -->
+- le bien-être (Kidscreen adapté) : 18 items en 4 sous-dimensions (bien-être physique 4/5 , bien-être psychologique 3/6, pairs et support social 4/4, env. scolaire 4/4, bullying 3 items) <!-- vérifier les noms corrects des dimensions du kidscreen -->
 - confiance en soi : 10 items
 - questions courtes (RS): 3 items pour 3 dimensions (énergie, amis, bien-être)
 
-<!-- Je dois confirmer que les items du kidscreen correspondent bien aux dimensions (cf. ressource excel dans le dossier). Idem pour SEM. -->
-
+## No. des items à inverser 
+- SEM : 5 et 10 (échelle à 5)
+- Kidscreen : 6, 15, 16, 17 (échelle à 5)
+- confiance en soi : 4, 5, 6, 7, 9 (échelle à 9)
 
