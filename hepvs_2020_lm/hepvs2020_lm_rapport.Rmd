@@ -1,0 +1,33 @@
+---
+title: "Analyse de données HEP-VS 20-21 - Mémoire LM & AB"
+Author: "Nicolas Bressoud"
+date: "octobre 2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE)
+source("hepvs2020_lm_script.R")
+```
+
+# Contexte
+
+bla
+
+2 temps.
+
+5 classes dont 2 contrôle. Mais qui a fait quoi quand ?
+
+## Echantillons
+
+résumé par classe garçon / filles
+
+# Mesures
+
+PANAS 20 items ?
+
+Bien-être 8 items
+
+proximité sociale ? 13 items
+
+## Identification des items à inverser
