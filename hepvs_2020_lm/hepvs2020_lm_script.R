@@ -2,56 +2,121 @@
 library(tidyverse)
 library(readxl)
 
-# Importation des données brutes (N= ??? ) sous la forme d'une répartition en 2 temps.
+# Importation des données brutes (N = 162) sous la forme d'une répartition en 2 temps.
 
 d <- read_excel("hepvs2020_lm_raw.xlsx") #les variables ont été correctement importées.
 
-#######################
-#travail sur les dates#
-#######################
+#########################
+# travail sur les dates #
+#########################
 
-# modification de la variable date" en temps 1, temps 2.
+# modification de la variable "date" en temps 1, temps 2.
 
-##############################
 d <- d %>% 
-  rename(date = RecordedDate) %>%  #dans cet ordre.
+  rename(id = code) %>%  #dans cet ordre.
   mutate(id = tolower(id)) #gestion de la casse.
 
 d <- d %>% 
   mutate(
-    date = case_when(date >= as.POSIXct("20.10.2019", format="%d.%m.%Y", tz="utc") & date <= as.POSIXct("05.11.2019", format="%d.%m.%Y", tz="utc") ~ "temps 1",
-                     date >= as.POSIXct("16.12.2019", format="%d.%m.%Y", tz="utc") & date <= as.POSIXct("20.12.2019", format="%d.%m.%Y", tz="utc") ~ "temps 2",
-                     date >= as.POSIXct("19.01.2020", format="%d.%m.%Y", tz="utc") & date <= as.POSIXct("24.01.2020", format="%d.%m.%Y", tz="utc") ~ "temps 3",
-                     date >= as.POSIXct("18.03.2020", format="%d.%m.%Y", tz="utc") & date <= as.POSIXct("04.04.2020", format="%d.%m.%Y", tz="utc") ~ "temps 4",
-                     TRUE ~ "autre temps")) #on privilégie case_when car on a 5 conditions et on va gérer les dates. On devrait pas avoir d'autre temps.
+    date = case_when(date >= as.POSIXct("30.08.2020", format="%d.%m.%Y", tz="utc") & date <= as.POSIXct("11.09.2020", format="%d.%m.%Y", tz="utc") ~ "temps 1",
+                     date >= as.POSIXct("11.10.2020", format="%d.%m.%Y", tz="utc") & date <= as.POSIXct("21.10.2020", format="%d.%m.%Y", tz="utc") ~ "temps 2",
+                     TRUE ~ "autre temps"))
 
 # Au passage, R a modifié le type de variable "date".
 
-# une idée des données par date en créant l'objet n_date_d
-n_date_d <- d %>% 
+# une idée des données par date en créant l'objet d_date
+d_date <- d %>% 
   group_by(date) %>% 
   summarize(n=n(),)
 
-# Recodage des variables au score inversé
+# Recodage des variables au score inversé sur variable bien-être.
 d <- d %>% 
-  mutate(con10_4 = 10 - con10_4,
-         con10_5 = 10 - con10_5,
-         con10_6 = 10 - con10_6,
-         con10_7 = 10 - con10_7,
-         con10_9 = 10 - con10_9,
-         sem17_5 = 6 - sem17_5,
-         sem17_10 = 6 - sem17_10,
-         kid17_6 = 6 - kid17_6,
-         kid17_15 = 6 - kid17_15,
-         kid17_16 = 6 - kid17_16,
-         kid17_17 = 6 - kid17_17)
+  mutate(be8_4 = 8 - be8_4,
+         be8_5 = 8 - be8_5,
+         be8_8 = 8 - be8_8,
+         )
 
-# Création des moyennes de chaque questionnaire pour chaque observation (sauf les 3 shorts questions)
-
+# Création des moyennes de chaque questionnaire (ou sous-dimension pour la PANAS) pour chaque observation :
 d <- d %>% 
-  mutate(sem_sco = rowMeans(select(.,starts_with("sem")) ,na.rm =T),
-         con_sco = rowMeans(select(.,starts_with("con")),na.rm =T),
-         kid_sco = rowMeans(select(.,starts_with("kid")),na.rm =T),
-         sho1_sco = sho_1,
-         sho2_sco = sho_2,
-         sho3_sco = sho_3)
+  mutate(be_sco = rowMeans(select(.,starts_with("be")) ,na.rm =T),
+         pro_sco = rowMeans(select(.,starts_with("pro")),na.rm =T),
+         panp_sco = rowMeans(select(.,starts_with("panp")),na.rm =T),
+         pann_sco = rowMeans(select(.,starts_with("pann")),na.rm =T),
+         )
+
+##################
+# Pairage strict #
+##################
+
+#suppression des id non strictement membre d'une paire (t1, t2) par création d'un df de comparaison.
+
+d_comp <- d %>% 
+  drop_na(id) %>% #par sécurité
+  arrange(id) %>% #visuel
+  group_by(id, date) %>% 
+  count(id) %>% 
+  filter(n==1) %>% #On a pas fini. On s'est assuré que chaque id est unique dans chaque modalité de temps. On doit encore être sûrs qu'on a maintenant exactement une paire (t1,t2).
+  ungroup() %>% 
+  group_by(id) %>% 
+  count(id) %>% 
+  filter(n==2) %>% #on ne garde que les paires de id qui se retrouvent dans t1 et t2. C'est notre grosse perte de données de ce traitement
+  ungroup()
+
+#Notre df de comparaison est prêt. On peut procéder à l'élagage de d_long.
+
+d_paired <- d %>% 
+  filter(id %in% d_comp$id)
+
+
+#################
+# visualisation #
+#################
+
+#be
+vis_be <- d_paired %>% 
+  ggplot() +
+  aes(x = date, y = be_sco) +
+  geom_boxplot(alpha = .5, outlier.colour = NA) +
+  geom_jitter(size = 5, alpha = .5, width = 0.3) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4, color = "red") +
+  stat_summary(fun = mean, geom = "line", aes(group = 1), color = "red") + #Le group = 1 est nécessaire pour dire à la ligne de connecter tous les points.
+  labs(title = "Mesure de bien-être", y = "Score") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+#panp
+vis_panp <- d_paired %>% 
+  ggplot() +
+  aes(x = date, y = panp_sco) +
+  geom_boxplot(alpha = .5, outlier.colour = NA) +
+  geom_jitter(size = 5, alpha = .5, width = 0.3) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4, color = "red") +
+  stat_summary(fun = mean, geom = "line", aes(group = 1), color = "red") + #Le group = 1 est nécessaire pour dire à la ligne de connecter tous les points.
+  labs(title = "Mesure d'émotions positives", y = "Score") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+#pann
+vis_pann <- d_paired %>% 
+  ggplot() +
+  aes(x = date, y = pann_sco) +
+  geom_boxplot(alpha = .5, outlier.colour = NA) +
+  geom_jitter(size = 5, alpha = .5, width = 0.3) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4, color = "red") +
+  stat_summary(fun = mean, geom = "line", aes(group = 1), color = "red") + #Le group = 1 est nécessaire pour dire à la ligne de connecter tous les points.
+  labs(title = "Mesure d'émotions négatives", y = "Score") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+#pro
+vis_pro <- d_paired %>% 
+  ggplot() +
+  aes(x = date, y = pro_sco) +
+  geom_boxplot(alpha = .5, outlier.colour = NA) +
+  geom_jitter(size = 5, alpha = .5, width = 0.3) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4, color = "red") +
+  stat_summary(fun = mean, geom = "line", aes(group = 1), color = "red") + #Le group = 1 est nécessaire pour dire à la ligne de connecter tous les points.
+  labs(title = "Mesure de climat de classe", y = "Score") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
+
+
