@@ -50,9 +50,9 @@ Items à inverser : NA
 # Scores aux principaux questionnaires
 
 ```{r vis, fig.show = "hold", out.width = "50%", fig.align = "default"}
-vis_be
-vis_panp
-vis_pann
-vis_pro
+vis_be2
+vis_panp2
+vis_pann2
+vis_pro2
 ```
 

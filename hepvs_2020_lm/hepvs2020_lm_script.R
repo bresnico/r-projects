@@ -67,6 +67,11 @@ d_comp <- d %>%
 d_paired <- d %>% 
   filter(id %in% d_comp$id)
 
+#######################
+# Résumés des données #
+#######################
+
+############################### Summarise à boule !!
 
 #################
 # visualisation #
@@ -83,16 +88,40 @@ vis_be <- d_paired %>%
   labs(title = "Mesure de bien-être", y = "Score") +
   theme(plot.title = element_text(hjust = 0.5))
 
+#be2
+vis_be2 <- d_paired %>% 
+  ggplot() +
+  aes(x = date, color = condition, y = be_sco) +
+  geom_boxplot(alpha = .5, outlier.colour = NA) +
+  geom_jitter(size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2)) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
+  stat_summary(fun = mean, aes(group = condition), geom = "line") +
+  labs(title = "Mesure bien-être", y = "Score de bien-être") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_color_brewer("Groupe", palette = "Set1")
+
 #panp
 vis_panp <- d_paired %>% 
   ggplot() +
-  aes(x = date, y = panp_sco) +
+  aes(x = date, color = condition, y = panp_sco) +
   geom_boxplot(alpha = .5, outlier.colour = NA) +
   geom_jitter(size = 5, alpha = .5, width = 0.3) +
   stat_summary(fun = mean, geom = "point", size = 3, shape = 4, color = "red") +
-  stat_summary(fun = mean, geom = "line", aes(group = 1), color = "red") + #Le group = 1 est nécessaire pour dire à la ligne de connecter tous les points.
+  stat_summary(fun = mean, geom = "line", aes(group = condition), color = "red") + #Le group = 1 est nécessaire pour dire à la ligne de connecter tous les points.
   labs(title = "Mesure d'émotions positives", y = "Score") +
   theme(plot.title = element_text(hjust = 0.5))
+
+#panp2
+vis_panp2 <- d_paired %>% 
+  ggplot() +
+  aes(x = date, color = condition, y = panp_sco) +
+  geom_boxplot(alpha = .5, outlier.colour = NA) +
+  geom_jitter(size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2)) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
+  stat_summary(fun = mean, aes(group = condition), geom = "line") +
+  labs(title = "Mesure d'émotions positives", y = "Score PANAS+") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_color_brewer("Groupe", palette = "Set1")
 
 #pann
 vis_pann <- d_paired %>% 
@@ -105,6 +134,18 @@ vis_pann <- d_paired %>%
   labs(title = "Mesure d'émotions négatives", y = "Score") +
   theme(plot.title = element_text(hjust = 0.5))
 
+#pann2
+vis_pann2 <- d_paired %>% 
+  ggplot() +
+  aes(x = date, color = condition, y = pann_sco) +
+  geom_boxplot(alpha = .5, outlier.colour = NA) +
+  geom_jitter(size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2)) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
+  stat_summary(fun = mean, aes(group = condition), geom = "line") +
+  labs(title = "Mesure émotions négatives", y = "PANAS-") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_color_brewer("Groupe", palette = "Set1")
+
 #pro
 vis_pro <- d_paired %>% 
   ggplot() +
@@ -116,7 +157,17 @@ vis_pro <- d_paired %>%
   labs(title = "Mesure de climat de classe", y = "Score") +
   theme(plot.title = element_text(hjust = 0.5))
 
-
+#pro2
+vis_pro2 <- d_paired %>% 
+  ggplot() +
+  aes(x = date, color = condition, y = pro_sco) +
+  geom_boxplot(alpha = .5, outlier.colour = NA) +
+  geom_jitter(size = 5, alpha = .5, position = position_jitterdodge(dodge.width=.7, jitter.width = .2)) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4) +
+  stat_summary(fun = mean, aes(group = condition), geom = "line") +
+  labs(title = "Mesure climat", y = "Score de 13 items") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_color_brewer("Groupe", palette = "Set1")
 
 
 
