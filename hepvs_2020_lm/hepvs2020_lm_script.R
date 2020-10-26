@@ -75,7 +75,7 @@ d_paired <- d %>%
 
 d_sum1 <- d_paired %>%
   group_by(condition, date) %>% 
-  summarise(n(), mean(be_sco), mean(panp_sco), mean(panp_sco), mean(pro_sco))
+  summarise(n(), mean(be_sco), mean(panp_sco), mean(pann_sco), mean(pro_sco))
 
 
   

@@ -24,7 +24,7 @@ On cherche à évaluer les effets d'un dispositif des forces sur le bien-être (
 
 ```{r table_t1, echo=FALSE}
 
-knitr::kable(d_sum1, caption="résumé des données de l'échantillon au temps 1 et au temps 2", label="temps1_2")
+knitr::kable(d_sum1, digits = 2, caption="résumé des données de l'échantillon au temps 1 et au temps 2", label="temps1_2")
 ```
 
 
