@@ -73,6 +73,13 @@ d_paired <- d %>%
 
 ############################### Summarise à boule !!
 
+d_sum1 <- d_paired %>%
+  group_by(condition, date) %>% 
+  summarise(n(), mean(be_sco), mean(panp_sco), mean(panp_sco), mean(pro_sco))
+
+
+  
+
 #################
 # visualisation #
 #################

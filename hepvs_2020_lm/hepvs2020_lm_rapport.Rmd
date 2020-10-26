@@ -12,42 +12,42 @@ source("hepvs2020_lm_script.R")
 
 # Contexte
 
-Cette étude se déroule entre août et octobre 2020 dans le cadre de deux mémoires Bachelor HEP-VS:
-- 2 temps de mesure
-- 5 classes
-- 2 conditions ( 3 classes expé et 2 contrôle)
+Cette étude se déroule entre août et octobre 2020 dans le cadre de deux mémoires Bachelor HEP-VS :
 
-On cherche à évaluer les effets d'un dispositif des forces sur le bien-être (PERMA) à travers une dimension : émotions positive (PANAS)
+- 2 temps de mesure
+- 4 classes (que s'est-il passé avec la classe A ?)
+- 2 conditions ( 3 classes expé et 1 contrôle)
+
+On cherche à évaluer les effets d'un dispositif des forces sur le bien-être (PERMA) à travers une dimension : émotions positive (PANAS)
 
 ## Echantillons
 
-résumé par classe garçon / filles
-
-résumé temps 1, temps 2
-
 ```{r table_t1, echo=FALSE}
 
-knitr::kable(d_date, caption="résumé des données de l'échantillon au temps 1 et au temps 2", label="temps1_2")
+knitr::kable(d_sum1, caption="résumé des données de l'échantillon au temps 1 et au temps 2", label="temps1_2")
 ```
 
 
 # Mesures
 
-variable : vie émotionnelle
-échelle : PANAS, 20 items, intensité 1 à 5
-émotions positives = items 1 3 5 9 10 12 14 16 17 19
-émotions négative = items 2 4 6 7 8 11 13 15 18 20
+## variable : vie émotionnelle
++ échelle : PANAS, 20 items, intensité 1 à 5
++ émotions positives = items 1 3 5 9 10 12 14 16 17 19
++ émotions négative = items 2 4 6 7 8 11 13 15 18 20
 
-variable : bien-être
-échelle : Bien-être, 8 items, intensité 1 à 7 
-Items à inverser : 4, 5, 8
+## variable : bien-être
++ échelle : Bien-être, 8 items, intensité 1 à 7 
++ Items à inverser : 4, 5, 8
 
-variable : climat en classe
-échelle : source ???, 13 items, intensité 1 à 5
-Items à inverser : NA
+## variable : climat en classe
+
++ échelle : source ???, 13 items, intensité 1 à 5
++ Items à inverser : NA
+
 
 
 # Scores aux principaux questionnaires
+
 
 ```{r vis, fig.show = "hold", out.width = "50%", fig.align = "default"}
 vis_be2
