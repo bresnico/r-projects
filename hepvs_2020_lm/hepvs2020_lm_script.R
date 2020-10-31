@@ -176,5 +176,33 @@ vis_pro2 <- d_paired %>%
   theme(plot.title = element_text(hjust = 0.5)) +
   scale_color_brewer("Groupe", palette = "Set1")
 
+# bidouillages, expérimentations
 
+essai <- ggplot(data = d_paired,
+       aes(x = condition, y = panp_sco,
+           color = condition)) +
+  geom_boxplot() +
+  facet_grid(~date) # create panes base on health status
+
+########################
+# stats inférentielles #
+########################
+
+# Création du tibble de stat.
+
+d_aov <- d_paired %>% 
+  select(date, id, classe, condition, sex, age, be_sco, pro_sco, panp_sco, pann_sco ) %>% 
+  mutate(classe = factor(classe, levels = c("B","C","D","E")),
+         condition = factor(condition, levels = c("Expérimentale","Contrôle")),
+         sex = factor(sex, levels = c("1","2")),
+         date = factor(date, levels = c("temps 1","temps 2"))) %>% 
+  arrange(date, id)
+
+glimpse(d_aov) # sympa le glimpse. c'est quoi ?
+
+# préparation anova DV = émotion positives IV = temps de mesure, condition. On cherche une interaction. sinon, pas intéressant, non ?
+
+aov1 <- aov(panp_sco ~ date * condition * classe, data = d_aov)
+
+summary(aov1)
 
