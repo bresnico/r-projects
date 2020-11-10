@@ -5,19 +5,19 @@ date: "novembre 2020"
 lang: fr
 toc-title: "Table des matières"
 output: 
+  bookdown::pdf_document2:
+    citation_package: default
+    pandoc_args: [ "--csl", "apa.csl" ]
+    keep_tex: true
+  bookdown::html_document2:
+    pandoc_args: [ "--csl", "apa.csl" ]
+    citation_package: none
+    toc: true
   bookdown::word_document2:
     pandoc_args: [ "--csl", "apa.csl" ]
     citation_package: none
     toc: true
     reference_docx: "template.docx"
-  bookdown::html_document2:
-    pandoc_args: [ "--csl", "apa.csl" ]
-    citation_package: none
-    toc: true
-  bookdown::pdf_document2:
-    citation_package: default
-    pandoc_args: [ "--csl", "apa.csl" ]
-    keep_tex: true
 ---
 
 
@@ -34,7 +34,9 @@ Ce rapport concerne les résultats bruts liés à l'évaluation, par les personn
 # Données de base
 
 Nombres de personnes qui ont reçu les informations sur les workshops : 148
+
 Nombre de personnes inscrites aux ateliers : 75 / 148
+
 Nombres de participant·es au questionnaire : 27 / 148
 
 Résumé des origines des participant·es (langue, catégories) :
