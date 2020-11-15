@@ -1,7 +1,7 @@
 ---
 title: "Analyse des données pour Amélie Cassaz"
 author: "Nicolas Bressoud"
-date: "septembre 2020"
+date: "novembre 2020"
 output: pdf_document
 ---
 
@@ -19,14 +19,13 @@ Ce rapport analyse l'évolution des scores dans deux groupes (expérimental / co
 Le tableau ci-dessous synthétise la participation:
 
 ```{r sum}
-knitr::kable(d_sum, caption="résumé des données de l'échantillon au temps 1", label="sample_final")
+knitr::kable(d_sump3, caption="résumé des données de l'échantillon aux temps 1 et 2", label="sample_final")
 ```
 
 ## Scores
 
-```{r vis, fig.show = "hold", out.width = "50%", fig.align = "default"}
-vis_sco
-vis_sco2
+```{r vis, fig.show = "hold", out.width = "100%", fig.align = "default"}
+vis_sco3
 ```
 
 # Statistiques inférentielles
