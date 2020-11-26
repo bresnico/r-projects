@@ -2,7 +2,15 @@
 title: "Analyse des données pour Amélie Cassaz"
 author: "Nicolas Bressoud"
 date: "novembre 2020"
-output: pdf_document
+output: 
+  bookdown::pdf_document2:
+    keep_tex: false
+  bookdown::html_document2:
+    citation_package: none
+    toc: false
+  bookdown::word_document2:
+    citation_package: none
+    toc: false
 ---
 
 ```{r setup, include=FALSE}
@@ -14,23 +22,55 @@ source("hepvs2020_ac_script.R")
 
 Ce rapport analyse l'évolution des scores dans deux groupes (expérimental / contrôle) impliquant au total 6 classes. Les classes A, C et E sont des classes expérimentales. Les classes B, D et F sont des classes contrôle.
 
+Le but de l'expérience visait à observer si la mise en oeuvre de conseils de classe favorisait l'inhibition comportementale des élèves de groupe expérimental.
+
+Toutes les classes ont eu un pré-test et un post-test durant lesquels les élèves ont répondu, à chacune des 2 passations, 25 fois à un exercice d'inhibition comportementale (test HTKS). L'expérimentatrice a scoré chaque exercice de la manière suivante :
+
++ 0 : l'enfant n'a pas réussi ou l'enfant a cherché des indices chez l'expérimentatrice
++ 1 : l'enfant a réussi avec une hésitation modérée (hésitation dans les gestes, traits du visage), tout en étant concentré sur la tâche
++ 2 : l'enfant a réussi avec aisance tout en étant concentré
+
 # Statistiques descriptives
 
-Le tableau ci-dessous synthétise la participation:
+Les tableaux \@ref(tab:sum1) et \@ref(tab:sum2) synthétisent les données descriptives :
 
-```{r sum}
-knitr::kable(d_sump3, caption="résumé des données de l'échantillon aux temps 1 et 2", label="sample_final")
+```{r sum1}
+knitr::kable(d_sump, digits = 2, caption="résumé des données sur les participant·es")
 ```
 
-## Scores
-
-```{r vis, fig.show = "hold", out.width = "100%", fig.align = "default"}
-vis_sco3
+```{r sum2}
+knitr::kable(d_sump3, digits = 2, caption="résumé des scores de l'échantillon aux temps 1 et 2")
 ```
+
 
 # Statistiques inférentielles
 
+Nous avons conduit une ANOVA à plan factoriel construite ainsi :
 
+- variable intersujet : le groupe (contrôle ou expérimental)
+- variable intrasujet : le temps (avant ou après l'expérimentation)
+
+
+Le tableau \@ref(tab:tab3) résume le test statistique :
+
+```{r tab3}
+knitr::kable(tidy_stats, digits = 2, caption="Résultats de l'ANOVA") 
+```
+
+Le calcul de $\eta ^{2}$ est réalisé avec la fonction `eta_sq` du package `sjstats`.
+
+Le graph \@ref(fig:vis) donne une illustration des données :
+
+```{r vis, fig.cap="vis", fig.show = "hold", out.width = "50%", fig.align = "center"}
+vis_sco3 
+```
 
 # Interprétation et conclusion
+
+L'analyse de variance a mis en évidence un effet significatif de l'interation entre le type de groupe (contrôle, expérimental) et le temps (avant, après) sur le score d'inhibition comportementale (*F*(1,158) = 4.47, *p* = .036). Cet effet est toutefois petit ($\eta ^{2}$ = 0.023).
+
+Cet effet indique que les élèves du groupe expérimental ont une différence de score entre les deux temps de mesure significativement plus élevée ($\overline{m}$ = 1.42, *sd* = 0.33 ; $\overline{m}$ = 1.70 , *sd* = 0.23) que les élèves du groupe contrôle ($\overline{m}$ = 1.37, *sd* = 0.35 ; $\overline{m}$ = 1.46, *sd* = 0.23).
+
+
+
 

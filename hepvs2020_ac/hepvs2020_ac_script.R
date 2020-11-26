@@ -2,6 +2,9 @@
 library(readxl)
 library(tidyverse)
 library(broom) #pour les sorties du test ANOVA en tidy data.
+library(knitr) #pour bidouiller nos tableaux de sortie
+library(kableExtra) #pour bidouiller nos tableaux de sortie
+library(sjstats) #pour eta_sq()
 
 # importation des données brutes présentées sous la forme d'un tableau de deux temps avec un groupe expé et un groupe contrôle.
 # les données concernent une expérimentation pédagogique en classe sur le groupe expé. On mesure l'inhibition des élèves avant/après.
@@ -72,13 +75,12 @@ d_paired <- d %>%
 ##################################
 
 
-# N, âge, score : avant / après par classe et sexe
+# N, âge, sex score : avant / après par classe et sexe
 d_sump <- d_paired %>% 
   mutate(sex=ifelse(sex=="M", "garçons","filles")) %>% 
-  group_by(clas, sex, tps) %>% 
+  group_by(grp, clas, sex) %>% 
   summarise(n=n(),
-            av_age=round(mean(age), digits=2),
-            sco_mean=mean(sco)
+            mean_age= mean(age)
   )
 
 # N, score : avant / après par classe
@@ -91,7 +93,8 @@ d_sump2 <- d_paired %>%
 d_sump3 <- d_paired %>% 
   group_by(tps, grp) %>% 
   summarise(n=n(),
-            mean_sco=mean(sco))
+            mean_sco=mean(sco),
+            sd_sco=sd(sco))
 
 
 ######################################
@@ -146,5 +149,6 @@ vis_sco3 <- d_paired %>%
 # On cherche donc une interaction tps*grp à p<.05.
 
 stats <- aov(sco ~ tps*grp, data = d_paired)
+eta_sq(stats)
 summary(stats)
 tidy_stats <- tidy(stats)
