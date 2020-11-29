@@ -1,0 +1,33 @@
+---
+title: "Préparation des données pour AFE du strength use questionnaire"
+author: "Nicolas Bressoud"
+date: "généré le 28 novembre 2020"
+output: 
+  bookdown::pdf_document2:
+    keep_tex: false
+  bookdown::html_document2:
+    citation_package: none
+    toc: false
+  bookdown::word_document2:
+    citation_package: none
+    toc: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+source("quebec2020_jf_script.R")
+```
+
+# Origine de la mission et but
+
+# Organisation de la collaboration
+
+## Contributeurs et contributrices
+
+## Questions ouvertes
+
+## Répartitions et échéances
+
+# Présentation des données et leur préparation
+
+# Analyses conduites
