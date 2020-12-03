@@ -15,7 +15,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-source("quebec2020_jf_script.R")
+source("quebece2020_jf_script.R")
 ```
 
 # Origine de la mission et but
