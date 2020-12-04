@@ -3,31 +3,121 @@ title: "Préparation des données pour AFE du strength use questionnaire"
 author: "Nicolas Bressoud"
 date: "généré le 28 novembre 2020"
 output: 
-  bookdown::pdf_document2:
-    keep_tex: false
+  bookdown::word_document2:
+    citation_package: none
+    reference_docx: "template.docx"
+    toc: false
   bookdown::html_document2:
     citation_package: none
     toc: false
-  bookdown::word_document2:
-    citation_package: none
-    toc: false
+  bookdown::pdf_document2:
+    keep_tex: false
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-source("quebece2020_jf_script.R")
+knitr::opts_chunk$set(echo = TRUE)
+source("quebec2020_jf_script.R")
 ```
 
+
 # Origine de la mission et but
+
+Rebecca a contacté Jacques. Décrire.
 
 # Organisation de la collaboration
 
 ## Contributeurs et contributrices
 
+Les auteur·es suivant·es contribuent à cette validation :
+
+- Karel Belleville : apport des BDD
+- Philippe Dubreuil : apport des BDD
+- Jacques Forest : apport des BDD
+- Rebecca Shankland : rédaction de la revue de question
+- Nicolas Bressoud : préparation des données agrégées, gestion du suivi du projet 
+- Philippe Gay : réalisation de l'AFE
+
 ## Questions ouvertes
+
+- ordre des auteur·es ?
+- tâches réalisées ?
+- publication visée ? Langue de la revue ?
 
 ## Répartitions et échéances
 
+- Diagramme de Gantt évolutif disponible via : https://docs.google.com/spreadsheets/d/1lNcHIYzXpXEOcymj_f7iO4hf7_kGZ44peLHq6C38H6Q/edit?usp=sharing
+
 # Présentation des données et leur préparation
 
+## Source des données 
+ 
+`bdd1.sav` - Banque de données CRHA :
+Dubreuil, P., Forest, J., & Courcy, F. (2014). From strengths use to work performance: The role of harmonious passion, subjective vitality and concentration. The Journal of Positive Psychology, 9, 335-349.
+ 
+`bdd2.sav` - Banque de données corrigée CRE :
+Dubreuil, P., Forest, J., Gillet, N., Fernet, C., Thibault-Landry, A., Crevier-Braud, L., & Girouard, S. (2016). Facilitating well-being and performance through the development of strengths at work: Results from an intervention program. International Journal of Applied Positive Psychology, 1(1), 1-19.
+ 
+`bdd3.sav` - Banque de données de Karel Belleville :
+Belleville, K., Dubreuil, P., & Courcy, F. (2019). The Use of Workplace Strengths and Proactive and Organizational Citizenship Behaviours: An Examination of the Mediating Role of Well-Being. Canadian Journal of Administrative Sciences, 37(2), 135-148.
+ 
+`bdd4.sav` - Banque de données CRDICA :
+Données provenant de l’échantillon #2 de ma thèse, celles-ci n’ont jamais été utilisées
+ 
+`bdd5.sav` - Banque de données éducation T1 :
+Données de projet non publié
+ 
+`bdd6.sav` - Banque de données HUMAN RELATIONS :
+Forest, J., Mageau, G. A., Crevier-Braud, L., Dubreuil, P., Bergeron, E., & Lavigne, G. L. (2012). Harmonious passion as a mediator of the relation between signature strengths’ use and optimal functioning at work: Test of an intervention program. Human Relations, 65, 1233-1252.
+
+## Préparation de l'aggrégation des données
+
+Stratégie : regrouper les bdd dans un fichier central au format csv.
+
+Dans un souci de gain de temps, nous conversons les 6 fichiers au format xlsx puis agrégeons à la main les 6 feuilles dans un fichier ´master´.
+
+```{r agreg, eval=FALSE}
+for (i in 1:6) {
+  a <- paste("bdd",i,".sav", sep = "")
+  b <- paste("bdd",i,".xlsx", sep = "")
+  convert(a,b)
+}
+```
+
+Dans la création du fichier ´master´, nous formalisons les noms des variables dans le but de faciliter la manipulation dans R.
+
+Le fichier obtenu s'appelle : ´quebec2020_jf_master.xlsx`. Il est converti en `.csv`et est réinjecté dans R pour traitement.
+
+````{r csv, eval=FALSE}
+convert("quebec2020_jf_master.xlsx", "quebec2020_jf_master.csv")
+````
+
+Description des variables :
+
+- `num` numéro de sujet (absolu)
+- `bdd` numéro de la bdd (1 à 6)
+- `sub` numéro de sujet dans sa bdd (format num_bdd, p.ex 1_1 pour sujet 1 de la bdd 1)
+- `age` âge du sujet (bdd1 = *interprétation* ?)
+- `sex` genre du sujet  (bdd1,2, *interprétation ?*)
+- `sco` scolarité (bdd1,3,4,5,6 *interprétation ?*)
+- `sta` statut de l'emploi (bdd1, *interprétation ?*)
+- `anc` ancienneté (bdd1,3, *interprétation ?*)
+- `deg` degree (bdd2, *interprétation ?*)
+- `job` job tenure (bdd2, *interprétation ?*)
+- `stc` statut civil (bdd6, *interprétation ?*)
+- `enf` nombre d'enfants (bdd6)
+- `cho` chômage oui non (bdd6, *interprétation ?*)
+- `lan` langue (bdd6 *interprétation ?*)
+- `ste` statetu (bdd6 *interprétation ?*)
+- `su_x` items 1 à 14 (`su_1` à `su_14`) 
+
+## Questions de vérification
+
+* Est-ce que le questionnaire Strength Use a été présenté de la même manière dans les 6 études ?
+* Est-ce que les items ont été listés dans le même ordre dans les 6 études ?
+* Comment interpréter certaines variables :
++ var1
++ var2
+
 # Analyses conduites
+
+Cf. Philippe Gay.
