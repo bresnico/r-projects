@@ -1,0 +1,50 @@
+---
+title: "L'élégance de la forme"
+subtitle: "par Nicolas Bressoud"
+output:
+  powerpoint_presentation:
+    reference_doc: template_hep-vs_fb.pptx
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Introduction
+
+Nous verrons, dans cette courte présentation, à quel point la forme compte.
+
+## A propos de la forme
+
+- La forme est belle
+- La forme est choue
+- La forme permet de penser l'idée
+
+## petite génération automatique
+
+```{r}
+x <- rnorm(1000)
+n <- 15
+hist(x, breaks = n)
+```
+
+## pour voir
+
+*italic* 
+**bold** 
+~~strikeout~~ 
+~subscript~
+^superscript^
+[small caps]{.smallcaps} 
+`verbatim`
+
+1. Numbered list
+* Unnumbered list
+
+$math-expression$
+$$math-equation$$
+
+[link](https://sigismonda.ch) 
+
+> Block quotations
