@@ -135,6 +135,35 @@ vis_sco3 <- d_paired %>%
   theme(plot.title = element_text(hjust = 0.5)) +
   scale_color_brewer("Groupe", palette = "Set1")
 
+# score par classe au temps 2 et au temps 1
+
+d_paired_2 <- d_paired %>% 
+  filter(tps=="2")
+
+d_paired_1 <- d_paired %>% 
+  filter(tps=="1")
+
+vis_sco4 <- d_paired_2 %>% 
+  ggplot() +
+  aes(x = clas, y = sco) +
+  geom_boxplot(alpha = .5, outlier.colour = NA) +
+  geom_jitter(size = 5, alpha = .5, width = 0.3) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4, color = "red") +
+  stat_summary(fun = mean, geom = "line", aes(group = 1), color = "red") + #Le group = 1 est nécessaire pour dire à la ligne de connecter tous les points.
+  labs(title = "Score moyen aux 25 exercices - temps 2", y = "Score") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+vis_sco5 <- d_paired_1 %>% 
+  ggplot() +
+  aes(x = clas, y = sco) +
+  geom_boxplot(alpha = .5, outlier.colour = NA) +
+  geom_jitter(size = 5, alpha = .5, width = 0.3) +
+  stat_summary(fun = mean, geom = "point", size = 3, shape = 4, color = "red") +
+  stat_summary(fun = mean, geom = "line", aes(group = 1), color = "red") + #Le group = 1 est nécessaire pour dire à la ligne de connecter tous les points.
+  labs(title = "Score moyen aux 25 exercices - temps 1", y = "Score") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
 #######################
 # Stat inférentielles #
 #######################
