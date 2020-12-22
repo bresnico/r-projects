@@ -1,0 +1,94 @@
+---
+title: "Article de validation - Structure"
+author: "Nicolas Bressoud"
+date: "généré le 19 décembre 2020"
+output: 
+  bookdown::word_document2:
+    citation_package: none
+    reference_docx: "template.docx"
+    toc: false
+  bookdown::html_document2:
+    citation_package: none
+    toc: false
+  bookdown::pdf_document2:
+    keep_tex: false
+---
+
+Je me base sur la structure du travail de Bernet, Karsenti, & Roy (2014) qui ont traduit et validé la SEM en français.
+
+# Introduction 
+0.5 à 1 page
+importance du problème, etc
+
+# Cadre théorique
+1 à 2 pages
+historique, modèle, focus, description
+conclure par intention de l'article.
+
+# Méthode
+
+## Participants
+description
+
+## Version originale du questionnaire
+source, validation d'origine
+
+## Méthodologie de validation 
+choix théorique sourcé, traduction.
+Bernet parlait de Vallerand et ses 7 étapes... (1) la préparation d’une version préliminaire, (2) l’évaluation et la modification de cette première version, (3) l’évaluation de la version expérimentale par un prétest, (4) l’évaluation de la validité concomitante et de contenu, (5) l’évaluation de la fidélité, (6) l’évaluation de la validité de construit, et (7) l’établissement de normes.
+
+### version préliminaire
+raconter comment on a traduit. Selon quelle méthode de traduction.
+
+### évaluation et modification de la première version
+rétrotraduction. A fusionner avec étape ci-dessus.
+
+### évaluation de la version expérimentale par un prétest
+l’évaluation de la clarté des énoncés par des membres de la population cible par un prétest.
+
+### évaluation de la validité concomitante et de contenu
+non. Pas pertinent.
+
+### évaluation de la fidélité
+Quand a-t-on soumis et à qui ? (précisions par rapport au point "participants").
+Alpha de Cronbach (oui)
+stabilité temporalle entre les différents moments de saisie des données (non)
+
+### évaluation de la validité de construit
+Cette vérification se réalise à trois niveaux :
+
+- niveau de la structure du construit lui-même : AFE
+- niveau des relations entre les différents construits inhérents à la structure théorique
+- conséquences et corrélats du ou des construits
+
+Attention, dès p.25, Bernet et al. justifie chaque choix stat en montrant les controverses... Aie. 
+
+Comment justifier nos choix ?
+
+Indice KMO et test de sphéricité de Bartlett
+matrice de corrélation
+tracé d'effondrement.
+ACP
+
+### établissement de normes
+
+# Résultats
+indiquer nos critères pour décider ceci ou cela.
+Alphas de cronbach
+tableau de l'AFE (Items, facteurs de corrélation, communauté, ...)
+corrélations entre les différentes dimensions (par nécessaire chez nous)
+
+# Discussion
+texte court
+
+## limites
+méthodo etc.
+
+## perspectives
+a faire pour consolider.
+
+# Références
+
+
+
+
