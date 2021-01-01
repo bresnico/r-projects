@@ -1,0 +1,256 @@
+---
+title: "Présentation des premières données - projet-pilote de personnes-ressources"
+author: "Nicolas Bressoud"
+date: "janvier 2021"
+output:
+  officedown::rdocx_document:
+    reference_docx: "template.docx"
+    toc: true
+  bookdown::html_document2:
+    citation_package: none
+    toc: no
+  pdf_document:
+    toc: true
+  bookdown::word_document2:
+    citation_package: none
+    reference_docx: "template.docx"
+    toc: true
+    lang: "french"
+  bookdown::pdf_document2:
+    keep_tex: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+source("hlm2020_nb_script.R")
+```
+
+# Etat des lieux des contacts avec les classes
+
+En tout, au 23 décembre 2020, j'ai reçu officiellement les coordonnées de 6 classes :
+
+- 3 classes dans le cycle 1
+- 3 classes dans le cycle 2
+
+Après contact et demande d'autorisation de récolter des données, je me suis retrouvé dans la situation suivante :
+
+- 2 classes ont accepté de participer
+- 1 classe n'a pas rendu réponse
+- 3 classes ont refusé
+
+Les 3 refus reposent sur les arguments de manque de temps ou de surcharge.
+
+# Résumé de l'échantillon
+
+Le tableau  \@ref(tab:samp) donne une idées des 2 classes.
+
+```{r samp, tab.id="samp", tab.cap="Résumé de l'échantillon des 2 classes A et B", tab.cap.style="Table Caption"}
+fl <- flextable::flextable(sample)
+flextable::set_header_labels(fl, classe = "Classe", gest = "Type de gestion", deg ="Degré", cyc ="Cycle", sit="Site scolaire", enf="Enfants signalés")
+
+```
+
+# Design et mesures entreprises
+
+D'une manière générale, notre but était de réaliser une prise d'information de la classe avant l'intervention de la personne-ressource puis une autre après l'intervention. La différence avant/après peut être un élément nous renseignant sur l'efficacité de tout le dispositif-pilote.
+
+Les prises d'information concernaient plusieurs domaines d'intérêt. Les voici.
+
+## Au niveau des enseignant·es titulaires
+
+- *Sentiment d'efficacité* dans la gestion de classe (questionnaire en ligne)
+
+   - Je me sens capable (de 0 "pas du tout" à 7 "tout à fait") :
+
+   - d’inclure tous les parents dans la résolution de problèmes de discipline, y compris les moins coopératifs. (sep16_1, implication des parents)
+
+   - d’enseigner le programme de discipline et le bon comportement aux élèves durant l’année scolaire. (sep16_2, gestion proactive) 
+
+   - de créer des stratégies efficaces, à l’avance, pour corriger le comportement d’un élève difficile. (sep16_3, gestion proactive) 
+
+   - de communiquer aux parents mes attentes concernant la discipline de leur enfant en classe dès le début de l’année scolaire. (sep16_4, implication des parents) 
+
+   - d’intervenir aux premiers signes d’indiscipline. (sep16_5, gestion réactive) 
+
+   - de prendre du recul face à une situation difficile dans le but de mettre en place des solutions efficaces à un problème disciplinaire récurent. (sep16_6, gestion proactive) 
+
+   - de mettre en place une collaboration avec des personnes extérieures à la classe (psychologue, médiateur, la direction) pour régler un problème d’inconduite. (sep16_7, implication externe) 
+
+   - de me montrer juste mais ferme lorsqu’un élève ne respecte pas les règles de classe. (sep16_8, gestion réactive) 
+
+   - d’appliquer une punition de manière ferme. (sep16_9, gestion réactive) 
+
+   - de communiquer explicitement avec tous les parents au sujet du comportement bon ou mauvais de leur enfant durant l’année scolaire. (sep16_10, gestion proactive) 
+
+   - de réfléchir et trouver des solutions en coopération avec l’élève difficile. (sep16_11, gestion proactive) 
+
+   - d’appliquer une punition selon le règlement de l’école. (sep16_12, gestion réactive) 
+
+   - d’identifier les élèves fautifs, de leur signaler que leur comportement est inacceptable. (sep16_13, gestion réactive) 
+
+   - de faire appel à des personnes extérieures (psychologue, médiateur, direction) pour m’aider à mieux communiquer avec un élève difficile afin de trouver des solutions. (sep16_14, implication externe) 
+
+   - de dialoguer de manière à ce que ni moi ni l’élève ne sorte perdant à l’issu d’une situation problématique. (sep16_15, gestion proactive) 
+
+   - d’inclure les parents dans la recherche de nouvelles possibilités suite à une situation difficile. (sep16_16, implication externe)
+
+
+## Au niveau des élèves de la classe
+
+- Sentiment d'amitié via un *sociogramme* (questionnaire en ligne)
+
+   - Avec qui aimerais-tu jouer?
+
+   - Avec qui n’aimerais-tu pas jouer?
+
+   - Avec qui aimerais-tu collaborer?
+
+   - Avec qui n’aimerais-tu pas collaborer?
+
+
+- Sentiment de *bien-être à l'école* (questionaire en ligne)
+
+   - Ce qui te correspond (1 "pas du tout" à 7 "tout à fait") :
+
+   - J'aime bien être à l'école. (be8_1)
+
+   - Je suis impatient·e d'aller à l'école. (be8_2) 
+
+   - L'école est quelque chose d'intéressant. (be8_3) 
+
+   - *J'aimerais ne pas aller à l'école. (be8_4) 
+
+   - *Il y a beaucoup de choses que je n'aime pas à l'école. (be8_5) 
+
+   - J'adore les activités à l'école. (be8_6) 
+
+   - J'apprends plein de choses à l'école. (be8_7) 
+
+   - *Je ne me sens pas bien à l'école. (be8_8)
+
+
+- Récolte des *absences* (feuille de suivi en classe)
+
+   - Aucune donnée disponible pour le moment.
+   
+   
+## Au niveau des élèves signalés
+
+- *Compétences psychosociales* (questionnaire papier)
+
+   - (échelle de 1 "jamais" à 5 "le plus souvent")
+
+   - Quand un·e ami·e me donne une information, je vérifie si elle est juste.
+
+   - Quand je lis une information sur Internet, j'essaie de vérifier si elle est vraie.
+
+   - *Je trouve difficile de gérer mon stress.
+
+   - Quand il y a une situation stressante, j'arrive à me calmer par moi-même.
+
+   - Quand je suis en colère, je peux facilement me calmer.
+
+   - Je suis toujours prêt·e à aider les autres (parents, professeurs, jeunes de mon âge).
+
+   - J’arrive à expliquer aux autres ce que je pense.
+
+   - Je communique facilement avec les autres.
+
+   - Quand je ne suis pas d’accord avec un·e ami·e, je lui dis.
+
+   - Quand quelqu'un me demande de faire quelque chose qui ne me semble pas raisonnable ou qui me met mal à l'aise, j'arrive facilement à dire non.
+
+   - J’arrive à comprendre les sentiments de mes ami·es quand ils ou elles sont en colère ou tristes.
+
+   - J’arrive à comprendre pourquoi les gens ressentent ce qu'ils ressentent.
+
+   - Si j’en éprouve le besoin pour mon travail scolaire, je peux demander de l’aide (pendant et/ou en dehors la classe).
+
+   - Quand je décide de faire quelque chose, je vais jusqu'au bout.
+
+   - Quand je prends des décisions, je réfléchis au pour et au contre.
+
+   - J'arrive facilement à gérer les situations imprévues.
+
+   - Je peux résoudre les problèmes que je rencontre si je fais suffisamment d'effort.
+
+   - Je prends le temps de réfléchir avant de faire quelque chose pour résoudre un problème.
+
+   - Pour résoudre un problème, je cherche plusieurs solutions possibles.
+
+   - Quand j’ai des problèmes, je demande de l’aide à mes ami·es.
+
+   - J’arrive facilement à savoir ce que je ressens.
+
+   - J’arrive facilement à trouver les mots pour décrire ce que je ressens.
+
+   - Quand je suis triste, j’arrive ensuite à me remettre de bonne humeur.
+
+   - Les autres viennent facilement se confier à moi.
+
+   - *J’ai du mal à écouter les problèmes des autres.
+
+   - J’aime travailler en groupe.
+
+
+- *Régulation émotionnelle* (questionnaire papier)
+
+   - (échelle de 1 "pas du tout" à 5 "tout à fait")
+
+   - Quand je suis en colère, je peux facilement me calmer.
+
+   - Lorsque je suis confronté·e à une situation stressante, je fais en sorte d’y penser de manière à ce que cela m’aide à rester calme.
+
+   - Quand je suis triste, il m’est facile de me remettre de bonne humeur.
+
+   - Je retrouve facilement mon calme après avoir vécu un évènement difficile.
+
+   - *Je trouve difficile de gérer mes émotions.
+
+
+# Premières données
+
+## Sociogrammes
+
+Les sociogrammes ont été réalisés dans les deux classes. Ils donnent des informations précises sur l'état des relations entre élèves et les zones de risque. Les données détaillées sont en mains des personnes-ressources. Les deux figures  \@ref(fig:socio) donnent un aperçu d'une des formes facilitant l'interprétation de la qualité des relations dans chaque classe.
+
+```{r socio, fig.show="hold", fig.align='center', out.width='40%', fig.cap='Exemples de sociogrammes (extraits anonymisés)'}
+knitr::include_graphics('peers/classe_a.png')
+knitr::include_graphics('peers/classe_b.png')
+```
+
+
+## Echelle SEP en gestion de classe
+
+Le tableau \@ref(tab:teach) résume les scores à chacune des 4 dimensions de la gestion de classe (gestion proactive, gestion réactive, implication des parents, implication de personnes externes). Chaque score s'entend sur un maximum de 8.
+
+
+```{r teach, tab.id="teach", tab.cap = "Résumé des données pour les 3 enseignantes", tab.cap.style="caption_nb"}
+fl2 <- flextable::flextable(teach_sum)
+flextable::set_header_labels(fl2, clas="Classe", sco_gp="Gestion proactive", sco_gr="Gestion réactive", sco_ip="Impl. des parents", sco_ie="Impl. externe",sco_tot="Total")
+
+```
+
+## Echelle Bien-être à l'école
+
+Le tableau  \@ref(tab:peers) indique le niveau de bien-être par classe (le score maximal vaut 7).
+
+```{r peers, tab.id="peers", tab.cap = "Résumé des scores de bien-être pour les 2 classes", tab.cap.style="caption_nb"}
+fl3 <- flextable::flextable(peers_sum)
+flextable::set_header_labels(fl3, clas = "Classe", mean = "Moyenne", max = "Score maxium", min = "Score minimum", median = "Médiane", std = "Ecart-type")
+
+```
+
+La représentation graphique  \@ref(fig:vis) nous donne une idée de la distribution des scores, par classe.
+
+```{r vis, out.width = "80%", fig.align='center', fig.cap='distribution des scores', echo=FALSE, dpi=300}
+be_vis
+```
+
+## Echelle de Régulation émotionnelle
+
+*Données en main des personnes-ressources (identification des éventuels besoins)*
+
+## Echelle de compétences psychosociales
+
+*Données en main des personnes-ressources (identification des éventuels besoins)*

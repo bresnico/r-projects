@@ -4,33 +4,29 @@ author: "Nicolas Bressoud"
 date: "juin 2020"
 lang: fr
 toc-title: "Table des matières"
+bibliography: biblio.bib
 output: 
   officedown::rdocx_document:
-    pandoc_args: ["--csl", "apa.csl" ]
     reference_docx: "template.docx"
     toc: true
   bookdown::html_document2:
-    citation_package: default
     toc: true
   bookdown::pdf_document2:
-    citation_package: default
     keep_tex: true
   bookdown::word_document2:
-    citation_package: default
-    pandoc_args: [ "--csl", "apa.csl" ]
     toc: true
     reference_docx: "template.docx"
-bibliography: biblio.bib
-
 ---
 <!-- jouer avec les options du yaml : https://cran.r-project.org/web/packages/ymlthis/vignettes/yaml-fieldguide.html -->
 
 <!-- bidouille mon template https://bookdown.org/yihui/rmarkdown-cookbook/word-template.html -->
 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-rmarkdown::find_pandoc(version = "2.7.3")
 ```
+
+rmarkdown::find_pandoc(version = "2.7.3")
 
 # Titre de niveau 1 salut
 
