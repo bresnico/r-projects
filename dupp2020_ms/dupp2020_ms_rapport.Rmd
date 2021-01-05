@@ -28,6 +28,13 @@ source("dupp2020_ms_script.R")
 - question subsidiaire 1 : Est-ce que connaître mes forces de caractère est utile pour lutter contre le harcèlement ?
 - question subsidiairs 2 : Est-ce que l'alliance de mes forces avec celles des autres est utile pour lutter contre le harcèlement ?
 
+# Résumé sous forme de tableau
+
+```{r sum}
+knitr::kable(summary, digits=2)
+```
+
+
 # graphiques
 
 

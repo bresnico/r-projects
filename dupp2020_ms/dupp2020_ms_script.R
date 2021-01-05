@@ -53,6 +53,21 @@ d <- d %>%
 
 d$clas.fac <- as.factor(d$clas)
 
+##########
+# Résumé #
+##########
+
+summary <- d %>% 
+  group_by(clas) %>% 
+  summarize(n=n(),
+            cps=mean(cps_sco),
+            confiance=mean(con_sco),
+            be=mean(be_sco),
+            climat=mean(cli_sco),
+            question_1=mean(har_1_sco),
+            question_2=mean(har_2_sco),
+  )
+
 #################
 # visualisation #
 #################
