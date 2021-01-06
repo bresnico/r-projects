@@ -1,0 +1,109 @@
+---
+title: "Présentation des premières données - Classe B"
+author: "Nicolas Bressoud"
+date: "janvier 2021"
+output:
+  officedown::rdocx_document:
+    reference_docx: "template.docx"
+    toc: true
+  bookdown::html_document2:
+    citation_package: none
+    toc: no
+  pdf_document:
+    toc: true
+  bookdown::word_document2:
+    citation_package: none
+    reference_docx: "template.docx"
+    toc: true
+    lang: "french"
+  bookdown::pdf_document2:
+    keep_tex: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+source("hlm2020_nb_script.R")
+```
+
+
+# Données sur la classe
+
+Le tableau  \@ref(tab:samp) donne une idées des 2 classes.
+
+```{r samp, tab.id="samp", tab.cap="Résumé de l'échantillon de la classe", tab.cap.style="Table Caption"}
+fl <- flextable::flextable(sample_b)
+flextable::set_header_labels(fl, classe = "Classe", gest = "Type de gestion", deg ="Degré", cyc ="Cycle", sit="Site scolaire", enf="Enfants signalés")
+
+```
+
+# Design et mesures entreprises
+
+D'une manière générale, notre but était de réaliser une prise d'information de la classe avant l'intervention de la personne-ressource. Il y en aura une autre après l'intervention. La différence avant/après peut être un élément nous renseignant sur l'efficacité de tout le dispositif-pilote.
+
+Les prises d'information concernaient plusieurs domaines d'intérêt. Les voici.
+
+## Au niveau des enseignant·es titulaires
+
+- *Sentiment d'efficacité* (SEP) dans la gestion de classe (questionnaire en ligne)
+
+
+## Au niveau des élèves de la classe
+
+- Sentiment d'amitié via un *sociogramme* (questionnaire en ligne)
+
+ 
+- Sentiment de *bien-être à l'école* (questionaire en ligne)
+
+
+- Récolte des *absences* (feuille de suivi en classe, en cours de réalisation par les enseignant·es)
+
+   
+## Au niveau des élèves signalés
+
+- *Compétences psychosociales* (questionnaire papier, par l'enseignant-ressource)
+
+
+- *Régulation émotionnelle* (questionnaire papier, par l'enseignant-ressource)
+
+
+
+# Premières données
+
+## Sociogrammes
+
+Les sociogrammes donnent des informations précises sur l'état des relations entre élèves et les zones de risque. Les données détaillées sont jointes à ce rapport. 
+
+## Echelle SEP en gestion de classe
+
+Le tableau \@ref(tab:teach) résume les scores à chacune des 4 dimensions de la gestion de classe (gestion proactive, gestion réactive, implication des parents, implication de personnes externes). Chaque score s'entend sur un maximum de 8.
+
+
+```{r teach, tab.id="teach", tab.cap = "Résumé des données concernant l'enseignement", tab.cap.style="caption_nb"}
+fl2 <- flextable::flextable(teach_sum_b)
+flextable::set_header_labels(fl2, clas="Classe", sco_gp="Gestion proactive", sco_gr="Gestion réactive", sco_ip="Impl. des parents", sco_ie="Impl. externe",sco_tot="Total")
+
+```
+
+## Echelle Bien-être à l'école
+
+Le tableau  \@ref(tab:peers) indique le niveau de bien-être par classe (le score maximal vaut 7).
+
+```{r peers, tab.id="peers", tab.cap = "Résumé des scores de bien-être pour la classe", tab.cap.style="caption_nb"}
+fl3 <- flextable::flextable(peers_sum_b)
+flextable::set_header_labels(fl3, clas = "Classe", mean = "Moyenne", max = "Score maxium", min = "Score minimum", median = "Médiane", std = "Ecart-type")
+
+```
+
+La représentation graphique  \@ref(fig:vis) nous donne une idée de la distribution des scores dans la classe.
+
+```{r vis, out.width = "80%", fig.align='center', fig.cap='distribution des scores', echo=FALSE, dpi=300}
+be_vis_b
+```
+
+## Echelle de Régulation émotionnelle
+
+*Données en main des personnes-ressources (identification des éventuels besoins)*
+
+## Echelle de compétences psychosociales
+
+*Données en main des personnes-ressources (identification des éventuels besoins)*

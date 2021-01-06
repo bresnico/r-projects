@@ -2,6 +2,7 @@
 library(tidyverse)
 library(rio)
 library(readxl)
+library(ggrepel) # pour les labels des plots
 
 # Acquisition des données
 peers <- read_xlsx("peers/hlm2020_nb_peers_raw.xlsx")
@@ -63,3 +64,96 @@ be_vis <- peers %>%
   ylab("Score de bien-être") +
   xlab("classe") +
   theme(plot.title = element_text(hjust = 0.5))
+
+############
+# classe a #
+############
+
+# sample (à la main)
+
+sample_a <- data.frame("classe"=c("A"), "gest"=c("duo"), "deg"=c("4"), "cyc"=c("2"), "sit"=c("Monthey"), "enf"=c(2))
+
+
+# teach - statistiques de base
+
+teach_sum_a <- teach %>% 
+  group_by(clas) %>%
+  filter(clas=="a") %>% 
+  summarize(sco_gp,
+            sco_gr,
+            sco_ip,
+            sco_ie,
+            sco_tot)
+
+# peers - statistiques de base
+
+peers_sum_a <- peers %>% 
+  filter(clas=="a") %>% 
+  group_by(clas) %>% 
+  summarize(mean=mean(sco_be), max=max(sco_be), min=min(sco_be), median=median(sco_be), std=sd(sco_be))
+
+# peers - visualisation
+pos <- position_jitter(width = 0.2, seed = 2)
+peers_a <- peers %>% 
+  filter(clas=="a")
+
+be_vis_a <- peers_a %>%
+   
+  ggplot() +
+  aes(x = clas, y = sco_be, fill = clas, color = clas, alpha = 0.8) +
+  geom_boxplot(outlier.colour = NA) +
+  geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
+  geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
+  theme(legend.position='none') +
+  ggtitle("Visualisation des scores dans la classe") +
+  ylab("Score de bien-être") +
+  xlab("classe") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+############
+# classe b #
+############
+
+# sample (à la main)
+
+sample_b <- data.frame("classe"=c("B"), "gest"=c("solo"), "deg"=c("5"), "cyc"=c("2"), "sit"=c("Haut-Lac"), "enf"=c(1))
+
+
+# teach - statistiques de base
+
+teach_sum_b <- teach %>% 
+  group_by(clas) %>%
+  filter(clas=="b") %>% 
+  summarize(sco_gp,
+            sco_gr,
+            sco_ip,
+            sco_ie,
+            sco_tot)
+
+# peers - statistiques de base
+
+peers_sum_b <- peers %>% 
+  filter(clas=="b") %>% 
+  group_by(clas) %>% 
+  summarize(mean=mean(sco_be), max=max(sco_be), min=min(sco_be), median=median(sco_be), std=sd(sco_be))
+
+# peers - visualisation
+pos <- position_jitter(width = 0.2, seed = 2)
+peers_b <- peers %>% 
+  filter(clas=="b")
+
+be_vis_b <- peers_b %>%
+  
+  ggplot() +
+  aes(x = clas, y = sco_be, fill = clas, color = clas, alpha = 0.8) +
+  geom_boxplot(outlier.colour = NA) +
+  geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
+  geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
+  theme(legend.position='none') +
+  ggtitle("Visualisation des scores dans la classe") +
+  ylab("Score de bien-être") +
+  xlab("classe") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+  
