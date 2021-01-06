@@ -26,7 +26,7 @@ d <- d %>%
 
 # une idée des données par date en créant l'objet d_date
 d_date <- d %>% 
-  group_by(date) %>% 
+  group_by(date, classe) %>% 
   summarize(n=n(),)
 
 # Recodage des variables au score inversé sur variable bien-être.
@@ -74,7 +74,7 @@ d_paired <- d %>%
 ############################### Summarise à boule !!
 
 d_sum1 <- d_paired %>%
-  group_by(condition, date) %>% 
+  group_by(condition, date, classe) %>% 
   summarise(n(), mean(be_sco), mean(panp_sco), mean(pann_sco), mean(pro_sco))
 
 
@@ -175,6 +175,50 @@ vis_pro2 <- d_paired %>%
   labs(title = "Mesure climat", y = "Score de 13 items") +
   theme(plot.title = element_text(hjust = 0.5)) +
   scale_color_brewer("Groupe", palette = "Set1")
+
+#################
+# par classe ()3#
+#################
+
+#be
+vis_be3 <- d_paired %>% 
+  ggplot() +
+  aes(x = date, y = be_sco, fill=classe) +
+  geom_boxplot(alpha = .5, outlier.colour = NA) +
+  labs(title = "Mesure de bien-être", y = "Score") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+#panp
+vis_panp3 <- d_paired %>% 
+  ggplot() +
+  aes(x = date, fill=classe, y = panp_sco) +
+  geom_boxplot(alpha = .5, outlier.colour = NA) +
+  labs(title = "Mesure d'émotions positives", y = "Score") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
+#pann
+vis_pann3 <- d_paired %>% 
+  ggplot() +
+  aes(x = date, y = pann_sco, fill=classe) +
+  geom_boxplot(alpha = .5, outlier.colour = NA) +
+  labs(title = "Mesure d'émotions négatives", y = "Score") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
+#pro
+vis_pro3 <- d_paired %>% 
+  ggplot() +
+  aes(x = date, y = pro_sco, fill=classe) +
+  geom_boxplot(alpha = .5, outlier.colour = NA) +
+  labs(title = "Mesure de climat de classe", y = "Score") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
 
 # bidouillages, expérimentations
 

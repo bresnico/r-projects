@@ -1,8 +1,10 @@
 ---
 title: "Analyse de données HEP-VS 20-21 - Mémoire LM & AB"
-Author: "Nicolas Bressoud"
+Author: Nicolas Bressoud
 date: "octobre 2020"
-output: pdf_document
+output:
+  pdf_document: default
+  word_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -56,3 +58,12 @@ vis_pann2
 vis_pro2
 ```
 
+# Scores aux principaux questionnaires par classe
+
+
+```{r vis3, fig.show = "hold", out.width = "50%", fig.align = "default"}
+vis_be3
+vis_panp3
+vis_pann3
+vis_pro3
+```
