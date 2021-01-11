@@ -1,6 +1,7 @@
 # lancement des packages
 library(readxl)
 library(tidyverse)
+library(rio)
 
 # Importation des données brutes présentées sous la forme d'un tableau unique d'un temps.
 d <- read_excel("dupp2020_ms_raw.xlsx")
@@ -128,3 +129,11 @@ vis_har_2 <- d %>%
   stat_summary(fun = mean, geom = "line", aes(group = 1), color = "red") + #Le group = 1 est nécessaire pour dire à la ligne de connecter tous les points.
   labs(title = "Score moyen - question 2", y = "Score") +
   theme(plot.title = element_text(hjust = 0.5))
+
+#################
+# df pour marie #
+#################
+
+d_ms <- d %>% 
+  select(., date, id, clas, sex, cps_sco, con_sco, be_sco, cli_sco, har_1_sco, har_2_sco)
+export(d_ms, "donnees_marie.xlsx")
