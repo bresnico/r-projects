@@ -2,15 +2,18 @@
 title: "Analyse des données pour Amélie Cassaz"
 author: "Nicolas Bressoud"
 date: "novembre 2020"
-output: 
-  bookdown::pdf_document2:
-    keep_tex: false
-  bookdown::html_document2:
-    citation_package: none
-    toc: false
+output:
+  officedown::rdocx_document:
+    reference_docx: "template.docx"
+    toc: true
   bookdown::word_document2:
     citation_package: none
     toc: false
+  bookdown::html_document2:
+    citation_package: none
+    toc: false
+  bookdown::pdf_document2:
+    keep_tex: false
 ---
 
 ```{r setup, include=FALSE}
@@ -71,6 +74,25 @@ L'analyse de variance a mis en évidence un effet significatif de l'interation e
 
 Cet effet indique que les élèves du groupe expérimental ont une différence de score entre les deux temps de mesure significativement plus élevée ($\overline{m}$ = 1.42, *sd* = 0.33 ; $\overline{m}$ = 1.70 , *sd* = 0.23) que les élèves du groupe contrôle ($\overline{m}$ = 1.37, *sd* = 0.35 ; $\overline{m}$ = 1.46, *sd* = 0.23).
 
+# Autres tableaux
 
+A mettre en forme à votre guise
+
+## Par classe
+
+
+```{r sump4b, tab.id="sump4b", tab.cap="résumé des scores de l'échantillon aux temps 1 et 2 par classe", tab.cap.style="Table Caption"}
+fl <- flextable::flextable(d_sump4)
+flextable::set_header_labels(fl, tps = "Temps", clas = "Classe", n ="Nombre", mean_sco ="Moyenne", et_sco="Ecart-type", max="Score max", min="Score min")
+
+```
+
+## Par groupe
+
+```{r sump3b, tab.id="sump3b", tab.cap="résumé des scores de l'échantillon aux temps 1 et 2 par groupe", tab.cap.style="Table Caption"}
+fl <- flextable::flextable(d_sump3)
+flextable::set_header_labels(fl, tps = "Temps", clas = "Groupe", n ="Nombre", mean_sco ="Moyenne", et_sco="Ecart-type", max="Score max", min="Score min")
+
+```
 
 

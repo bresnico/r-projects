@@ -94,7 +94,20 @@ d_sump3 <- d_paired %>%
   group_by(tps, grp) %>% 
   summarise(n=n(),
             mean_sco=mean(sco),
-            sd_sco=sd(sco))
+            sd_sco=sd(sco),
+            max=max(sco),
+            min=min(sco)) %>% 
+  ungroup()
+
+# N, score : avant / après par classe
+d_sump4 <- d_paired %>% 
+  group_by(tps, clas) %>% 
+  summarise(n=n(),
+            mean_sco=mean(sco),
+            sd_sco=sd(sco),
+            max=max(sco),
+            min=min(sco)) %>% 
+  ungroup()
 
 
 ######################################
