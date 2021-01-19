@@ -1,0 +1,126 @@
+---
+title: "Synthèse des réponses au questionnaire d'évaluation du 3.3"
+author: "Nicolas Bressoud"
+date: "janvier 2021"
+lang: fr
+toc-title: "Table des matières"
+output:
+  officedown::rdocx_document:
+    reference_docx: "template.docx"
+    toc: true
+  bookdown::html_document2:
+    citation_package: none
+    toc: no
+  pdf_document:
+    toc: true
+  bookdown::word_document2:
+    citation_package: none
+    reference_docx: "template.docx"
+    toc: true
+    lang: "french"
+  bookdown::pdf_document2:
+    keep_tex: yes
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+source("hepvs2021_33_script.R")
+```
+
+# Contexte
+
+Ce rapport concerne les résultats bruts liés à l'évaluation, par les étudiant·es, du cours 3.3, semestre d'automne 2020, en contexte pandémique.
+
+# Données de base
+
+Nombre de personnes inscrites au cours sur Moodle (marge d'erreur : 5) : 76
+
+Nombres de participant·es au questionnaire : 28
+
+
+```{r sum}
+fl <- flextable::flextable(sum_ques)
+fl <- flextable::set_header_labels(fl, tra = "Catégorie", n = "Nombre")
+flextable::width(fl, j= NULL, 3)
+
+
+```
+
+
+## Questions
+(pas du tout - plutôt non - plutôt oui - tout à fait)
+
+- Je suis satisfait·e du cours.
+- Je suis parvenu·e à transférer les apports du cours en stage.
+- J'ai le sentiment que ce cours m'a fait progresser en gestion de classe.
+- L'adaptation du cours aux conditions sanitaires a été satisfaisante.
+
+# Plots
+
+```{r vis, fig.show = "hold", out.width = "100%", fig.align = "default", warning=FALSE, results='hide'}
+plot_list
+```
+
+# Retours qualitatifs 
+
+## Forces
+
+```{r for}
+quali <- d[,6]
+fl2 <- flextable::flextable(quali)
+fl2 <- flextable::set_header_labels(fl2, "for" = "Forces")
+flextable::width(fl2, j= NULL, 6)
+
+```
+
+## Limites
+
+```{r wea}
+
+
+quali2 <- d[,7]
+fl3 <- flextable::flextable(quali2)
+fl3 <- flextable::set_header_labels(fl3, wea = "Limites")
+flextable::width(fl3, j= NULL, 6)
+
+
+
+```
+
+## Propositions des étudiant·es
+
+```{r rem}
+
+
+
+quali3 <- d[,8]
+fl4 <- flextable::flextable(quali3)
+fl4 <- flextable::set_header_labels(fl4, rem = "Améliorations possibles")
+flextable::width(fl4, j= NULL, 6)
+
+
+
+```
+
+# Synthèse de l'équipe de formation
+
+## Interprétation
+
+Les retours des étudiant·es sont plutôt peu nombreux mais sont de qualité. Ils permettent une bonne prise de température et permettent de considérer que le cours a répondu aux attentes, en dépit du contexte.
+
+## Points forts à conserver pour 2021-2022
+
+Les éléments suivants sont à conservers :
+
+- Proximité étudiant·es et formateur
+- Qualité théorique pour entrer dans la complexité de la gestion de classe
+- Accompagnement de type coaching
+
+## Planification des améliorations pour 2021-2022
+
+Les améliorations suivantes sont prévues :
+
+- Développer les liens avec l'école enfantine
+- Augmenter les interactions entre étudiant·es
+- Soutenir les étudiant·es dans les appropriations théoriques (mécanisme de suivi ou de feedbacks)
