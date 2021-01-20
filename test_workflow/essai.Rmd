@@ -6,7 +6,6 @@ lang: fr
 toc-title: "Table des matières"
 output: 
   bookdown::word_document2:
-    citation_package: default
     toc: true
     reference_docx: "template.docx"
   bookdown::html_document2:
@@ -22,6 +21,7 @@ output:
 bibliography: biblio.bib
 csl: apa.csl
 ---
+
 <!-- jouer avec les options du yaml : https://cran.r-project.org/web/packages/ymlthis/vignettes/yaml-fieldguide.html -->
 
 <!-- bidouille mon template https://bookdown.org/yihui/rmarkdown-cookbook/word-template.html -->
@@ -32,17 +32,18 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # Titre de niveau 1 salut
 
-+ ajouter image interne (générée par R) avec référence dans le texte, légende
-+ ajouter table avec référence dans le texte, légende (kable)
-+ ajouter image externe, avec référence dans le texte, légende
-+ ajouter référence biblio dans texte
-+ ajouter biblio
+-   ajouter image interne (générée par R) avec référence dans le texte, légende
+-   ajouter table avec référence dans le texte, légende (kable)
+-   ajouter image externe, avec référence dans le texte, légende
+-   ajouter référence biblio dans texte
+-   ajouter biblio
 
 PDF et Word énumèrent pas.
 
 > à gérer la langue de "table of contents" et "table" au lieu de "tableau".
 
 # tableau
+
 Si on se réfère au tableau \@ref(tab:iris-lol), on voit que c'est beau. Ou \@ref(tab:table-single)
 
 ```{r iris-lol}
@@ -71,7 +72,7 @@ plot(pressure)
 
 # Image externe
 
-Figure \@ref(fig:knitr-logo) is an example of three **knitr** logos included in a figure environment. 
+Figure \@ref(fig:knitr-logo) is an example of three **knitr** logos included in a figure environment.
 
 ```{r knitr-logo, out.width='32.8%', fig.show='hold', fig.cap='Three knitr logos included in the document from an external PNG image file.'}
 knitr::include_graphics(rep('images/knit-logo.png', 3))
@@ -81,10 +82,8 @@ Word réduit pas les tailles.
 
 # Citations
 
-La vie est belle [@shankland2015 ; @shankland2011]. Et aime bien le discours de Shankland [-@shankland2015]. @shankland2012 pense aussi cela. Mais pas tout le temps [voir @shankland2015, pp. 33-35 ; également @shankland2012, ch. 1]. Salut la vie [@shankland2018a].
-
+La vie est belle [@shankland2015 ; @shankland2011]. Et aime bien le discours de Shankland [-@shankland2015]. @shankland2012 pense aussi cela. Mais pas tout le temps [voir @shankland2015, pp. 33-35; également @shankland2012, ch. 1]. Salut la vie [@shankland2018a].
 
 # Biblio
 
-Biblio doit contenir les 4 références :
-Mais aussi voir pour faire la biblio d'office en entier à partir du fichier bibtex (bio CV).
+Biblio doit contenir les 4 références : Mais aussi voir pour faire la biblio d'office en entier à partir du fichier bibtex (bio CV).
