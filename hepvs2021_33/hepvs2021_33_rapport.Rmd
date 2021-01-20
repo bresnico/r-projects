@@ -34,7 +34,7 @@ Ce rapport concerne les résultats bruts liés à l'évaluation, par les étudia
 
 # Données de base
 
-Nombre de personnes inscrites au cours sur Moodle (marge d'erreur : 5) : 76
+Nombre de personnes inscrites au cours sur Moodle (marge d'erreur : 1-2) : 72
 
 Nombres de participant·es au questionnaire : 28
 
@@ -111,7 +111,7 @@ Les retours des étudiant·es sont plutôt peu nombreux mais sont de qualité. I
 
 ## Points forts à conserver pour 2021-2022
 
-Les éléments suivants sont à conservers :
+Les éléments suivants sont à conserver :
 
 - Proximité étudiant·es et formateur
 - Qualité théorique pour entrer dans la complexité de la gestion de classe
