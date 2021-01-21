@@ -1,0 +1,20 @@
+---
+title: "Untitled"
+output: 
+  bookdown:: word_document
+bibliography: biblio.bib
+link-citations: true
+csl: apa.csl
+---
+
+Salut, les amis. Comment allez-vous ?
+
+# Chapitre 1
+
+```{r}
+a <- 2 + 1
+```
+
+J'ai `r a` amis. J'ai 3 ans.
+
+Et pas 12. [@shankland2018c]
