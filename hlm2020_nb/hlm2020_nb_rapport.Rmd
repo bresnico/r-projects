@@ -2,6 +2,7 @@
 title: "Présentation des premières données - projet-pilote de personnes-ressources"
 author: "Nicolas Bressoud"
 date: "janvier 2021"
+toc-title: "Table des matières"
 output:
   officedown::rdocx_document:
     reference_docx: "template.docx"
@@ -27,14 +28,14 @@ source("hlm2020_nb_script.R")
 
 # Etat des lieux des contacts avec les classes
 
-En tout, au 23 décembre 2020, j'ai reçu officiellement les coordonnées de 6 classes :
+En tout, au 22 janvier 2021, j'ai reçu officiellement les coordonnées de 7 classes :
 
 - 3 classes dans le cycle 1
-- 3 classes dans le cycle 2
+- 4 classes dans le cycle 2
 
 Après contact et demande d'autorisation de récolter des données, je me suis retrouvé dans la situation suivante :
 
-- 2 classes ont accepté de participer
+- 3 classes ont accepté de participer
 - 1 classe n'a pas rendu réponse
 - 3 classes ont refusé
 
@@ -42,9 +43,9 @@ Les 3 refus reposent sur les arguments de manque de temps ou de surcharge.
 
 # Résumé de l'échantillon
 
-Le tableau  \@ref(tab:samp) donne une idées des 2 classes.
+Le tableau  \@ref(tab:samp) donne une idées des classes qui participent.
 
-```{r samp, tab.id="samp", tab.cap="Résumé de l'échantillon des 2 classes A et B", tab.cap.style="Table Caption"}
+```{r samp, tab.id="samp", tab.cap="Résumé de l'échantillon des classes", tab.cap.style="Table Caption"}
 fl <- flextable::flextable(sample)
 flextable::set_header_labels(fl, classe = "Classe", gest = "Type de gestion", deg ="Degré", cyc ="Cycle", sit="Site scolaire", enf="Enfants signalés")
 

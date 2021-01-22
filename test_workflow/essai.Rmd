@@ -1,4 +1,20 @@
 ---
+title: "Untitled"
+editor_options:
+  markdown:
+    wrap: sentence
+    rmd_extensions: +bookdown_cross_references
+output:
+  word_document:
+    reference_docx: "template.docx"
+bibliography: biblio.bib
+link-citations: true
+csl: apa.csl
+---
+
+```{=html}
+<!--
+---
 title: "Essai d'article complet avec toutes les contraintes"
 author: "Nicolas Bressoud"
 date: "juin 2020"
@@ -21,7 +37,8 @@ output:
 bibliography: biblio.bib
 csl: apa.csl
 ---
-
+-->
+```
 <!-- jouer avec les options du yaml : https://cran.r-project.org/web/packages/ymlthis/vignettes/yaml-fieldguide.html -->
 
 <!-- bidouille mon template https://bookdown.org/yihui/rmarkdown-cookbook/word-template.html -->
@@ -44,7 +61,8 @@ PDF et Word énumèrent pas.
 
 # tableau
 
-Si on se réfère au tableau \@ref(tab:iris-lol), on voit que c'est beau. Ou \@ref(tab:table-single)
+Si on se réfère au tableau \@ref(tab:iris-lol), on voit que c'est beau.
+Ou \@ref(tab:table-single)
 
 ```{r iris-lol}
 iris2 <- head(iris)
@@ -58,7 +76,8 @@ knitr::kable(
 )
 ```
 
-La mise en forme et l'emplacement des tableaux diffèrent selon le type de sorties. Voir aussi Andy Field pour ajouter du KableExtra ?
+La mise en forme et l'emplacement des tableaux diffèrent selon le type de sorties.
+Voir aussi Andy Field pour ajouter du KableExtra ?
 
 WORD fait pas de différences entre les deux mises en page de tableaux.
 
@@ -82,7 +101,11 @@ Word réduit pas les tailles.
 
 # Citations
 
-La vie est belle [@shankland2015 ; @shankland2011]. Et aime bien le discours de Shankland [-@shankland2015]. @shankland2012 pense aussi cela. Mais pas tout le temps [voir @shankland2015, pp. 33-35; également @shankland2012, ch. 1]. Salut la vie [@shankland2018a].
+La vie est belle [@shankland2015 ; @shankland2011].
+Et aime bien le discours de Shankland [-@shankland2015].
+@shankland2012 pense aussi cela.
+Mais pas tout le temps [voir @shankland2015, pp. 33-35; également @shankland2012, ch. 1].
+Salut la vie [@shankland2018a].
 
 # Biblio
 

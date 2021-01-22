@@ -10,7 +10,7 @@ teach <- read_xlsx("teach/hlm2020_nb_teach_raw.xlsx")
 
 # Création de mon résumé d'échantillon à la main
 
-sample <- data.frame("classe"=c("A","B"), "gest"=c("duo","solo"), "deg"=c("4","5"), "cyc"=c("2","2"), "sit"=c("Monthey","Haut-Lac"), "enf"=c(2,1))
+sample <- data.frame("classe"=c("A","B","C"), "gest"=c("duo","solo","solo"), "deg"=c("4","5","3"), "cyc"=c("2","2","1"), "sit"=c("Monthey","Haut-Lac","Haut-Lac"), "enf"=c(2,1,"classe"))
 
 # teach - création des scores des sous-dimensions
 
@@ -157,3 +157,50 @@ be_vis_b <- peers_b %>%
   theme(plot.title = element_text(hjust = 0.5))
 
   
+
+
+############
+# classe c #
+############
+
+# sample (à la main)
+
+sample_c <- data.frame("classe"=c("C"), "gest"=c("solo"), "deg"=c("3"), "cyc"=c("1"), "sit"=c("Haut-Lac"), "enf"=c("classe"))
+
+
+# teach - statistiques de base
+
+teach_sum_c <- teach %>% 
+  group_by(clas) %>%
+  filter(clas=="c") %>% 
+  summarize(sco_gp,
+            sco_gr,
+            sco_ip,
+            sco_ie,
+            sco_tot)
+
+# peers - statistiques de base
+
+peers_sum_b <- peers %>% 
+  filter(clas=="c") %>% 
+  group_by(clas) %>% 
+  summarize(mean=mean(sco_be), max=max(sco_be), min=min(sco_be), median=median(sco_be), std=sd(sco_be))
+
+# peers - visualisation
+pos <- position_jitter(width = 0.2, seed = 2)
+peers_c <- peers %>% 
+  filter(clas=="c")
+
+be_vis_c <- peers_c %>%
+  
+  ggplot() +
+  aes(x = clas, y = sco_be, fill = clas, color = clas, alpha = 0.8) +
+  geom_boxplot(outlier.colour = NA) +
+  geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
+  geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
+  theme(legend.position='none') +
+  ggtitle("Visualisation des scores dans la classe") +
+  ylab("Score de bien-être") +
+  xlab("classe") +
+  theme(plot.title = element_text(hjust = 0.5))
+

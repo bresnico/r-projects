@@ -1,5 +1,8 @@
 ---
 title: "Untitled"
+editor_options:
+  markdown:
+    wrap: sentence
 output: 
   bookdown:: word_document
 bibliography: biblio.bib
@@ -7,7 +10,8 @@ link-citations: true
 csl: apa.csl
 ---
 
-Salut, les amis. Comment allez-vous ?
+Salut, les amis.
+Comment allez-vous ?
 
 # Chapitre 1
 
@@ -15,6 +19,9 @@ Salut, les amis. Comment allez-vous ?
 a <- 2 + 1
 ```
 
-J'ai `r a` amis. J'ai 3 ans.
+J'ai `r a` amis.
+J'ai 3 ans.
+pas 2.
 
-Et pas 12. [@shankland2018c]
+Et pas 12.
+[@shankland2018c]

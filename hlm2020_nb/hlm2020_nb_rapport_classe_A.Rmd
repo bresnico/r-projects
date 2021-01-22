@@ -2,6 +2,7 @@
 title: "Présentation des premières données - Classe A"
 author: "Nicolas Bressoud"
 date: "janvier 2021"
+toc-title: "Table des matières"
 output:
   officedown::rdocx_document:
     reference_docx: "template.docx"
