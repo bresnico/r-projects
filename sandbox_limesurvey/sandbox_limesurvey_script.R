@@ -1,11 +1,14 @@
 
 # Load library
 library(limer)
+library(tidyverse)
+library(lubridate)
+
 
 # Setup API details
 options(lime_api = 'https://survey.competences-emotionnelles.ch/admin/remotecontrol')
 options(lime_username = 'admin')
-options(lime_password = '******')
+options(lime_password = 'L0912@tercy21')
 
 
 # Do stuff with LimeSurvey API
@@ -26,12 +29,20 @@ responses <- get_responses(731372, sResponseType = "short")  # Get results from 
 release_session_key()
 
 # Mise à jour des noms des variables PAS ENCORE BON
-library(tidyverse)
- d <- responses
+d <- responses
 
-# Mise à jour des variables selon une syntaxe de type q1_1
+# Mise à jour des variables selon une syntaxe de type q1_1, tri et adaptation des variables meta
 d <- d %>% 
   rename_with(~ gsub('[[:punct:]]$', '', .x)) %>% 
-  rename_with(~ gsub('[[:punct:]]', '_', .x)) 
- 
- 
+  rename_with(~ gsub('[[:punct:]]', '_', .x)) %>%
+  select(!c("lastpage","seed","startdate","submitdate",)) %>% 
+  rename(lan = startlanguage, dat = datestamp)
+
+# Mise à jour du format des dates avec lubridate
+d$dat <- ymd_hms(d$dat)
+
+# Gestion des temps de mesure
+d <- d %>% 
+mutate(
+  tim = case_when(dat >= as_date("01.01.2021", format="%d.%m.%Y") & dat <= as_date("21.01.2021", format="%d.%m.%Y") ~ "temps 1",
+                  TRUE ~ "autre temps"))
