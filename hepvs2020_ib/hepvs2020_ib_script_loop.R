@@ -5,7 +5,7 @@ library(tidyverse)
 #modification des en-têtes du fichier excel à la main.
 #importation des données brutes présentées sous la forme d'un tableau unique de 2 temps.
 
-d <- read_excel("hepvs2020_ib_raw.xlsx")
+d <- read_excel("../../data/hepvs2020_ib_raw.xlsx")
 str(d) #on observe que la variable "RecordedDate" semble avoir été bien intégrée (POSIXct)
 
 #######################

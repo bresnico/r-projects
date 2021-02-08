@@ -2,8 +2,8 @@ library(tidyverse)
 library(readxl)
 
 # Importation des données Qualtrics à disposition ----
-d_t1_raw <- read_excel("crips2019_lv_raw_t1.xlsx")
-d_t2_raw <- read_excel("crips2019_lv_raw_t2.xlsx")
+d_t1_raw <- read_excel("../../data/crips2019_lv_raw_t1.xlsx")
+d_t2_raw <- read_excel("../../data/crips2019_lv_raw_t2.xlsx")
 
 #Ajout de la variable temps sur chaque df et normalisation des id en minuscule.
 

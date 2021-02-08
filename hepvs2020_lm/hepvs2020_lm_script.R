@@ -4,7 +4,7 @@ library(readxl)
 
 # Importation des données brutes (N = 162) sous la forme d'une répartition en 2 temps.
 
-d <- read_excel("hepvs2020_lm_raw.xlsx") #les variables ont été correctement importées.
+d <- read_excel("../../data/hepvs2020_lm_raw.xlsx") #les variables ont été correctement importées.
 
 #########################
 # travail sur les dates #

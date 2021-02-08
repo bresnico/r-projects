@@ -5,7 +5,7 @@ library(ggrepel) # pour les labels des plots
 
 # importation des données brutes présentées sous la forme d'un tableau unique de deux temps, issu de manipulations depuis deux Google Forms (octobre 2016 et avril 2017)
 
-d <- read_excel("stm2017_nb_raw.xlsx")
+d <- read_excel("../../data/stm2017_nb_raw.xlsx")
 str(d)
 
 # Recodage des variables au score inversé----

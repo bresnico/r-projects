@@ -5,7 +5,7 @@ library(tidyverse)
 #importation des données brutes présentées sous la forme d'un tableau unique de trois temps (mais en fait deux temps de mesure pour les id commençant par fc et qui nous intéressent)
 #après préparation ad hoc dans Qualtrics
 
-d <- read_excel("ors2020_ad_raw.xlsx")
+d <- read_excel("../../data/ors2020_ad_raw.xlsx")
 str(d) #on observe que la variable "RecordedDate" semble avoir été bien intégrée (POSIXct)
 
 #######################

@@ -4,7 +4,7 @@ library(tidyverse)
 library(rio)
 
 # Importation des données brutes présentées sous la forme d'un tableau unique d'un temps.
-d <- read_excel("dupp2020_ms_raw.xlsx")
+d <- read_excel("../../data/dupp2020_ms_raw.xlsx")
 str(d) #on observe que la variable "RecordedDate" semble avoir été bien intégrée (POSIXct)
 
 d <- d %>% 

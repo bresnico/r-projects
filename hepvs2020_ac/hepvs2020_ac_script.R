@@ -9,7 +9,7 @@ library(sjstats) #pour eta_sq()
 # importation des données brutes présentées sous la forme d'un tableau de deux temps avec un groupe expé et un groupe contrôle.
 # les données concernent une expérimentation pédagogique en classe sur le groupe expé. On mesure l'inhibition des élèves avant/après.
 
-d <- read_excel("hepvs2020_ac_raw.xlsx")
+d <- read_excel("../../data/hepvs2020_ac_raw.xlsx")
 
 # Création de la moyenne "sco" pour chaque participant (On ne s'occupe pas de la variable "total")
 

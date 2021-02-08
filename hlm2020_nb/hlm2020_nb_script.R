@@ -5,8 +5,8 @@ library(readxl)
 library(ggrepel) # pour les labels des plots
 
 # Acquisition des données
-peers <- read_xlsx("peers/hlm2020_nb_peers_raw.xlsx")
-teach <- read_xlsx("teach/hlm2020_nb_teach_raw.xlsx")
+peers <- read_xlsx("../../data/hlm2020_nb_peers_raw.xlsx")
+teach <- read_xlsx("../../data/hlm2020_nb_teach_raw.xlsx")
 
 # Création de mon résumé d'échantillon à la main
 

@@ -4,7 +4,7 @@ library(tidyverse)
 
 # Importation des données brutes présentées sous la forme d'un tableau unique.
 
-d <- read_excel("hepvs2021_33_raw.xlsx")
+d <- read_excel("../../data/hepvs2021_33_raw.xlsx")
 str(d) 
 
 ###########################
