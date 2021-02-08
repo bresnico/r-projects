@@ -3,6 +3,7 @@ title: "Analyse des données pour Adeline Derivaz"
 author: "Nicolas Bressoud"
 date: "6/13/2020"
 output: pdf_document
+knit: knitnbr::knit_date_output
 ---
 
 ```{r setup, include=FALSE}

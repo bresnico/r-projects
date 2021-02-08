@@ -6,6 +6,7 @@ output:
   pdf_document: default
   html_document:
     df_print: paged
+knit: knitnbr::knit_date_output
 ---
 
 ```{r setup, include=FALSE}

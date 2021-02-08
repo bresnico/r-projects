@@ -18,6 +18,7 @@ output:
     citation_package: none
     toc: true
     reference_docx: "template.docx"
+knit: knitnbr::knit_date_output
 ---
 
 

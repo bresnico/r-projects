@@ -12,6 +12,7 @@ output:
     toc: false
   bookdown::pdf_document2:
     keep_tex: false
+knit: knitnbr::knit_date_output
 ---
 
 ```{r setup, include=FALSE}

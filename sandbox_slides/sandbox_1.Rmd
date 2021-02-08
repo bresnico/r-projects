@@ -4,7 +4,7 @@ subtitle: "par Nicolas Bressoud"
 output:
   powerpoint_presentation:
     reference_doc: template_hep-vs_fb.pptx
-
+knit: knitnbr::knit_date_output
 ---
 
 ```{r setup, include=FALSE}

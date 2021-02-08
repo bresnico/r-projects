@@ -3,6 +3,7 @@ title: "Rapport d'analyse A Nous les Forces - CRIPS 2019 (version publiée)"
 author: "Nicolas Bressoud"
 date: "v2.0 - 25 juin 2020"
 output: pdf_document
+knit: knitnbr::knit_date_output
 ---
 
 ```{r setup, include=FALSE}

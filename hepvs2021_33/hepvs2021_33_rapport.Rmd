@@ -20,6 +20,7 @@ output:
     lang: "french"
   bookdown::pdf_document2:
     keep_tex: yes
+knit: knitnbr::knit_date_output
 ---
 
 

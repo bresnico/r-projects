@@ -3,13 +3,13 @@ title: "Untitled"
 editor_options:
   markdown:
     wrap: sentence
-    rmd_extensions: +bookdown_cross_references
 output:
   word_document:
     reference_docx: "template.docx"
 bibliography: biblio.bib
 link-citations: true
 csl: apa.csl
+knit: knitnbr::knit_date_output
 ---
 
 ```{=html}

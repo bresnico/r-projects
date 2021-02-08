@@ -4,6 +4,7 @@ title: Rapport de progression des étudiant·es dans les compétences en pédago
 author: "Nicolas Bressoud"
 date: "10 juillet 2020"
 output: pdf_document
+knit: knitnbr::knit_date_output
 ---
 
 

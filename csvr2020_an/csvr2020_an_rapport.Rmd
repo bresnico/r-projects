@@ -3,6 +3,7 @@ title: "Analyse de données CSVR 19-20 - Série AN"
 Author: "Nicolas Bressoud"
 date: "octobre 2020"
 output: pdf_document
+knit: knitnbr::knit_date_output
 ---
 
 ```{r setup, include=FALSE}
