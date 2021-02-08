@@ -5,6 +5,7 @@ date: "octobre 2020"
 output:
   pdf_document: default
   word_document: default
+knit: knitnbr::knit_date_output
 ---
 
 ```{r setup, include=FALSE}
@@ -14,13 +15,13 @@ source("hepvs2020_lm_script.R")
 
 # Contexte
 
-Cette étude se déroule entre août et octobre 2020 dans le cadre de deux mémoires Bachelor HEP-VS :
+Cette étude se déroule entre août et octobre 2020 dans le cadre de deux mémoires Bachelor HEP-VS :
 
 - 2 temps de mesure
 - 4 classes (que s'est-il passé avec la classe A ?)
 - 2 conditions ( 3 classes expé et 1 contrôle)
 
-On cherche à évaluer les effets d'un dispositif des forces sur le bien-être (PERMA) à travers une dimension : émotions positive (PANAS)
+On cherche à évaluer les effets d'un dispositif des forces sur le bien-être (PERMA) à travers une dimension : émotions positive (PANAS)
 
 ## Echantillons
 
