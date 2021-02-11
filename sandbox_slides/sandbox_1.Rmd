@@ -20,6 +20,8 @@ Nous verrons, dans cette courte présentation, à quel point la forme compte.
 - La forme est belle
 - La forme est choue
 - La forme permet de penser l'idée
+- et voilà
+- prout
 
 ## petite génération automatique
 
@@ -48,3 +50,28 @@ $$math-equation$$
 [link](https://sigismonda.ch) 
 
 > Block quotations
+
+## Et sinon, les images ?
+
+```{r}
+knitr::include_graphics("/Users/nbr/Dropbox/HEP/Administration\ générale/Adobe\ stock/Fotolia_61974934_M.jpg", dpi = 72)
+```
+
+## Et sinon les images directement avec Pandoc et une légende ?
+
+![un exemple d'amour](/Users/nbr/Dropbox/HEP/Administration\ générale/Adobe\ stock/Fotolia_61974934_M.jpg)
+
+## Et si j'ai trop de texte ?
+
+L'amour
+L'amour de la vie
+L'amoure de la vie de la joie de la folie de la mort pas grande qui pousse ä la folie
+L'amoure de la vie de la joie de la folie de la mort pas grande qui pousse ä la folie
+L'amoure de la vie de la joie de la folie de la mort pas grande qui pousse ä la folie
+L'amoure de la vie de la joie de la folie de la mort pas grande qui pousse ä la folie
+L'amoure de la vie de la joie de la folie de la mort pas grande qui pousse ä la folie
+L'amoure de la vie de la joie de la folie de la mort pas grande qui pousse ä la folie
+L'amoure de la vie de la joie de la folie de la mort pas grande qui pousse ä la folie
+L'amoure de la vie de la joie de la folie de la mort pas grande qui pousse ä la folie
+L'amoure de la vie de la joie de la folie de la mort pas grande qui pousse ä la folie
+

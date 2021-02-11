@@ -1,0 +1,42 @@
+---
+title: "Enseigner en classe hétérogène"
+subtitle: "par Nicolas Bressoud"
+output:
+  powerpoint_presentation:
+    reference_doc: template_hep-vs_fb.pptx
+knit: knitnbr::knit_date_output
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Ce que nous allons découvrir
+
+contexte, buts
+
+## Mise en situation initiale
+
+image de notre élève "type" pour faciliter la mémorisation
+
+ouvrir le questionnement ?? mettre en besoin
+
+## Notions convoquées
+
+Ce que nous avons besoin pour penser la situation
+
+## Notion 1
+
+définition
+
+## Que faut-il retenir ?
+
+orienté métier. Ce que JE VEUX qu'ils sachent faire, dire, penser.
+
+## Mise en situation finale
+
+Image
+qu'est-ce qui change maintenant quand on a les outils ?
+
+## Pour aller plus loin
+![un exemple d'amour](/Users/nbr/Dropbox/HEP/Administration\ générale/Adobe\ stock/Fotolia_61974934_M.jpg)
