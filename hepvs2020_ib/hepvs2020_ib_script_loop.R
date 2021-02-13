@@ -106,3 +106,34 @@ for (i in 1:16) {
   temp_plot = plot_list[[i]]
   ggsave(temp_plot, file=paste0("plot_", var_list[[i]],".png"), width = 14, height = 10, units = "cm")
 }
+
+
+
+
+
+
+#############################
+
+
+
+plotting <- function (df, date, var) {
+  plot_list = list()
+  
+  for (i in seq_along(var)) {
+    p <- df %>%
+      ggplot() +
+      aes_string(x = date, y = var[i]) +
+      geom_jitter(size = 5, alpha = .5, width = 0.3) +
+      stat_summary(fun = mean, geom = "point", size = 3, shape = 4, color = "red") +
+      stat_summary(fun = mean, geom = "line", aes(group = 1), color = "red") +
+      labs(title = paste0("Mesure item", var[i]), y = "Score") +
+      theme(plot.title = element_text(hjust = 0.5))
+    plot_list[[i]] = p
+    
+  }
+plot_list
+}
+
+
+salut <- plotting(d_paired, "dat", "c")
+dev.off()

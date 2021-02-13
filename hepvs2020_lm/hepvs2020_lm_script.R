@@ -251,4 +251,3 @@ aov1 <- aov(panp_sco ~ date * condition * classe, data = d_aov)
 glm1 <- glm(panp_sco ~ date * condition, data = d_aov)
 
 summary(aov1)
-
