@@ -135,5 +135,5 @@ plot_list
 }
 
 
-salut <- plotting(d_paired, "dat", "c")
+salut <- plotting(d_paired, "dat", c("c","f"))
 dev.off()
