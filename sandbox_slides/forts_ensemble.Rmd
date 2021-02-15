@@ -1,0 +1,46 @@
+---
+title: "Forts ensemble !" 
+subtitle: "N. Bressoud, L. Coutaz Bressoud, L. Mascolo, A. Blot, & A. C. Samson"
+output:
+  powerpoint_presentation:
+    reference_doc: template_hep-vs.pptx
+knit: knitnbr::knit_date_output
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Balises
+
+8-12 ans
+
+école
+
+cohésion de groupe
+
+climat de classe
+
+signature strengths
+
+## Plan
+
+Intention - découvrir, tester, commenter
+
+10h30 - Accueil, plan (frontal)
+
+10h35 - Vos connaissances sur les forces (beekast)
+
+10h45 - Récit d'une expérimentation (frontal)
+
+11h10 - Expérimentation (activité)
+
+11h20 - Partage autour de l'expérience (interactif)
+
+11h30 - Présentation matériel pédagogique (vidéo)
+
+11h35 - Récit des premiers essais (frontal)
+
+11h45 - Evaluation du matériel et de la méthode (beekast)
+
+11h55 - Conclusion

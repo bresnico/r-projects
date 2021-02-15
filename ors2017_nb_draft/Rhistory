@@ -1,0 +1,294 @@
+read.csv2(file="wb_pga.csv", row.names=1, dec=".") -> wb_pga.df
+setwd("~/HEP/Recherche/Bressoud_VIA_Kidscreen/Orsiere")
+#library(Rcmdr)
+#library(psy)
+#library(MASS)
+library(psych)
+#source(file="C:/Work/Lib/RFct/sumScoreDf.fct.R")
+#source(file="C:/Work/Lib/RFct/convScoreDf.fct.R")
+#source(file="C:/Work/Lib/RFct/alphaDf.fct.R")
+source(file="C:/Work/Lib/RFct/corTestDf.fct.R")
+source(file="C:/Work/Lib/RFct/formCor.fct.R")
+#### load all ans sum ####
+read.csv2(file="NBR_Ors_t1.csv", row.names=1, dec=".") -> all.df
+read.csv2(file="wb_pga.csv", row.names=1, dec=".") -> wb_pga.df
+wb_pga.df
+names(wb_pga.df)
+fit <- aov(t0_WB_score_mean_1 ~ category, data=wb_pga.df)
+strg(wb_pga.df)
+str(wb_pga.df)
+head(wb_pga.df)
+str(wb_pga.df)
+as.factor(wb_pga.df$category)
+wb_pga.df$category <- as.factor(wb_pga.df$category)
+str(wb_pga.df)
+wb_pga.df$t0_WB_score_mean_1 <- as.numeric(wb_pga.df$t0_WB_score_mean_1)
+wb_pga.df$t1_WB_score_mean_1 <- as.numeric(wb_pga.df$t1_WB_score_mean_1)
+str(wb_pga.df)
+summary(wb_pga.df)
+fit <- aov(t0_WB_score_mean_1 ~ category, data=wb_pga.df)
+summary(fit)
+read.csv2(file="wb_pga.csv", row.names=1, dec=".") -> wb_pga.df
+read.csv2(file="wb_pga.csv", row.names=1, dec=".") -> wb_pga.df
+str(wb_pga.df)
+wb_pga.df$category <- as.factor(wb_pga.df$category)
+wb_pga.df$WB_score_mean <- as.numeric(wb_pga.df$WB_score_mean)
+summary(wb_pga.df)
+fit <- aov(WB_score_mean ~ category*tps, data=wb_pga.df)
+summary(fit)
+summary(fit)
+library("ggpubr")
+fit <- aov(WB_score_mean ~ category+tps, data=wb_pga.df)
+summary(fit)
+fit <- aov(WB_score_mean ~ category + tps + category*tps, data=wb_pga.df)
+summary(fit)
+fit <- aov(WB_score_mean ~ category*tps, data=wb_pga.df)
+summary(fit)
+model1 <- aov(WB_score_mean ~ (category*tps) + Error(Subj/(category*tps)), contrasts = contr.sum)
+fit <- aov(WB_score_mean ~ category*tps, data=wb_pga.df)
+summary(fit)
+model1 <- aov(WB_score_mean ~ (category*tps) + Error(Subj/(category*tps)), contrasts = contr.sum)
+summary(model1)   # Standard repeated measures anova
+WB_score_mean
+model1 <- aov(WB_score_mean ~ (category*tps) + Error(Subj/(category*tps)), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+model1 <- aov(WB_score_mean ~ (category*tps) + Error(Subj/(category*tps)), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+Subj
+str(wb_pga.df)
+model1 <- aov(WB_score_mean ~ (category*tps) + Error(Subj/(category*tps)), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+model1 <- aov(WB_score_mean ~ (category*tps) + Error(tps/(category*subj)), contrasts = contr.sum, data=wb_pga.df)
+model1 <- aov(WB_score_mean ~ (category*tps) + Error(tps/(category*subj)), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+model1 <- aov(WB_score_mean ~ (category*tps) + Error(Subj), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+model1 <- aov(WB_score_mean ~ (category+tps+category*tps) + Error(Subj), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+fit <- aov(WB_score_mean ~ category*tps, data=wb_pga.df)
+summary(fit)
+ggplot(wb_pga.df, aes(x=WB_score_mean, y=category, colour=tps, fill=Wool))+
+geom_point(position=position_jitterdodge(dodge.width=0.7), size=2) +
+geom_boxplot(alpha=0.5, position = position_dodge(width=0.8), fatten=NULL)+
+scale_colour_manual(values=c(c("#1E90FF", "#D02090", "#FFFFFF")))+
+scale_fill_manual(values=c("#1E90FF", "#D02090", "#FFFFFF"))+
+stat_summary(fun.y = mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y..),
+width=0.65,size = 1.5, linetype = "solid",position = position_dodge(width=0.7))+
+ylab("Usure")+
+theme_classic()
+library(ggplot2)
+ggplot(wb_pga.df, aes(x=WB_score_mean, y=category, colour=tps, fill=Wool))+
+geom_point(position=position_jitterdodge(dodge.width=0.7), size=2) +
+geom_boxplot(alpha=0.5, position = position_dodge(width=0.8), fatten=NULL)+
+scale_colour_manual(values=c(c("#1E90FF", "#D02090", "#FFFFFF")))+
+scale_fill_manual(values=c("#1E90FF", "#D02090", "#FFFFFF"))+
+stat_summary(fun.y = mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y..),
+width=0.65,size = 1.5, linetype = "solid",position = position_dodge(width=0.7))+
+ylab("Usure")+
+theme_classic()
+ggplot(wb_pga.df, aes(x=WB_score_mean, y=category, colour=tps, fill=tps))+
+geom_point(position=position_jitterdodge(dodge.width=0.7), size=2) +
+geom_boxplot(alpha=0.5, position = position_dodge(width=0.8), fatten=NULL)+
+scale_colour_manual(values=c(c("#1E90FF", "#D02090", "#FFFFFF")))+
+scale_fill_manual(values=c("#1E90FF", "#D02090", "#FFFFFF"))+
+stat_summary(fun.y = mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y..),
+width=0.65,size = 1.5, linetype = "solid",position = position_dodge(width=0.7))+
+ylab("Usure")+
+theme_classic()
+ggplot(wb_pga.df, aes(x=category, y=WB_score_mean, colour=tps, fill=tps))+
+geom_point(position=position_jitterdodge(dodge.width=0.7), size=2) +
+geom_boxplot(alpha=0.5, position = position_dodge(width=0.8), fatten=NULL)+
+scale_colour_manual(values=c(c("#1E90FF", "#D02090", "#FFFFFF")))+
+scale_fill_manual(values=c("#1E90FF", "#D02090", "#FFFFFF"))+
+stat_summary(fun.y = mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y..),
+width=0.65,size = 1.5, linetype = "solid",position = position_dodge(width=0.7))+
+ylab("Usure")+
+theme_classic()
+fit <- aov(WB_score_mean ~ category*tps, data=wb_pga.df)
+summary(fit)
+model1 <- aov(WB_score_mean ~ (category*tps) + Error(Subj/(category*tps)), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+print(summary(model1))
+fit <- aov(WB_score_mean ~ category*tps, data=wb_pga.df)
+summary(fit)
+model1 <- aov(WB_score_mean ~ (category*tps) + Error(Subj/(category*tps)), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+model1 <- aov(WB_score_mean ~ (category+tps+category*tps) + Error(Subj), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+print(summary(model1))
+ggplot(wb_pga.df, aes(x=category, y=WB_score_mean, colour=tps, fill=tps))+
+geom_point(position=position_jitterdodge(dodge.width=0.7), size=2) +
+geom_boxplot(alpha=0.5, position = position_dodge(width=0.8), fatten=NULL)+
+scale_colour_manual(values=c(c("#1E90FF", "#D02090", "#FFFFFF")))+
+scale_fill_manual(values=c("#1E90FF", "#D02090", "#FFFFFF"))+
+stat_summary(fun.y = mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y..),
+width=0.65,size = 1.5, linetype = "solid",position = position_dodge(width=0.7))+
+ylab("WB")+
+theme_classic()
+wb_pga.df
+read.csv2(file="wb_pga.csv", row.names=1, dec=".") -> wb_pga.df
+str(wb_pga.df)
+wb_pga.df$category <- as.factor(wb_pga.df$category)
+wb_pga.df$WB_score_mean <- as.numeric(wb_pga.df$WB_score_mean)
+summary(wb_pga.df)
+read.csv2(file="wb_pga.csv", row.names=1, dec=".") -> wb_pga.df
+str(wb_pga.df)
+wb_pga.df$category <- as.factor(wb_pga.df$category)
+wb_pga.df$WB_score_mean
+wb_pga.df$WB_score_mean <- as.numeric_version(wb_pga.df$WB_score_mean)
+summary(wb_pga.df)
+read.csv2(file="wb_pga.csv", row.names=1, dec=".") -> wb_pga.df
+str(wb_pga.df)
+wb_pga.df$category <- as.factor(wb_pga.df$category)
+summary(wb_pga.df)
+fit <- aov(WB_score_mean ~ category*tps, data=wb_pga.df)
+summary(fit)
+model1 <- aov(WB_score_mean ~ (category*tps) + Error(Subj/(category*tps)), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+model1 <- aov(WB_score_mean ~ (category+tps+category*tps) + Error(Subj), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+print(summary(model1))
+library(ggplot2)
+ggplot(wb_pga.df, aes(x=category, y=WB_score_mean, colour=tps, fill=tps))+
+geom_point(position=position_jitterdodge(dodge.width=0.7), size=2) +
+geom_boxplot(alpha=0.5, position = position_dodge(width=0.8), fatten=NULL)+
+scale_colour_manual(values=c(c("#1E90FF", "#D02090", "#FFFFFF")))+
+scale_fill_manual(values=c("#1E90FF", "#D02090", "#FFFFFF"))+
+stat_summary(fun.y = mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y..),
+width=0.65,size = 1.5, linetype = "solid",position = position_dodge(width=0.7))+
+ylab("WB")+
+theme_classic()
+model1 <- aov(WB_score_mean ~ (category+tps+category*tps) + Error(tps), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+print(summary(model1))
+model1 <- aov(WB_score_mean ~ (category+tps+category*tps) + Error(tps*subj), contrasts = contr.sum, data=wb_pga.df)
+subj
+model1 <- aov(WB_score_mean ~ (category+tps+category*tps) + Error(tps*subj), contrasts = contr.sum, data=wb_pga.df)
+model1 <- aov(WB_score_mean ~ (category+tps+category*tps) + Error(tps*Subj), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+print(summary(model1))
+model1 <- aov(WB_score_mean ~ (category+tps+category*tps) + Error(tps), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+print(summary(model1))
+model1 <- aov(WB_score_mean ~ (category+tps+category*tps) + Error(Subj), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+print(summary(model1))
+model1 <- aov(WB_score_mean ~ (category+tps+category*tps) + Error(Subj/tps), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+model1 <- aov(WB_score_mean ~ (category*tps) + Error(Subj), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+model1 <- aov(WB_score_mean ~ (category+tps) + Error(Subj), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+model1 <- aov(WB_score_mean ~ (category*tps) + Error(Subj), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+model1 <- aov(WB_score_mean ~ (category+tps+category*tps) + Error(Subj/(category*tps), contrasts = contr.sum, data=wb_pga.df)
+library(ggplot2)
+model1 <- aov(WB_score_mean ~ (category+tps+category*tps) + Error(Subj/(category*tps)), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+layout(matrix(c(1,2,3,4),2,2)) # optional layout
+plot(fit) # diagnostic plots
+layout(matrix(c(1,2,3,4),2,2)) # optional layout
+plot(model1) # diagnostic plots
+fit <- aov(WB_score_mean ~ category*tps, data=wb_pga.df)
+summary(fit)
+model1 <- aov(WB_score_mean ~ (category*tps) + Error(Subj/(category*tps)), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+model1 <- aov(WB_score_mean ~ (category*tps) + Error(Subj), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+model1 <- aov(WB_score_mean ~ (category+tps+category*tps) + Error(Subj/(category*tps)), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+model1 <- aov(WB_score_mean ~ (category+tps+category*tps) + Error(Subj/(category*tps)), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+layout(matrix(c(1,2,3,4),2,2)) # optional layout
+plot(model1) # diagnostic plots
+drop1(model1,~.,test="F") # type III SS and F Tests
+TukeyHSD(model1)
+TukeyHSD(fit)
+fit <- aov(WB_score_mean ~ category*tps, data=wb_pga.df)
+summary(fit)
+model1 <- aov(WB_score_mean ~ (category*tps) + Error(Subj/(category*tps)), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova
+TukeyHSD(model1)
+fit <- aov(WB_score_mean ~ category*tps, data=wb_pga.df) 
+summary(fit)
+model1 <- aov(WB_score_mean ~ (category*tps) + Error(Subj/(category*tps)), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova  
+model1 <- aov(WB_score_mean ~ (category*tps) + Error(Subj), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova  
+model1 <- aov(WB_score_mean ~ (category+tps+category*tps) + Error(Subj/(category*tps)), contrasts = contr.sum, data=wb_pga.df)
+summary(model1)   # Standard repeated measures anova  
+layout(matrix(c(1,2,3,4),2,2)) # optional layout
+plot(model1) # diagnostic plots
+drop1(model1,~.,test="F") # type III SS and F Tests 
+TukeyHSD(model1)
+TukeyHSD(fit) 
+library(ggplot2)
+ggplot(wb_pga.df, aes(x=category, y=WB_score_mean, colour=tps, fill=tps))+
+  geom_point(position=position_jitterdodge(dodge.width=0.7), size=2) +
+  geom_boxplot(alpha=0.5, position = position_dodge(width=0.8), fatten=NULL)+
+  scale_colour_manual(values=c(c("#1E90FF", "#D02090", "#FFFFFF")))+
+  scale_fill_manual(values=c("#1E90FF", "#D02090", "#FFFFFF"))+
+  stat_summary(fun.y = mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y..),
+               width=0.65,size = 1.5, linetype = "solid",position = position_dodge(width=0.7))+
+  ylab("WB")+
+  theme_classic()
+describeBy(VD_t1.df, group = VD_t1.df$groupe)
+setwd("~/HEP/Recherche/Bressoud_VIA_Kidscreen/Orsiere")
+#ls()
+#rm(list = ls())
+## library
+#library(Rcmdr)
+#library(psy)
+#library(MASS)
+library(psych)
+#source(file="C:/Work/Lib/RFct/sumScoreDf.fct.R")
+#source(file="C:/Work/Lib/RFct/convScoreDf.fct.R")
+#source(file="C:/Work/Lib/RFct/alphaDf.fct.R")
+source(file="C:/Work/Lib/RFct/corTestDf.fct.R")
+source(file="C:/Work/Lib/RFct/formCor.fct.R")
+#load(file="C:/Work/Lib/RShare/sepOrsParam.df")
+#load(file="C:/Work/Lib/RShare/beOrsParam.df")
+#load(file="C:/Work/Lib/RShare/engOrsParam.df")
+#### load all ans sum #### 
+read.csv2(file="NBR_Ors_t1.csv", row.names=1, dec=".") -> all.df
+names(all.df)
+head(all.df)
+summary(all.df)
+summary(all.df$groupe)
+all.df$groupe <- as.factor(all.df$groupe)
+summary(all.df$groupe)
+summary(all.df$classe.eleve)
+describeBy(VD_t1.df, group = VD_t1.df$groupe)
+cbind(all.df[2], all.df[33], all.df[59], all.df[77:80]) -> VD_t1.df
+describeBy(VD_t1.df, group = VD_t1.df$groupe)
+cbind(all.df[2], all.df[33], all.df[59], all.df[77:80]) -> VD_t1.df
+names(VD_t1.df)
+summary(VD_t1.df)
+describeBy(VD_t1.df, group = VD_t1.df$groupe)
+read.csv2(file="NBR_Ors_t4.csv", row.names=1, dec=".") -> VD_t4.df
+VD_t4.df
+names(VD_t4.df)
+cbind(all.df[2], all.df[33], all.df[59], all.df[77:80], VD_t4.df[36]) -> VD_t1.df
+cbind(VD_t4.df[36:38]) -> VD_3t.df
+VD_3t.df
+(VD_t4.df[36:38]) -> VD_3t.df
+(VD_t4.df[36:38,]) -> VD_3t.df
+VD_3t.df
+(VD_t4.df[,36:38]) -> VD_3t.df
+VD_t4.df
+read.csv2(file="NBR_Ors_t4.csv", row.names=1, dec=".") -> VD_3t.df
+VD_3t.df
+ VD_3t.df <- VD_3t.df[36:38]
+ VD_3t.df 
+library(ggplot2)
+t.test(VD_3t.df[1], VD_3t.df[2])
+t.test(VD_3t.df[1], VD_3t.df[3])
+t.test(VD_3t.df[2], VD_3t.df[3])
+boxplot(VD_3t.df[1], VD_3t.df[2], VD_3t.df[3])
+boxplot(VD_3t.df[1], VD_3t.df[2], VD_3t.df[3])
+VD_3t.df[1]
+VD_3t.df[2]
+VD_3t.df[1]
+VD_3t.df[3]
+boxplot
+q()
