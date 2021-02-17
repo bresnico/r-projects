@@ -1,6 +1,6 @@
 ---
-title: "Forts ensemble !" 
-subtitle: "N. Bressoud, L. Coutaz Bressoud, L. Mascolo, A. Blot, & A. C. Samson"
+title: "A chacun·e ses forces !" 
+author: "N. Bressoud, L. Coutaz Bressoud, L. Mascolo, A. Blot, & A. C. Samson"
 output:
   powerpoint_presentation:
     reference_doc: template_hep-vs.pptx
@@ -11,18 +11,24 @@ knit: knitnbr::knit_date_output
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Balises
 
-8-12 ans
+## Mais à quoi sert l'école ?
 
-école
+![Frato, 1970](/Users/nbr/Pictures/frato.jpg)
 
-cohésion de groupe
+## Nos thèmes de l'atelier
 
-climat de classe
+Cohésion de groupe
 
-signature strengths
+Climat de classe
 
+**Signature strengths**
+
+## Nos thèmes de l'atelier
+
+![Le plateau de jeu "A chacun·e ses forces !](/Users/nbr/Pictures/plateau.jpg)
+
+<!--
 ## Plan
 
 Intention - découvrir, tester, commenter
@@ -44,3 +50,232 @@ Intention - découvrir, tester, commenter
 11h45 - Evaluation du matériel et de la méthode (beekast)
 
 11h55 - Conclusion
+-->
+
+## Les forces ?
+
+![[Beekast - cliquons donc par ici](https://www.beekast.live/ppromandie)](/Users/nbr/Pictures/beekast.png)
+
+## Contexte valaisan
+
+- Loi sur l'enseignement spécialisé du 25 juin 1986 et son règlement du 25 février 1987 (révisés depuis)
+
+- Accord intercantonal sur la collaboration dans le domaine de la pédagogie spécialisée du 25 octobre 2007 
+
+*Les solutions intégratives sont préférées aux solutions séparatives, ceci dans le respect du bien-être et des possibilités de développement de l’enfant ou du jeune concerné et en tenant compte de l’environnement et de l’organisation scolaires.*
+
+## Vision
+
+![inclusion](/Users/nbr/Pictures/inclusion.png)
+
+## Rôle des enseignant·es
+
+- Les croyances et pratiques des enseignant·es ont un impact sur les élèves et leurs apprentissages
+
+- La conception de l’intelligence, chez les enseignant·es, a des effets sur les résultats des élèves
+
+- La conception du métier est un élément central de l’efficacité pédagogique
+
+- Les méthodes ne sont pas intrinsèquement efficaces	
+
+> Voir p.ex. Hattie (2009), Bressoux (2001), Doudin (1997), Elmore (1996)
+
+## Climat de classe
+
+- Impact positif du bien-être sur le développement et les performances
+
+- Rôle dans la formation des citoyens
+
+- Développement de facteurs de protection des personnes (santé mentale)
+
+- Relations entre pairs déterminantes dans le développement de soi
+
+> White & Kern (2018)
+
+## Climat de classe
+
+![Bressoud, Bétrisey, & Gay, 2018](/Users/nbr/Pictures/cohesion.png)
+
+## Forces : Une définition
+
+« A strength isn’t just something your child is good at. Psychologists have defined three characteristics of a strength: your child does it well (high performance), happily (high energy) and often (high use). Strengths can be talent-based, such as sports or art, or character-based, such as humour or kindness. »
+
+> Waters (2017)
+
+## Forces : ce qui fait la différence
+
+Connaître oui mais...
+
+*Utiliser c'est mieux !*
+
+## Classsification VIA (trad. C. Gay-Des-Combes)
+
+![](/Users/nbr/Pictures/forces.png)
+
+## Classification VIA (graphisme L. Coutaz Bressoud)
+
+![](/Users/nbr/Pictures/force2.png)
+
+## Effets attendus
+
+- Bien-être psychologique
+
+- Relations interpersonnelles
+
+- Performances scolaires
+
+- Expérience d’émotions positives
+
+> Madden et al. (2011); Proctor et al. (2011); Quinlan et al. (2015); Seligman et al. (2009)
+
+## Expérimentation - Données
+
+- Année 2016-2017
+
+- Une classe d’enfants de 10 à 12 ans
+
+- 24 élèves dont 12 filles
+
+- Profils particuliers : TSA, suivi pédopsy, suivi psy, programme adapté, HPi
+
+- 14 enfants ont rempli le pré-test (octobre 2016) et le post-test (avril 2017)
+
+## Expérimentation - Méthode
+
+- Semi-expérimental
+
+- VI intrasujet = effet du temps (avec intervention pédagogique sur les forces)
+
+- Mesures avant/après : KidScreen (Bien-être psy, amis et soutien social, env. scolaire), questions ouvertes
+
+## Expérimentation - Intervention
+
+1. Développer un cadre/langage commun
+
+2. Reconnaître et réfléchir aux forces des autres
+
+3. Reconnaître et réfléchir à ses propres forces
+
+4. Pratiquer et appliquer les forces
+
+5. Identifier, célébrer et cultiver les forces du groupe
+
+> Linkins, Niemiec, Gillham, & Mayerson (2014)
+
+## Expérimentation - Traces
+
+![](/Users/nbr/Pictures/exp1.png)
+
+## Expérimentation - Traces
+
+![](/Users/nbr/Pictures/exp2.png)
+
+## Résultats
+
+![](/Users/nbr/Pictures/res1.png)
+
+
+## Résultats
+
+![](/Users/nbr/Pictures/res2.png)
+
+## Résultats
+
+![](/Users/nbr/Pictures/res3.png)
+
+## Résultats
+
+MAR :
+
+« j’ai trouvé excellent » ; « je me suis senti bien mieux » ; « je n’avais jamais pensé à certaines de mes forces » ; « je crois que je m’entends mieux avec les autres » ; «  le travail sur les forces permet aux gens de se mettre ensemble et de se protéger les uns les autres »
+
+## Résultats
+
+KEN :
+
+« ça sert à montrer qu’on a tous quelque chose de bien » ;  « Pour moi, je ne veux pas dire » ; «  je sais pas » ; « le bonheur est une illusion »
+
+## Résultats
+ 
+GUI :
+
+« On se rend compte qu’on a tous des forces et que personne n’est mauvais » ; « Pour bien s’entendre, je comprends l’importance de ne pas se moquer »
+
+## Résultats
+
+NOR :
+
+« apprendre à voir qu’on est tous différents » ; « je me suis sentie heureuse en faisant cela » ; « ça améliore un tout petit peu l’ambiance ».
+
+## Ce qu'on a appris
+
+- Séquence plus longue
+
+- S'intégrer dans al vie de la classe
+
+- Offrir des opportunités d'adaptation par les profs
+
+- Garantir un cadre
+
+- Entraîner nos mécanismes attentionnels
+
+## A nous les forces ! 
+
+![](/Users/nbr/Pictures/jeu.png)
+
+## A nous les forces ! 
+
+![](/Users/nbr/Pictures/force3.png)
+
+## A nous les forces ! 
+
+![](/Users/nbr/Pictures/force4.png)
+
+## A nous les forces ! 
+
+![](/Users/nbr/Pictures/force5.png)
+
+## A nous les forces ! - contenu
+
+Un boîte d'activité contient :
+
+- 1 plateau de jeu de 20 cases
+
+- 1 poster des 24 forces
+
+- 30 cartes défis
+
+- 24 cartes des forces
+
+- 1 dossier de matériel complémentaire
+
+- 1 guide de l'enseignant·e
+
+## A nous les forces ! - premier test
+
+Pertinence pédagogique du matériel : en cours d'évaluation
+
+## A nous les forces ! - exemple
+
+![](/Users/nbr/Pictures/exemple11.png)
+
+## A nous les forces ! - exemple
+
+![](/Users/nbr/Pictures/exemple12.png)
+
+## A nous les forces ! - exemple
+
+![](/Users/nbr/Pictures/exemple21.png)
+
+## A nous les forces ! - exemple
+
+![](/Users/nbr/Pictures/exemple22.png)
+
+## Feedbacks
+
+![[Beekast - cliquons donc encore par ici](https://www.beekast.live/ppromandie)](/Users/nbr/Pictures/beekast.png)
+
+## Merci pour votre attention !
+
+![](/Users/nbr/Pictures/fin.png)
+
