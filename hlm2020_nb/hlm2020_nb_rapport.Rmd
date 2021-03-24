@@ -1,7 +1,7 @@
 ---
 title: "Présentation des premières données - projet-pilote de personnes-ressources"
 author: "Nicolas Bressoud"
-date: "janvier 2021"
+date: "mars 2021"
 toc-title: "Table des matières"
 output:
   officedown::rdocx_document:
@@ -25,18 +25,19 @@ knit: knitnbr::knit_date_output
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 source("hlm2020_nb_script.R")
+library(flextable)
 ```
 
 # Etat des lieux des contacts avec les classes
 
-En tout, au 22 janvier 2021, j'ai reçu officiellement les coordonnées de 7 classes :
+En tout, au 23 mars 2021, j'ai reçu officiellement les coordonnées de 8 classes :
 
-- 3 classes dans le cycle 1
-- 4 classes dans le cycle 2
+- 5 classes dans le cycle 1
+- 3 classes dans le cycle 2
 
 Après contact et demande d'autorisation de récolter des données, je me suis retrouvé dans la situation suivante :
 
-- 3 classes ont accepté de participer
+- 4 classes ont accepté de participer
 - 1 classe n'a pas rendu réponse
 - 3 classes ont refusé
 
@@ -216,9 +217,13 @@ Les prises d'information concernaient plusieurs domaines d'intérêt. Les voici.
 
 Les sociogrammes ont été réalisés dans les deux classes. Ils donnent des informations précises sur l'état des relations entre élèves et les zones de risque. Les données détaillées sont en mains des personnes-ressources. Les deux figures  \@ref(fig:socio) donnent un aperçu d'une des formes facilitant l'interprétation de la qualité des relations dans chaque classe.
 
-```{r socio, fig.show="hold", fig.align='center', out.width='40%', fig.cap='Exemples de sociogrammes (extraits anonymisés)'}
+A noter : les sociogrammes ne sont pas complétés pour les élèves de 1 à 3H.
+
+
+```{r socio, fig.show="hold", fig.align='center', out.width='30%', fig.cap='Exemples de sociogrammes (extraits anonymisés)'}
 knitr::include_graphics('peers/classe_a.png')
 knitr::include_graphics('peers/classe_b.png')
+knitr::include_graphics('peers/classe_d.png')
 ```
 
 
@@ -226,21 +231,26 @@ knitr::include_graphics('peers/classe_b.png')
 
 Le tableau \@ref(tab:teach) résume les scores à chacune des 4 dimensions de la gestion de classe (gestion proactive, gestion réactive, implication des parents, implication de personnes externes). Chaque score s'entend sur un maximum de 8.
 
-
-```{r teach, tab.id="teach", tab.cap = "Résumé des données pour les 3 enseignantes", tab.cap.style="caption_nb"}
+```{r teach, tab.id="teach", tab.cap = "Résumé des données pour les enseignantes", tab.cap.style="caption_nb"}
 fl2 <- flextable::flextable(teach_sum)
-flextable::set_header_labels(fl2, clas="Classe", sco_gp="Gestion proactive", sco_gr="Gestion réactive", sco_ip="Impl. des parents", sco_ie="Impl. externe",sco_tot="Total")
-
+fl2 <- set_header_labels(fl2, clas="Classe", sco_gp="Gestion proactive", sco_gr="Gestion réactive", sco_ip="Impl. des parents", sco_ie="Impl. externe",sco_tot="Total")
+fl2 <- colformat_double(fl2, digits = 2)
+fl2 <- autofit(fl2)
+fl2
 ```
 
 ## Echelle Bien-être à l'école
 
 Le tableau  \@ref(tab:peers) indique le niveau de bien-être par classe (le score maximal vaut 7).
 
-```{r peers, tab.id="peers", tab.cap = "Résumé des scores de bien-être pour les 2 classes", tab.cap.style="caption_nb"}
-fl3 <- flextable::flextable(peers_sum)
-flextable::set_header_labels(fl3, clas = "Classe", mean = "Moyenne", max = "Score maxium", min = "Score minimum", median = "Médiane", std = "Ecart-type")
+A noter : l'échelle de bien-être n'est pas complétée pour les élèves de 1 à 3H.
 
+```{r peers, tab.id="peers", tab.cap = "Résumé des scores de bien-être pour les classes", tab.cap.style="caption_nb"}
+fl3 <- flextable(peers_sum)
+fl3 <-set_header_labels(fl3, clas = "Classe", mean = "Moyenne", max = "Score maxium", min = "Score minimum", median = "Médiane", std = "Ecart-type")
+fl3 <- colformat_double(fl3, digits = 2)
+fl3 <- autofit(fl3)
+fl3
 ```
 
 La représentation graphique  \@ref(fig:vis) nous donne une idée de la distribution des scores, par classe.
