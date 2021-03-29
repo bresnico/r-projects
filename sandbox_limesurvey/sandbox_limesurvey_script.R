@@ -13,7 +13,7 @@ options(lime_password = 'L0912@tercy21')
 
 # Do stuff with LimeSurvey API
 get_session_key()  # Log in
-responses <- get_responses(191945, sResponseType = "short")  # Get results from survey
+responses <- get_responses(198632, sResponseType = "short")  # Get results from survey
 
 # Paramètres d'importation des données
 # raw_data <- call_limer(method = "export_responses", 
@@ -34,9 +34,12 @@ d <- responses
 # Mise à jour des variables selon une syntaxe de type q1_1, tri et adaptation des variables meta
 d <- d %>% 
   rename_with(~ gsub('[[:punct:]]$', '', .x)) %>% 
-  rename_with(~ gsub('[[:punct:]]', '_', .x)) %>%
+  rename_with(~ gsub('[[:punct:]]', '', .x)) %>% #on peut mettre un _ à la place de rien
   select(!c("lastpage","seed","startdate","submitdate",)) %>% 
   rename(lan = startlanguage, dat = datestamp)
+
+# on enlève les majuscules
+names(d) <- tolower(names(d))
 
 # Mise à jour light
 d <- d %>% 
@@ -51,5 +54,7 @@ d <- d %>%
 mutate(
   tim = case_when(dat >= as_date("01.01.2021", format="%d.%m.%Y") & dat <= as_date("21.01.2021", format="%d.%m.%Y") ~ "temps 1",
                   TRUE ~ "autre temps"))
+
+
 
 export(d,"sortie.xlsx")
