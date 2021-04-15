@@ -7,9 +7,8 @@ library(rio)
 
 # Setup API details
 options(lime_api = 'https://survey.competences-emotionnelles.ch/admin/remotecontrol')
-options(lime_username = 'admin')
-options(lime_password = 'L0912@tercy21')
-
+options(lime_username = 'nbr_low') #Compte limité
+options(lime_password = '82BBdJyTjqzz')
 
 # Do stuff with LimeSurvey API
 get_session_key()  # Log in
