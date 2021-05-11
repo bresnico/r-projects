@@ -28,6 +28,8 @@ source("hlm2020_nb_script.R")
 library(flextable)
 ```
 
+# Contexte et origine du projet
+
 # Etat des lieux des contacts avec les classes
 
 En tout, au 23 mars 2021, j'ai reçu officiellement les coordonnées de 8 classes :
@@ -211,7 +213,7 @@ Les prises d'information concernaient plusieurs domaines d'intérêt. Les voici.
    - *Je trouve difficile de gérer mes émotions.
 
 
-# Premières données
+# Données 20-21
 
 ## Sociogrammes
 
@@ -266,3 +268,17 @@ be_vis
 ## Echelle de compétences psychosociales
 
 *Données en main des personnes-ressources (identification des éventuels besoins)*
+
+## Evolution pré-test / post-test
+
+# Synthèse-discussion (avec tableau des opportunités et risques),
+
+## Paragraphe
+
+## Tableau des opportunités et risques
+
+# Perspectives 21-22
+
+## Recommandations pour les pratiques (processus, objectifs, communication, fonctionnement)
+
+## Recommandations pour la recherche autour du projet
