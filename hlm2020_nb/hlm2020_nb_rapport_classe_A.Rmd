@@ -30,7 +30,7 @@ source("hlm2020_nb_script.R")
 
 # Données sur la classe
 
-Le tableau  \@ref(tab:samp) donne une idées des 2 classes.
+Le tableau  \@ref(tab:samp) donne une idées de la classe.
 
 ```{r samp, tab.id="samp", tab.cap="Résumé de l'échantillon de la classe", tab.cap.style="Table Caption"}
 fl <- flextable::flextable(sample_a)

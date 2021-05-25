@@ -1,7 +1,7 @@
 ---
 title: "Présentation des premières données - Classe D"
 author: "Nicolas Bressoud"
-date: "mars 2021"
+date: "mai 2021"
 toc-title: "Table des matières"
 output:
   officedown::rdocx_document:
@@ -53,6 +53,10 @@ Vu l'âge des enfants, nous ne procédons pas à d'autres récoltes.
 
 # Premières données
 
+## Sociogrammes
+
+Les sociogrammes donnent des informations précises sur l'état des relations entre élèves et les zones de risque. Les données détaillées sont jointes à ce rapport. 
+
 ## Echelle SEP en gestion de classe
 
 Le tableau \@ref(tab:teach) résume les scores à chacune des 4 dimensions de la gestion de classe (gestion proactive, gestion réactive, implication des parents, implication de personnes externes). Chaque score s'entend sur un maximum de 8.
@@ -62,3 +66,30 @@ fl2 <- flextable::flextable(teach_sum_d)
 flextable::set_header_labels(fl2, clas="Classe", sco_gp="Gestion proactive", sco_gr="Gestion réactive", sco_ip="Impl. des parents", sco_ie="Impl. externe",sco_tot="Total")
 
 ```
+
+## Echelle Bien-être à l'école
+
+Le tableau  \@ref(tab:peers) indique le niveau de bien-être par classe (le score maximal vaut 7).
+
+```{r peers, tab.id="peers", tab.cap = "Résumé des scores de bien-être pour la classe", tab.cap.style="caption_nb"}
+fl3 <- flextable::flextable(peers_sum_d)
+flextable::set_header_labels(fl3, clas = "Classe", mean = "Moyenne", max = "Score maxium", min = "Score minimum", median = "Médiane", std = "Ecart-type")
+
+```
+
+La représentation graphique  \@ref(fig:vis) nous donne une idée de la distribution des scores dans la classe.
+
+```{r vis, out.width = "80%", fig.align='center', fig.cap='distribution des scores', echo=FALSE, dpi=300}
+be_vis_d
+```
+
+## Echelle de Régulation émotionnelle
+
+*Données en main des personnes-ressources (identification des éventuels besoins)*
+
+## Echelle de compétences psychosociales
+
+*Données en main des personnes-ressources (identification des éventuels besoins)*
+
+
+

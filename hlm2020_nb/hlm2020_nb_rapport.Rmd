@@ -1,22 +1,22 @@
 ---
-title: "Présentation des premières données - projet-pilote de personnes-ressources"
+title: "Présentation des données - projet-pilote de personnes-ressources - an 1"
 author: "Nicolas Bressoud"
-date: "mars 2021"
+date: "juin 2021"
 toc-title: "Table des matières"
 output:
   officedown::rdocx_document:
-    reference_docx: "template.docx"
+    reference_docx: "template2.docx"
     toc: true
+  bookdown::word_document2:
+    citation_package: none
+    reference_docx: "template2.docx"
+    toc: true
+    lang: "french"
   bookdown::html_document2:
     citation_package: none
     toc: no
   pdf_document:
     toc: true
-  bookdown::word_document2:
-    citation_package: none
-    reference_docx: "template.docx"
-    toc: true
-    lang: "french"
   bookdown::pdf_document2:
     keep_tex: yes
 knit: knitnbr::knit_date_output
@@ -30,24 +30,26 @@ library(flextable)
 
 # Contexte et origine du projet
 
+Ce projet de récolte de données se déroule dans le cadre de l'expérimentation d'un rôle local de personne-ressource en gestion des comportements. Le projet, dans sa première année, concerne les établissements primaires du Haut-Lac et de Monthey et se déroule en 2020-2021.
+
+Le projet est piloté par le Service de l'Enseignement. La HEP-VS y est associée pour documenter le rapport de fonctionnement, via sa coordination en gestion de classe et son équipe de recherche "Emotions, Bien-être et Apprentissages à l'école" (EMA).
+
 # Etat des lieux des contacts avec les classes
 
-En tout, au 23 mars 2021, j'ai reçu officiellement les coordonnées de 8 classes :
+En tout, au 24 mai 2021, nous avons reçu officiellement les coordonnées de 8 classes :
 
-- 5 classes dans le cycle 1
-- 3 classes dans le cycle 2
+- 6 classes dans le cycle 1
+- 4 classes dans le cycle 2
 
-Après contact et demande d'autorisation de récolter des données, je me suis retrouvé dans la situation suivante :
+Après contact et demande d'autorisation de récolter des données, la situation suivante peut être résumée :
 
 - 4 classes ont accepté de participer
 - 1 classe n'a pas rendu réponse
-- 3 classes ont refusé
-
-Les 3 refus reposent sur les arguments de manque de temps ou de surcharge.
+- 5 classes ont refusé
 
 # Résumé de l'échantillon
 
-Le tableau  \@ref(tab:samp) donne une idées des classes qui participent.
+Le tableau  \@ref(tab:samp) donne une idée des classes qui participent.
 
 ```{r samp, tab.id="samp", tab.cap="Résumé de l'échantillon des classes", tab.cap.style="Table Caption"}
 fl <- flextable::flextable(sample)
@@ -217,7 +219,7 @@ Les prises d'information concernaient plusieurs domaines d'intérêt. Les voici.
 
 ## Sociogrammes
 
-Les sociogrammes ont été réalisés dans les deux classes. Ils donnent des informations précises sur l'état des relations entre élèves et les zones de risque. Les données détaillées sont en mains des personnes-ressources. Les deux figures  \@ref(fig:socio) donnent un aperçu d'une des formes facilitant l'interprétation de la qualité des relations dans chaque classe.
+Les sociogrammes ont été réalisés dans trois classes. Ils donnent des informations précises sur l'état des relations entre élèves et les zones de risque. Les données détaillées sont en mains des personnes-ressources. Les figures  \@ref(fig:socio) donnent un aperçu d'une des formes facilitant l'interprétation de la qualité des relations dans chaque classe.
 
 A noter : les sociogrammes ne sont pas complétés pour les élèves de 1 à 3H.
 
@@ -235,7 +237,7 @@ Le tableau \@ref(tab:teach) résume les scores à chacune des 4 dimensions de la
 
 ```{r teach, tab.id="teach", tab.cap = "Résumé des données pour les enseignantes", tab.cap.style="caption_nb"}
 fl2 <- flextable::flextable(teach_sum)
-fl2 <- set_header_labels(fl2, clas="Classe", sco_gp="Gestion proactive", sco_gr="Gestion réactive", sco_ip="Impl. des parents", sco_ie="Impl. externe",sco_tot="Total")
+fl2 <- set_header_labels(fl2, clas="Classe", sco_gp="Gest. proactive", sco_gr="Gest. réactive", sco_ip="Impl. des parents", sco_ie="Impl. externe",sco_tot="Total")
 fl2 <- colformat_double(fl2, digits = 2)
 fl2 <- autofit(fl2)
 fl2
@@ -255,9 +257,9 @@ fl3 <- autofit(fl3)
 fl3
 ```
 
-La représentation graphique  \@ref(fig:vis) nous donne une idée de la distribution des scores, par classe.
+La représentation graphique  \@ref(fig:vis2) nous donne une idée de la distribution des scores, par classe.
 
-```{r vis, out.width = "80%", fig.align='center', fig.cap='distribution des scores', echo=FALSE, dpi=300}
+```{r vis2, out.width = "80%", fig.align='center', fig.cap='distribution des scores', echo=FALSE, dpi=300}
 be_vis
 ```
 
@@ -271,14 +273,99 @@ be_vis
 
 ## Evolution pré-test / post-test
 
-# Synthèse-discussion (avec tableau des opportunités et risques),
+En séance du 17 mai 2021, les personnes-ressources et le représentant de la HEP-VS ont décidé de renoncer à une récolte post-intervention (voir partie "synthèse"). 
 
-## Paragraphe
+Cette présente année pilote ne contient pas de données avant/après et ne permet pas une comparaison rigoureuse et objective des scores aux différentes dimensions évaluées.
 
-## Tableau des opportunités et risques
+Toutefois, des données qualitatives permettent d'orienter la suite de l'expérience pilote (en vue de l'an 2).
+
+# Données qualitatives
+
+## Représentations graphiques
+
+```{r vis, fig.show = "hold", out.width = "100%", fig.align = "default", warning=FALSE, results='hide'}
+plot_list
+```
+
+## Ce que disent les enseignant·es
+
+### Forces
+
+```{r for}
+quali_force <- quali %>% 
+  select(d)
+fl2 <- flextable::flextable(quali_force)
+fl2 <- flextable::set_header_labels(fl2, "d" = "Forces")
+flextable::width(fl2, j= NULL, 6)
+
+```
+
+### Limites
+
+```{r wea}
+
+
+quali_faibl <- quali %>% 
+  select(e)
+fl3 <- flextable::flextable(quali_faibl)
+fl3 <- flextable::set_header_labels(fl3, "e" = "Limites et remédiations")
+flextable::width(fl3, j= NULL, 6)
+
+
+
+```
+
+### Remarques générales 
+
+```{r rem}
+quali_rem <- quali %>% 
+  select(f)
+
+fl4 <- flextable::flextable(quali_rem)
+fl4 <- flextable::set_header_labels(fl4, "f" = "Améliorations possibles")
+flextable::width(fl4, j= NULL, 6)
+
+
+
+```
+
+
+# Synthèse-discussion (avec tableau des opportunités et risques)
+
+## Vers une formalisation renforcée du dispositif
+
+D'une manière générale, si cette année pilote reste comme une expérience positive. Il apparaît assez clairement que le dispositif bénéficiera d'un renforcement de son pilotage et de sa structure. 
+
+L'enjeu est simple : trouver le meilleur compromis entre *flexibité des ERIE* et *maintien d'un projet cohérent* pour chaque enfant. En ce sens, la culture de l'établissement peut jouer un rôle favorable.
+
+## Tableau des opportunités, risques par thèmes
+
+Le tableau \@ref(tab:syn) propose une synthèse sous forme de risques, opportunités et pistes relatives.
+
+```{r syn, tab.id="syn", tab.cap="Résumé des risques, opportunités et pistes", tab.cap.style="Table Caption"}
+fls <- flextable::flextable(syn)
+fls
+```
 
 # Perspectives 21-22
 
 ## Recommandations pour les pratiques (processus, objectifs, communication, fonctionnement)
 
+En termes de développement des pratiques, on pourrait s'attendre à une évolution de la mission avec les éléments suivants :
+
+- Le projet de prise en charge est déterminé par des objectifs formulés en collaboration avec les titulaires et bornés dans le temps.
+- Le projet est basé sur un protocole par défaut mis en place par la direction (p.ex., semaine 1 : action, semaine 2 : entretien de démarrage (qui a un problème, quel est l'état souhaité,  qu'es-tu prêt à faire ?), semaines 3 à 7 : action et suivi, semaine 8 : fin et décision formelle)
+- La direction impose un procotole qui cadre les temps institutionnels de rencontres (calendrier annuel) et limite la durée des mesures (valeur maximale par défaut : 3 mois, reconductible)
+- Les lieux pivilégiés de collaboration des ERIE sont les rencontres formelles en interne (DIR, ES, Titulaires)
+- L'importance donnée à la clôture des mesures est renforcée
+- Dans l'ouverture d'une situation, les titulaires et les ERIE préparent le projet dans une perspective systémique (la classe joue un rôle dans la manifestation du problème de comportement).
+
 ## Recommandations pour la recherche autour du projet
+
+Les recommandations suivantes sont nécessaires à la poursuite du projet de rechercher HEP-VS :
+
+- Accord formel entre le SE et la HEP-VS (détermination d'un mandat officiel 21-22)
+- Amélioration de la scientificité de la démarche (questionnaires avant/après)
+- Amélioration de l'implication des titulaires (participation à la recherche)
+
+Nicolas Bressoud

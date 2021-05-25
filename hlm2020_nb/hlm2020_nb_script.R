@@ -1,12 +1,44 @@
 # Préparation des packages
 library(tidyverse)
+library(lubridate)
 library(rio)
 library(readxl)
 library(ggrepel) # pour les labels des plots
+library(limer)
 
 # Acquisition des données
+
 peers <- read_xlsx("../../data/hlm2020_nb_peers_raw.xlsx")
 teach <- read_xlsx("../../data/hlm2020_nb_teach_raw.xlsx")
+
+options(lime_api = 'https://survey.competences-emotionnelles.ch/admin/remotecontrol')
+options(lime_username = 'nbr_low') #Compte limité
+options(lime_password = '82BBdJyTjqzz')
+get_session_key()  # Log in
+responses <- get_responses(993289, sResponseType = "short")  # Get results from survey
+release_session_key()
+quali <- responses
+
+quali <- quali %>% 
+  rename_with(~ gsub('[[:punct:]]$', '', .x)) %>% 
+  rename_with(~ gsub('[[:punct:]]', '', .x)) %>% #on peut mettre un _ à la place de rien
+  select(!c("lastpage","seed","startdate","submitdate",)) %>% 
+  rename(lan = startlanguage, dat = datestamp)
+
+quali$dat <- ymd_hms(quali$dat)
+
+
+quali <- quali %>% 
+  mutate(
+    a = factor(a, levels = c("1","2"), labels = c("Haut-Lac", "Monthey")),
+    b = factor(b, levels = c("1","2"), labels = c("Cycle 1", "Cycle 2")),
+    c1 = factor(c1, levels = c("1","2","3","4"), labels = c("Totalement en désaccord", "plutôt en désaccord", "plutôt en accord", "totalement en accord")),
+    c2 = factor(c2, levels = c("1","2","3","4"), labels = c("Totalement en désaccord", "plutôt en désaccord", "plutôt en accord", "totalement en accord")),
+    c3 = factor(c3, levels = c("1","2","3","4"), labels = c("Totalement en désaccord", "plutôt en désaccord", "plutôt en accord", "totalement en accord")),
+    c4 = factor(c4, levels = c("1","2","3","4"), labels = c("Totalement en désaccord", "plutôt en désaccord", "plutôt en accord", "totalement en accord")),
+    c5 = factor(c5, levels = c("1","2","3","4"), labels = c("Totalement en désaccord", "plutôt en désaccord", "plutôt en accord", "totalement en accord")),
+    )
+
 
 # Création de mon résumé d'échantillon à la main
 
@@ -249,3 +281,44 @@ be_vis_d <- peers_d %>%
   ylab("Score de bien-être") +
   xlab("classe") +
   theme(plot.title = element_text(hjust = 0.5))
+
+##################
+# synthèse quali #
+##################
+
+# Liste des items
+items <- list("J'ai trouvé l'intervention de l'ERIE très utile globalement.",
+              "Je pense que le ou les élèves concernés par l'intervention ont progressé dans leur comportement.",
+              "Je pense que l'intervention de l'ERIE a fait évoluer ma manière d'enseigner.",
+              "J'ai le sentiment que l'intervention de l'ERIE m'a permis de prendre du recul sur la situation.",
+              "Je pense qu'une intervention de l'ERIE dans ma classe ne devrait jamais durer trop longtemps dans l'année scolaire."
+              )
+
+# Liste des noms des variables que l'on veut (q1 à q5 uniquement).
+var_list <- c(names(quali)[6:10], names(quali)[13])
+
+# création de la liste pour accueillir les 6 plots
+plot_list = list()
+
+for (i in 1:5) {
+  p <- quali %>% 
+    ggplot() +
+    aes(fill = b) +
+    aes_string(x = var_list[i]) +
+    labs(title = paste(items[[i]]), y = "Somme") +
+    theme(plot.title = element_text(hjust = 0.5, size = 6),
+          axis.text.x = (element_text(angle = 50, vjust = 0.5, hjust=0.5))) +
+    geom_bar() +
+    labs(x = "", fill = "Par cycle") +
+    scale_x_discrete(drop = FALSE) # Forcer l'affichage des catégories vides
+  #theme(legend.title = element_blank()) # Pour cacher le titre de la légende
+  plot_list[[i]] = p
+}
+
+# Synthèse
+
+syn <- data.frame("Thèmes"=c("Dynamique de projet","Organisation annuelle","Développement de compétences des élèves","Développement de compétences des enseignant·es","Attractivité du métier"),
+                  "Risques"=c("Perdre de vue les objectifs de progression","Se suradapter aux besoins des collègues","Considérer l'élève comme le problème de la classe","Laisser les personnes-ressources porter seules","S'épuiser dans la mission de pompier urgentiste"),
+                  "Opportunités"=c("Repérer les situations stagnantes","Renforcer la collaboration","Considérer les ressources et besoins de l'élève dans sa classe","Engager les enseignant·es dans la recherche de solutions","Gérer des situations imprévues"),
+                  "Pistes"=c("contractualiser la durée","Figer un calendrier annuel des rencontres","Prendre en compte l'élève dans son système classe","Mettre en oeuvre un protocole de prise en charge","trouver des défis stimulants dans un cadre protecteur")
+                 )
