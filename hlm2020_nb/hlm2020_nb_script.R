@@ -291,7 +291,7 @@ items <- list("J'ai trouvé l'intervention de l'ERIE très utile globalement.",
               "Je pense que le ou les élèves concernés par l'intervention ont progressé dans leur comportement.",
               "Je pense que l'intervention de l'ERIE a fait évoluer ma manière d'enseigner.",
               "J'ai le sentiment que l'intervention de l'ERIE m'a permis de prendre du recul sur la situation.",
-              "Je pense qu'une intervention de l'ERIE dans ma classe ne devrait jamais durer trop longtemps dans l'année scolaire."
+              "Je pense qu'une intervention de l'ERIE dans ma classe ne devrait jamais durer trop longtemps."
               )
 
 # Liste des noms des variables que l'on veut (q1 à q5 uniquement).
@@ -306,7 +306,7 @@ for (i in 1:5) {
     aes(fill = b) +
     aes_string(x = var_list[i]) +
     labs(title = paste(items[[i]]), y = "Somme") +
-    theme(plot.title = element_text(hjust = 0.5, size = 6),
+    theme(plot.title = element_text(hjust = 0.5, size = 6.5),
           axis.text.x = (element_text(angle = 50, vjust = 0.5, hjust=0.5))) +
     geom_bar() +
     labs(x = "", fill = "Par cycle") +

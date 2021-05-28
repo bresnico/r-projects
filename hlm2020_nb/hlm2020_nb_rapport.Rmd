@@ -1,12 +1,14 @@
 ---
-title: "Présentation des données - projet-pilote de personnes-ressources - an 1"
+title: "Présentation des données - Projet-pilote"
+subtitle: "ERIE - An 1"
 author: "Nicolas Bressoud"
-date: "juin 2021"
+date: "Juin 2021"
 toc-title: "Table des matières"
 output:
   officedown::rdocx_document:
     reference_docx: "template2.docx"
     toc: true
+    toc_depth: 1
   bookdown::word_document2:
     citation_package: none
     reference_docx: "template2.docx"
@@ -52,8 +54,12 @@ Après contact et demande d'autorisation de récolter des données, la situation
 Le tableau  \@ref(tab:samp) donne une idée des classes qui participent.
 
 ```{r samp, tab.id="samp", tab.cap="Résumé de l'échantillon des classes", tab.cap.style="Table Caption"}
+fl_w <- 6.3/ncol(sample)
 fl <- flextable::flextable(sample)
-flextable::set_header_labels(fl, classe = "Classe", gest = "Type de gestion", deg ="Degré", cyc ="Cycle", sit="Site scolaire", enf="Enfants signalés")
+fl <- flextable::width(fl, width = fl_w)
+fl <- flextable::set_header_labels(fl, classe = "Classe", gest = "Type de gestion", deg ="Degré", cyc ="Cycle", sit="Site scolaire", enf="Enfants signalés")
+fl <- font(fl, fontname="calibri")
+fl
 
 ```
 
@@ -224,7 +230,7 @@ Les sociogrammes ont été réalisés dans trois classes. Ils donnent des inform
 A noter : les sociogrammes ne sont pas complétés pour les élèves de 1 à 3H.
 
 
-```{r socio, fig.show="hold", fig.align='center', out.width='30%', fig.cap='Exemples de sociogrammes (extraits anonymisés)'}
+```{r socio, fig.show="hold", fig.align='center', fig.height = 2, fig.width = 2.5, fig.cap='Exemples de sociogrammes (extraits anonymisés)'}
 knitr::include_graphics('peers/classe_a.png')
 knitr::include_graphics('peers/classe_b.png')
 knitr::include_graphics('peers/classe_d.png')
@@ -236,10 +242,12 @@ knitr::include_graphics('peers/classe_d.png')
 Le tableau \@ref(tab:teach) résume les scores à chacune des 4 dimensions de la gestion de classe (gestion proactive, gestion réactive, implication des parents, implication de personnes externes). Chaque score s'entend sur un maximum de 8.
 
 ```{r teach, tab.id="teach", tab.cap = "Résumé des données pour les enseignantes", tab.cap.style="caption_nb"}
+fl2_w <- 6.3/ncol(teach_sum)
 fl2 <- flextable::flextable(teach_sum)
 fl2 <- set_header_labels(fl2, clas="Classe", sco_gp="Gest. proactive", sco_gr="Gest. réactive", sco_ip="Impl. des parents", sco_ie="Impl. externe",sco_tot="Total")
 fl2 <- colformat_double(fl2, digits = 2)
-fl2 <- autofit(fl2)
+fl2 <- flextable::width(fl2, width = fl2_w)
+fl2 <- font(fl2, fontname="calibri")
 fl2
 ```
 
@@ -250,16 +258,18 @@ Le tableau  \@ref(tab:peers) indique le niveau de bien-être par classe (le scor
 A noter : l'échelle de bien-être n'est pas complétée pour les élèves de 1 à 3H.
 
 ```{r peers, tab.id="peers", tab.cap = "Résumé des scores de bien-être pour les classes", tab.cap.style="caption_nb"}
+fl3_w <- 6.3/ncol(peers_sum)
 fl3 <- flextable(peers_sum)
 fl3 <-set_header_labels(fl3, clas = "Classe", mean = "Moyenne", max = "Score maxium", min = "Score minimum", median = "Médiane", std = "Ecart-type")
 fl3 <- colformat_double(fl3, digits = 2)
-fl3 <- autofit(fl3)
+fl3 <- width(fl3, width = fl3_w)
+fl3 <- font(fl3, fontname="calibri")
 fl3
 ```
 
 La représentation graphique  \@ref(fig:vis2) nous donne une idée de la distribution des scores, par classe.
 
-```{r vis2, out.width = "80%", fig.align='center', fig.cap='distribution des scores', echo=FALSE, dpi=300}
+```{r vis2, fig.align='center', fig.width=5, fig.height=5, fig.cap='distribution des scores', echo=FALSE}
 be_vis
 ```
 
@@ -283,7 +293,7 @@ Toutefois, des données qualitatives permettent d'orienter la suite de l'expéri
 
 ## Représentations graphiques
 
-```{r vis, fig.show = "hold", out.width = "100%", fig.align = "default", warning=FALSE, results='hide'}
+```{r vis, fig.show = "hold", fig.width=4.5, fig.height=4.5, fig.align = "center", warning=FALSE, results='hide'}
 plot_list
 ```
 
@@ -294,10 +304,13 @@ plot_list
 ```{r for}
 quali_force <- quali %>% 
   select(d)
-fl2 <- flextable::flextable(quali_force)
-fl2 <- flextable::set_header_labels(fl2, "d" = "Forces")
-flextable::width(fl2, j= NULL, 6)
-
+fl4 <- flextable::flextable(quali_force)
+fl4 <- flextable::set_header_labels(fl4, "d" = "Forces")
+fl4 <- flextable::delete_part(fl4, part = "header")
+fl4 <- flextable::autofit(fl4, add_h = 0.2)
+fl4 <- flextable::width(fl4, width = 6.3)
+fl4 <- font(fl4, fontname="calibri")
+fl4
 ```
 
 ### Limites
@@ -307,10 +320,12 @@ flextable::width(fl2, j= NULL, 6)
 
 quali_faibl <- quali %>% 
   select(e)
-fl3 <- flextable::flextable(quali_faibl)
-fl3 <- flextable::set_header_labels(fl3, "e" = "Limites et remédiations")
-flextable::width(fl3, j= NULL, 6)
-
+fl5 <- flextable::flextable(quali_faibl)
+fl5 <- flextable::set_header_labels(fl5, "e" = "Limites et remédiations")
+fl5 <- flextable::delete_part(fl5, part = "header")
+fl5 <- flextable::width(fl5, width = 6.3)
+fl5 <- font(fl5, fontname="calibri")
+fl5
 
 
 ```
@@ -321,10 +336,12 @@ flextable::width(fl3, j= NULL, 6)
 quali_rem <- quali %>% 
   select(f)
 
-fl4 <- flextable::flextable(quali_rem)
-fl4 <- flextable::set_header_labels(fl4, "f" = "Améliorations possibles")
-flextable::width(fl4, j= NULL, 6)
-
+fl6 <- flextable::flextable(quali_rem)
+fl6 <- flextable::set_header_labels(fl6, "f" = "Améliorations possibles")
+fl6 <- flextable::delete_part(fl6, part = "header")
+fl6 <- flextable::width(fl6, width = 6.3)
+fl6 <- font(fl6, fontname="calibri")
+fl6
 
 
 ```
@@ -343,8 +360,11 @@ L'enjeu est simple : trouver le meilleur compromis entre *flexibité des ERIE* e
 Le tableau \@ref(tab:syn) propose une synthèse sous forme de risques, opportunités et pistes relatives.
 
 ```{r syn, tab.id="syn", tab.cap="Résumé des risques, opportunités et pistes", tab.cap.style="Table Caption"}
-fls <- flextable::flextable(syn)
-fls
+fl7_w <- 6.3/ncol(syn)
+fl7 <- flextable::flextable(syn)
+fl7 <- flextable::width(fl7, width = fl7_w)
+fl7 <- font(fl7, fontname="calibri")
+fl7
 ```
 
 # Perspectives 21-22
