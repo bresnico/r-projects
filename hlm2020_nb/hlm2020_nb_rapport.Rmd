@@ -225,7 +225,7 @@ Les prises d'information concernaient plusieurs domaines d'intérêt. Les voici.
 
 ## Sociogrammes
 
-Les sociogrammes ont été réalisés dans trois classes. Ils donnent des informations précises sur l'état des relations entre élèves et les zones de risque. Les données détaillées sont en mains des personnes-ressources. Les figures  \@ref(fig:socio) donnent un aperçu d'une des formes facilitant l'interprétation de la qualité des relations dans chaque classe.
+Les sociogrammes ont été réalisés dans trois classes. Ils donnent des informations précises sur l'état des relations entre élèves et les zones de risque. Les données détaillées sont en mains des personnes-ressources. Les figures 1 à  \@ref(fig:socio) donnent un aperçu d'une des formes facilitant l'interprétation de la qualité des relations dans chaque classe.
 
 A noter : les sociogrammes ne sont pas complétés pour les élèves de 1 à 3H.
 
