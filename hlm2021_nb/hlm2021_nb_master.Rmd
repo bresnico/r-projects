@@ -1,0 +1,452 @@
+---
+title: "Présentation des données - Rapport court intermédiaire"
+subtitle: "ERIE - An 2"
+author: "Nicolas Bressoud"
+date: "`r format(Sys.time(), '%d.%m.%Y')`"
+toc-title: "Table des matières"
+output:
+  officedown::rdocx_document:
+    reference_docx: "template2.docx"
+    toc: true
+    toc_depth: 1
+knit: knitnbr::knit_date_output
+params:
+  classe: a # Lettre de la classe (sous réserve du param all)
+  all: false # true pour renoncer à une classe et afficher pour toutes les données.
+  time: false # true va générer des tableaux et plots avant/après 
+  save: false # génère des xlsx des données pour sauvegarde si true
+  temps: 1 # 1 ou 2 suivant le temps unique qu'on veut observer (si time est false)
+  peers: 717311 # code survey enfants
+  teach: 851424 # code survey enseignants
+  url_survey: "https://sondage.competences-emotionnelles.ch/admin/remotecontrol"
+  login_survey: nbr_low
+  pass_survey: 82BBdJyTjqzz
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(knitr)
+library(tidyverse)
+library(lubridate)
+library(rio)
+library(readxl)
+library(ggrepel) # pour les labels des plots
+library(limer)
+
+# Acquisition des données
+
+options(lime_api = params$url_survey)
+options(lime_username = params$login_survey)
+options(lime_password = params$pass_survey)
+
+# log in
+get_session_key()
+
+# Données enfants
+
+responses <- get_responses(params$peers, sResponseType = "short")  
+peers <- responses
+
+# Données profs
+responses <- get_responses(params$teach, sResponseType = "short")  
+teach <- responses
+
+#log out
+release_session_key()
+
+# Préparation de la boucle pour traitement des données.
+vec <- list("peers", "teach")
+
+# Mise à jour des variables selon une syntaxe de type q1_1, tri et adaptation des variables meta
+
+for (i in 1:2) {
+  g <- get(vec[[i]])
+  
+  g <- g %>% 
+    rename_with(~ gsub('[[:punct:]]$', '', .x)) %>% 
+    rename_with(~ gsub('[[:punct:]]', '_', .x)) %>%
+    select(!c("lastpage","seed","startdate","submitdate",)) %>% 
+    rename(lan = startlanguage, dat = datestamp) 
+    
+  # Création de la variable classe
+  g$classe <- str_extract(g$q1, "[a-z]+")
+  
+  # Création de la variable temps
+  g$temps <- str_sub(g$q1, start = -2L, end = -2L)
+  
+  # Mise à jour du format des dates avec lubridate
+  g$dat <- ymd_hms(g$dat)
+  
+  # Modification des df d'origine
+  
+  if (i == 1) {
+    peers <- g %>% 
+      mutate(be8_4 = 8 - be8_4,
+         be8_5 = 8 - be8_5,
+         be8_8 = 8 - be8_8) %>% 
+      mutate(sco_be  = rowMeans(select(.,starts_with("be")) ,na.rm =T))
+      
+  } else {
+    teach <- g %>%
+      mutate(
+        sco_gp = rowMeans(select(., c("sep16_2","sep16_3","sep16_6","sep16_10","sep16_11","sep16_15")) ,na.rm = T),
+        sco_gr = rowMeans(select(., c("sep16_5","sep16_8","sep16_9","sep16_12","sep16_13")), na.rm = T),
+        sco_ip = rowMeans(select(., c("sep16_1","sep16_4")), na.rm = T),
+        sco_ie = rowMeans(select(., c("sep16_7","sep16_14","sep16_16")), na.rm = T),
+        sco_tot = rowMeans(select(., starts_with("sep16_")), na.rm = T),
+        )
+    
+  }
+
+}
+
+#Données enfants pris en charge (erie.xlsx)
+erie <- read_excel("erie.xlsx")
+
+#Données classes (log.xlsx)
+
+sample <- read_excel("log.xlsx")
+
+#Variante classe ou variante totale
+p_all <- print("Les données concernent toutes les classes ayant participé à ce jour en 2020-2021.")
+p_classe <- print(paste0("Les données concernent la classe ", params$classe,"."))
+q_time <- print("Toutes les données sont fournies en comparant les temps 1 et 2.")
+q_no_time <- print(paste0("Les données de ce rapport concernent le temps ", params$temps,"."))
+
+if (isTRUE(params$all)) {
+  p <- p_all
+} else {
+  p <- p_classe
+}
+
+
+if (isTRUE(params$time)) {
+  q <- q_time
+} else {
+  q <- q_no_time
+}
+
+
+```
+
+```{r eval=params$save}
+export(peers, "peers_save.xlsx")
+export(teach, "teach_save.xlsx")
+
+```
+
+
+# Données de base
+
+`r p`
+
+`r q`
+
+```{r eval=params$all, echo=FALSE, warning=FALSE, message=FALSE}
+
+# teach - statistiques de base
+
+teach_sum <- teach %>%
+  filter(temps == params$temps) %>% 
+  group_by(classe) %>% 
+  summarize(sco_gp,
+            sco_gr,
+            sco_ip,
+            sco_ie,
+            sco_tot)
+
+# teach - variante temps 1 et 2 
+
+teach_sum_1 <- teach %>%
+  filter(temps=="1") %>% 
+  group_by(classe) %>% 
+  summarize(sco_gp,
+            sco_gr,
+            sco_ip,
+            sco_ie,
+            sco_tot)
+  
+teach_sum_2 <- teach %>%
+  filter(temps=="2") %>% 
+  group_by(classe) %>% 
+  summarize(sco_gp,
+            sco_gr,
+            sco_ip,
+            sco_ie,
+            sco_tot)
+
+
+# peers - statistiques de base
+
+peers_sum <- peers %>% 
+  filter(temps == params$temps) %>% 
+  group_by(classe) %>% 
+  summarize(mean=mean(sco_be), max=max(sco_be), min=min(sco_be), median=median(sco_be), std=sd(sco_be))
+
+# peers - variante temps 1 et 2
+
+peers_sum_1 <- peers %>%
+  filter(temps=="1") %>% 
+  group_by(classe) %>% 
+  summarize(mean=mean(sco_be), max=max(sco_be), min=min(sco_be), median=median(sco_be), std=sd(sco_be))
+
+peers_sum_2 <- peers %>%
+  filter(temps=="2") %>% 
+  group_by(classe) %>% 
+  summarize(mean=mean(sco_be), max=max(sco_be), min=min(sco_be), median=median(sco_be), std=sd(sco_be))
+
+# peers vis - visualisation
+
+pos <- position_jitter(width = 0.2, seed = 2)
+
+be_vis <- peers %>%
+  filter(temps == params$temps) %>% 
+  ggplot() +
+  aes(x = classe, y = sco_be, fill = classe, color = classe, alpha = 0.8) +
+  geom_boxplot(outlier.colour = NA) +
+  geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
+  geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
+  theme(legend.position='none') +
+  ggtitle("Visualisation des scores dans les classes") +
+  ylab("Score de bien-être") +
+  xlab("classes") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+# peers vis - variante temps 1 et 2
+
+be_vis_1_2 <- peers %>%
+  ggplot() +
+  aes(x = temps, y = sco_be, fill = temps, color = classe, alpha = 0.8) +
+  geom_boxplot(outlier.colour = NA) +
+  geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
+  geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
+  theme(legend.position='none') +
+  ggtitle("Visualisation des scores aux temps 1 et 2") +
+  ylab("Score de bien-être") +
+  xlab("Temps") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_color_brewer("temps", palette = "Set1")
+
+```
+
+```{r, eval=!params$all, echo=FALSE, warning=FALSE, message=FALSE}
+
+sample <- sample %>% 
+  filter(classe == params$classe)
+
+# teach - statistiques de base
+
+teach_sum <- teach %>%
+  filter(temps == params$temps) %>% 
+  group_by(classe) %>%
+  filter(classe== params$classe) %>% 
+  summarize(sco_gp,
+            sco_gr,
+            sco_ip,
+            sco_ie,
+            sco_tot)
+
+# teach - variante temps 1 et 2
+
+teach_sum_1 <- teach %>% 
+  group_by(classe) %>%
+  filter(classe== params$classe,
+         temps=="1") %>% 
+  summarize(sco_gp,
+            sco_gr,
+            sco_ip,
+            sco_ie,
+            sco_tot)
+
+teach_sum_2 <- teach %>% 
+  group_by(classe) %>%
+  filter(classe== params$classe,
+         temps=="2") %>% 
+  summarize(sco_gp,
+            sco_gr,
+            sco_ip,
+            sco_ie,
+            sco_tot)
+
+# peers - statistiques de base
+
+peers_sum <- peers %>% 
+  filter(temps == params$temps) %>% 
+  filter(classe==params$classe) %>% 
+  group_by(classe) %>% 
+  summarize(mean=mean(sco_be), max=max(sco_be), min=min(sco_be), median=median(sco_be), std=sd(sco_be))
+
+# peers - variante temps 1 et 2
+
+peers_sum_1 <- peers %>% 
+  filter(classe==params$classe,
+         temps=="1") %>% 
+  group_by(classe) %>% 
+  summarize(mean=mean(sco_be), max=max(sco_be), min=min(sco_be), median=median(sco_be), std=sd(sco_be))
+
+peers_sum_2 <- peers %>% 
+  filter(classe==params$classe,
+         temps=="2") %>% 
+  group_by(classe) %>% 
+  summarize(mean=mean(sco_be), max=max(sco_be), min=min(sco_be), median=median(sco_be), std=sd(sco_be))
+
+# peers viz - visualisation
+pos <- position_jitter(width = 0.2, seed = 2)
+
+be_vis <- peers %>%
+  filter(classe==params$classe) %>% 
+  filter(temps == params$temps) %>% 
+  ggplot() +
+  aes(x = classe, y = sco_be, fill = classe, color = classe, alpha = 0.8) +
+  geom_boxplot(outlier.colour = NA) +
+  geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
+  geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
+  theme(legend.position='none') +
+  ggtitle("Visualisation des scores dans la classe") +
+  ylab("Score de bien-être") +
+  xlab("classe") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+# peers viz - temps 1 temps 2
+
+be_vis_1_2 <- peers %>%
+  filter(classe== params$classe) %>%
+  ggplot() +
+  aes(x = temps, y = sco_be, fill = temps, color = classe, alpha = 0.8) +
+  geom_boxplot(outlier.colour = NA) +
+  geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
+  geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
+  theme(legend.position='none') +
+  ggtitle("Visualisation des scores dans la classe") +
+  ylab("Score de bien-être") +
+  xlab("Temps") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  scale_color_brewer("temps", palette = "Set1")
+
+
+```
+
+Le tableau  \@ref(tab:samp) propose un résumé des données.
+
+```{r samp, tab.id="samp", tab.cap="Résumé de l'échantillon", tab.cap.style="Table Caption"}
+fl_w <- 6.3/ncol(sample)
+fl <- flextable::flextable(sample)
+fl <- flextable::width(fl, width = fl_w)
+fl <- flextable::set_header_labels(fl, classe = "Classe", gest = "Type de gestion", deg ="Degré", cyc ="Cycle", sit="Site scolaire", enf="Enfants signalés")
+fl <- flextable::font(fl, fontname="calibri")
+fl
+```
+
+
+# Premières données
+
+
+## Echelle SEP en gestion de classe
+
+Le tableau \@ref(tab:teach) résume les scores à chacune des 4 dimensions de la gestion de classe (gestion proactive, gestion réactive, implication des parents, implication de personnes externes). Chaque score s'entend sur un maximum de 8.
+
+
+```{r teach, tab.id="teach", tab.cap = "Résumé des données concernant l'enseignement", tab.cap.style="caption_nb", eval=!params$time}
+fl2_w <- 6.3/ncol(teach_sum)
+fl2 <- flextable::flextable(teach_sum)
+fl2 <- flextable::set_header_labels(fl2, classe="Classe", sco_gp="Gest. proactive", sco_gr="Gest. réactive", sco_ip="Impl. des parents", sco_ie="Impl. externe",sco_tot="Total")
+fl2 <- flextable::colformat_double(fl2, digits = 2)
+fl2 <- flextable::width(fl2, width = fl2_w)
+fl2 <- flextable::font(fl2, fontname="calibri")
+fl2
+
+```
+
+```{r teach_1, tab.id="teach", tab.cap = "Résumé des données concernant l'enseignement respectivement aux temps 1 et 2", tab.cap.style="caption_nb", eval=params$time}
+fl21_w <- 6.3/ncol(teach_sum_1)
+fl21 <- flextable::flextable(teach_sum_1)
+fl21 <- flextable::set_header_labels(fl21, classe="Classe", sco_gp="Gest. proactive", sco_gr="Gest. réactive", sco_ip="Impl. des parents", sco_ie="Impl. externe",sco_tot="Total")
+fl21 <- flextable::colformat_double(fl21, digits = 2)
+fl21 <- flextable::width(fl21, width = fl21_w)
+fl21 <- flextable::font(fl21, fontname="calibri")
+fl21
+
+```
+
+
+```{r teach_2, tab.id="teach", tab.cap = "Résumé des données concernant l'enseignement respectivement aux temps 1 et 2", tab.cap.style="caption_nb", eval=params$time}
+fl22_w <- 6.3/ncol(teach_sum_2)
+fl22 <- flextable::flextable(teach_sum_2)
+fl22 <- flextable::set_header_labels(fl22, classe="Classe", sco_gp="Gest. proactive", sco_gr="Gest. réactive", sco_ip="Impl. des parents", sco_ie="Impl. externe",sco_tot="Total")
+fl22 <- flextable::colformat_double(fl22, digits = 2)
+fl22 <- flextable::width(fl22, width = fl22_w)
+fl22 <- flextable::font(fl22, fontname="calibri")
+fl22
+
+```
+
+
+
+
+## Echelle Bien-être à l'école
+
+Le tableau  \@ref(tab:peers) indique le niveau de bien-être par classe (le score maximal vaut 7).
+
+```{r peers, tab.id="peers", tab.cap = "Résumé des scores de bien-être", tab.cap.style="caption_nb", eval=!params$time}
+fl3_w <- 6.3/ncol(peers_sum)
+fl3 <- flextable::flextable(peers_sum)
+fl3 <- flextable::set_header_labels(fl3, classe = "Classe", mean = "Moyenne", max = "Score maxium", min = "Score minimum", median = "Médiane", std = "Ecart-type")
+fl3 <- flextable::colformat_double(fl3, digits = 2)
+fl3 <- flextable::width(fl3, width = fl3_w)
+fl3 <- flextable::font(fl3, fontname="calibri")
+fl3
+
+```
+
+```{r peers_1, tab.id="peers", tab.cap = "Résumé des scores de bien-être respectivement aux temps 1 et 2", tab.cap.style="caption_nb", eval=params$time}
+fl31_w <- 6.3/ncol(peers_sum_1)
+fl31 <- flextable::flextable(peers_sum_1)
+fl31 <- flextable::set_header_labels(fl31, classe = "Classe", mean = "Moyenne", max = "Score maxium", min = "Score minimum", median = "Médiane", std = "Ecart-type")
+fl31 <- flextable::colformat_double(fl31, digits = 2)
+fl31 <- flextable::width(fl31, width = fl31_w)
+fl31 <- flextable::font(fl31, fontname="calibri")
+fl31
+
+```
+
+```{r peers_2, tab.id="peers", tab.cap = "Résumé des scores de bien-être respectivement aux temps 1 et 2", tab.cap.style="caption_nb", eval=params$time}
+fl32_w <- 6.3/ncol(peers_sum_2)
+fl32 <- flextable::flextable(peers_sum_2)
+fl32 <- flextable::set_header_labels(fl32, classe = "Classe", mean = "Moyenne", max = "Score maxium", min = "Score minimum", median = "Médiane", std = "Ecart-type")
+fl32 <- flextable::colformat_double(fl32, digits = 2)
+fl32 <- flextable::width(fl32, width = fl32_w)
+fl32 <- flextable::font(fl32, fontname="calibri")
+fl32
+
+```
+
+
+La représentation graphique  \@ref(fig:vis) nous donne une idée de la distribution des scores.
+
+```{r vis, fig.id="vis", fig.align='center', out.width = "100%", fig.retina = 3, fig.show = "hold", fig.cap='distribution des scores', echo=FALSE, eval=!params$time}
+
+be_vis
+```
+
+
+```{r vis_1_2,fig.id="vis", fig.align='center', out.width = "100%", fig.retina = 3, fig.show = "hold", fig.cap='distribution des scores', echo=FALSE, eval=params$time}
+
+be_vis_1_2
+```
+
+## Echelle de Régulation émotionnelle
+
+La représentation graphique  \@ref(fig:vis2) nous donne une idée de la distribution des scores.
+
+```{r vis2, out.width = "80%", fig.align='center', fig.cap='distribution des scores', echo=FALSE, dpi=300, eval=!params$time}
+be_vis
+```
+
+## Echelle de compétences psychosociales
+
+La représentation graphique  \@ref(fig:vis3) nous donne une idée de la distribution des scores.
+
+```{r vis3, out.width = "80%", fig.align='center', fig.cap='distribution des scores', echo=FALSE, dpi=300, eval=!params$time}
+be_vis
+```
+
