@@ -1,0 +1,11 @@
+name: sandbox_shiny
+title:
+username:
+account: bresnico
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4385465
+bundleId: 4819297
+url: https://bresnico.shinyapps.io/sandbox_shiny/
+when: 1626278800.28097
+lastSyncTime: 1626278800.28098
