@@ -5,7 +5,7 @@ library(rio)
 library(readxl)
 library(ggrepel) # pour les labels des plots
 library(limer)
-
+library(gtsummary)
 # Acquisition des données
 
 peers <- read_xlsx("../../data/hlm2020_nb_peers_raw.xlsx")
@@ -78,11 +78,23 @@ peers <- peers %>%
          sco_be = rowMeans(select(.,starts_with("be")) ,na.rm =T)
          )
 
+###############
+# gtsummary   #
+###############
+
+lol <- peers %>%
+  select(clas, sco_be) %>% 
+  tbl_summary()
+
 # peers - statistiques de base
 
 peers_sum <- peers %>% 
   group_by(clas) %>% 
   summarize(mean=mean(sco_be), max=max(sco_be), min=min(sco_be), median=median(sco_be), std=sd(sco_be))
+
+lol2 <- peers_sum %>% 
+  tbl_summary()
+
 
 # peers - visualisation
 
