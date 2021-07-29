@@ -110,3 +110,39 @@ be_vis_1_2 <- peers %>%
   xlab("Temps") +
   theme(plot.title = element_text(hjust = 0.5)) +
   scale_color_brewer("temps", palette = "Set1")
+
+######################################
+# gtsummary in progress ------------ #
+######################################
+
+library(gtsummary)
+gt_teach <- teach %>% 
+  select(id, classe, temps, sco_gp, sco_gr)
+
+gt_teach_sum <- gt_teach %>% 
+  group_by(classe, temps) %>% 
+  summarise(min=min(sco_gp),
+            max=max(sco_gp),
+            mean=mean(sco_gp)
+            )
+
+gt_table <- 
+  tbl_summary(
+    gt_teach_sum,
+    by = temps, # split table by group
+    missing = "no" # don't list missing data separately
+  ) %>%
+  add_n() %>% # add column with total number of non-missing observations
+  add_p() %>% # test for a difference between groups
+  modify_header(label = "**Variable**") %>% # update the column header
+  bold_labels() 
+
+gt_table2 <- tbl_summary(gt_teach_sum, by = temps)
+
+gt_table3 <-
+  tbl_cross(gt_teach_sum,
+            row = classe,
+            col = temps,
+            percent = "cell"
+            ) %>%
+  add_p()
