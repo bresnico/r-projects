@@ -9,7 +9,6 @@ output:
     reference_docx: "template2.docx"
     toc: true
     toc_depth: 1
-knit: knitnbr::knit_date_output
 params:
   classe: a # Lettre de la classe (sous réserve du param all)
   all: false # true pour renoncer à une classe et afficher pour toutes les données.
@@ -21,6 +20,7 @@ params:
   url_survey: "https://sondage.competences-emotionnelles.ch/admin/remotecontrol"
   login_survey: nbr_low
   pass_survey: 82BBdJyTjqzz
+#knit: knitnbr::knit_date_output
 ---
 
 ```{r setup, include=FALSE, warning=FALSE}
@@ -103,9 +103,27 @@ for (i in 1:2) {
 #Données enfants pris en charge (erie.xlsx)
 erie <- read_excel("erie.xlsx")
 
+# Création de la variable classe
+erie$classe <- str_extract(erie$code, "[a-z]+")
+  
+# Création de la variable temps
+erie$temps <- str_sub(erie$code, start = -2L, end = -2L)
+
+# Création du score emo
+erie <- erie %>% 
+      mutate(emo5_5 = 6 - emo5_5) %>% 
+      mutate(emo_sco  = rowMeans(select(.,starts_with("emo")) ,na.rm =T))
+
+# Création du score cps
+erie <- erie %>% 
+      mutate(cps26_3 = 6 - cps26_3,
+             cps26_25 = 6 - cps26_25) %>% 
+      mutate(cps_sco  = rowMeans(select(.,starts_with("cps")) ,na.rm =T))
+
 #Données classes (log.xlsx)
 
-sample <- read_excel("log.xlsx")
+sample <- read_excel("log.xlsx") %>% 
+    select(classe, gest, deg, cyc, sit, enf)
 
 #Variante classe ou variante totale
 p_all <- print("Les données concernent toutes les classes ayant participé à ce jour en 2020-2021.")
@@ -137,6 +155,16 @@ export(teach, "teach_save.xlsx")
 
 
 # Données de base
+
+Les données ont les origines suivantes :
+
+- données de base : inscrites à la main dans un fichier Excel par les ERIE
+- données sur les élèves suivis : 2 échelles (Emotions et compétences psychosociales) dont les scores sont inscrits à la main par les ERIE
+- données sur les titulaires : 1 échelle (Sentiment d'efficacité) visible sur le système LimeSurvey
+- données sur les camarades de classe : 1 échelle (bien-être en classe) visible sur le système LimeSurvey
+
+Les données sont regroupées avec un système de code qui identifie la classe et le temps de mesure.
+<!-- le code est toujours <123[codeclasse][1|2]5> -->
 
 `r p`
 
@@ -227,6 +255,61 @@ be_vis_1_2 <- peers %>%
   theme(plot.title = element_text(hjust = 0.5)) +
   scale_color_brewer("temps", palette = "Set1")
 
+# ERIE - élèves emo - variante temps x
+
+emo_vis <- erie %>% 
+  filter(temps == params$temps) %>% 
+  ggplot() +
+  aes(x = classe, y = emo_sco, fill = classe, color = classe, alpha = 0.8) +
+  geom_boxplot(outlier.colour = NA) +
+  geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
+  geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
+  theme(legend.position='none') +
+  ggtitle("Visualisation") +
+  ylab("Score de régulation émotionnelle") +
+  xlab("élève(s) suivi(s)") +
+  theme(plot.title = element_text(hjust = 0.5))  
+
+# ERIE - élèves emo - variante temps all
+emo_vis_1_2 <- erie %>% 
+  ggplot() +
+  aes(x = temps, y = emo_sco, fill = classe, color = classe, alpha = 0.8) +
+  geom_boxplot(outlier.colour = NA) +
+  geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
+  geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
+  theme(legend.position='none') +
+  ggtitle("Visualisation") +
+  ylab("Score de régulation émotionnelle") +
+  xlab("élève(s) suivi(s)") +
+  theme(plot.title = element_text(hjust = 0.5)) 
+
+
+# ERIE - élève cps - variante temps x
+cps_vis <- erie %>% 
+  filter(temps == params$temps) %>% 
+  ggplot() +
+  aes(x = classe, y = cps_sco, fill = classe, color = classe, alpha = 0.8) +
+  geom_boxplot(outlier.colour = NA) +
+  geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
+  geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
+  theme(legend.position='none') +
+  ggtitle("Visualisation") +
+  ylab("Score de compétences psychosociales") +
+  xlab("élève(s) suivi(s)") +
+  theme(plot.title = element_text(hjust = 0.5)) 
+
+# ERIE - élève cps - variante temps all
+cps_vis_1_2 <- erie %>% 
+  ggplot() +
+  aes(x = temps, y = cps_sco, fill = classe, color = classe, alpha = 0.8) +
+  geom_boxplot(outlier.colour = NA) +
+  geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
+  geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
+  theme(legend.position='none') +
+  ggtitle("Visualisation") +
+  ylab("Score de compétences psychosociales") +
+  xlab("élève(s) suivi(s)") +
+  theme(plot.title = element_text(hjust = 0.5)) 
 ```
 
 ```{r, eval=!params$all, echo=FALSE, warning=FALSE, message=FALSE}
@@ -323,6 +406,66 @@ be_vis_1_2 <- peers %>%
   theme(plot.title = element_text(hjust = 0.5))+
   scale_color_brewer("temps", palette = "Set1")
 
+# ERIE - élèves emo - variante temps x
+
+emo_vis <- erie %>% 
+  filter(classe== params$classe) %>%
+  filter(temps == params$temps) %>% 
+  ggplot() +
+  aes(x = classe, y = emo_sco, fill = classe, color = classe, alpha = 0.8) +
+  geom_boxplot(outlier.colour = NA) +
+  geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
+  geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
+  theme(legend.position='none') +
+  ggtitle("Visualisation") +
+  ylab("Score de régulation émotionnelle") +
+  xlab("élève(s) suivi(s)") +
+  theme(plot.title = element_text(hjust = 0.5))  
+
+# ERIE - élèves emo - variante temps all
+emo_vis_1_2 <- erie %>% 
+  filter(classe== params$classe) %>%
+  ggplot() +
+  aes(x = temps, y = emo_sco, fill = classe, color = classe, alpha = 0.8) +
+  geom_boxplot(outlier.colour = NA) +
+  geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
+  geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
+  theme(legend.position='none') +
+  ggtitle("Visualisation") +
+  ylab("Score de régulation émotionnelle") +
+  xlab("élève(s) suivi(s)") +
+  theme(plot.title = element_text(hjust = 0.5)) 
+
+
+# ERIE - élève cps - variante temps x
+cps_vis <- erie %>% 
+  filter(classe== params$classe) %>%
+  filter(temps == params$temps) %>% 
+  ggplot() +
+  aes(x = classe, y = cps_sco, fill = classe, color = classe, alpha = 0.8) +
+  geom_boxplot(outlier.colour = NA) +
+  geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
+  geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
+  theme(legend.position='none') +
+  ggtitle("Visualisation") +
+  ylab("Score de compétences psychosociales") +
+  xlab("élève(s) suivi(s)") +
+  theme(plot.title = element_text(hjust = 0.5)) 
+
+# ERIE - élève cps - variante temps all
+cps_vis_1_2 <- erie %>% 
+  filter(classe== params$classe) %>%
+  ggplot() +
+  aes(x = temps, y = cps_sco, fill = classe, color = classe, alpha = 0.8) +
+  geom_boxplot(outlier.colour = NA) +
+  geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
+  geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
+  theme(legend.position='none') +
+  ggtitle("Visualisation") +
+  ylab("Score de compétences psychosociales") +
+  xlab("élève(s) suivi(s)") +
+  theme(plot.title = element_text(hjust = 0.5)) 
+ 
 
 ```
 
@@ -434,19 +577,35 @@ be_vis
 be_vis_1_2
 ```
 
+<!-- Reprendre le travail ici : générer le script. L'intégrer dans mes conditions du Rmd... -->
+
 ## Echelle de Régulation émotionnelle
 
 La représentation graphique  \@ref(fig:vis2) nous donne une idée de la distribution des scores.
 
-```{r vis2, out.width = "80%", fig.align='center', fig.cap='distribution des scores', echo=FALSE, dpi=300, eval=!params$time}
-be_vis
+```{r vis2, fig.id="vis2", fig.align='center', out.width = "100%", fig.retina = 3, fig.show = "hold", fig.cap='distribution des scores', echo=FALSE, eval=!params$time}
+
+emo_vis
+```
+
+
+```{r vis2_1_2,fig.id="vis2", fig.align='center', out.width = "100%", fig.retina = 3, fig.show = "hold", fig.cap='distribution des scores', echo=FALSE, eval=params$time}
+
+emo_vis_1_2
 ```
 
 ## Echelle de compétences psychosociales
 
 La représentation graphique  \@ref(fig:vis3) nous donne une idée de la distribution des scores.
 
-```{r vis3, out.width = "80%", fig.align='center', fig.cap='distribution des scores', echo=FALSE, dpi=300, eval=!params$time}
-be_vis
+```{r vis3, fig.id="vis3", fig.align='center', out.width = "100%", fig.retina = 3, fig.show = "hold", fig.cap='distribution des scores', echo=FALSE, eval=!params$time}
+
+cps_vis
+```
+
+
+```{r vis3_1_2,fig.id="vis3", fig.align='center', out.width = "100%", fig.retina = 3, fig.show = "hold", fig.cap='distribution des scores', echo=FALSE, eval=params$time}
+
+cps_vis_1_2
 ```
 
