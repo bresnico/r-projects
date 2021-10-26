@@ -8,19 +8,80 @@ output:
   officedown::rdocx_document:
     reference_docx: "template2.docx"
     toc: true
-    toc_depth: 1
+    toc_depth: 2
 params:
-  classe: a # Lettre de la classe (sous réserve du param all)
-  all: false # true pour renoncer à une classe et afficher pour toutes les données.
-  time: false # true va générer des tableaux et plots avant/après 
-  save: false # génère des xlsx des données pour sauvegarde si true
-  temps: 1 # 1 ou 2 suivant le temps unique qu'on veut observer (si time est false)
-  peers: 717311 # code survey enfants
-  teach: 851424 # code survey enseignants
-  url_survey: "https://sondage.competences-emotionnelles.ch/admin/remotecontrol"
-  login_survey: nbr_low
-  pass_survey: 82BBdJyTjqzz
-#knit: knitnbr::knit_date_output
+  classe_global: 
+    label: "Le rapport doit englober toutes les classes"
+    value: TRUE
+  time_global:
+    label: "Le rapport doit englober tous les temps"
+    value: TRUE
+  save_global:
+    label: "Cette génération doit créer des sauvegardes"
+    value: TRUE
+  classe:
+    label: "Si le rapport n'englobe pas toutes les classes, sur laquelle se concentrer ?"
+    value: a 
+    input: select
+    choices: [a,b,c,d,e,f,g,h]
+  temps:
+    label: "Si le rapport n'englobe pas tous les temps, sur lequel se concentrer ?"
+    value: 1
+    input: select
+    choices: [1,2]
+  peers:
+    label: "Insérer le code du questionnaire LimeSurvey pour les élèves de la classe."
+    value: 717311
+  teach:
+    label: "Insérer le code du questionnaire LimeSurvey pour les titulaires de la classe."
+    value: 851424
+  url_survey:
+    label: "Insérer l'URL pour contacter l'API de LimeSurvey."
+    value: "https://sondage.competences-emotionnelles.ch/admin/remotecontrol"
+  login_survey:
+    label: "Insérer le login d'accès à l'API de LimeSuvey."
+    value: nbr_low
+  pass_survey:
+    label: "Insérer le mot de passe lié au login d'accès à l'API de LimeSuvey."
+    value: 82BBdJyTjqzz
+    input: password
+  
+    
+  # 
+  # 
+  # classe: a # Lettre de la classe (sous réserve du param all)
+  # all: false # true pour renoncer à une classe et afficher pour toutes les données.
+  # time: false # true va générer des tableaux et plots avant/après 
+  # save: false # génère des xlsx des données pour sauvegarde si true
+  # temps: 1 # 1 ou 2 suivant le temps unique qu'on veut observer (si time est false)
+  # peers: 717311 # code survey enfants
+  # teach: 851424 # code survey enseignants
+  # url_survey: "https://sondage.competences-emotionnelles.ch/admin/remotecontrol"
+  # login_survey: nbr_low
+  # pass_survey: 82BBdJyTjqzz
+  
+  
+# params:
+#   nombre_etus:
+#     label: "Nombre d'étudiant·es inscrit·es dans le cours:"
+#     value: 20
+#     input: slider
+#     min: 5
+#     max: 80
+#     step: 1
+#     sep: ""
+#   code_i1:
+#     label: "Code du cours pour Lime Survey:"
+#     value: 53
+#     input: select
+#     choices: [31, 32, 33, 53, 831, 839, 81, 001, 201.1, 201.2]
+#   code_i2:
+#     label: "Code de l'année académique pour Lime Survey:"
+#     value: 21
+#     input: select
+#     choices: [21, 22, 23, 24]
+  
+# knit: knitnbr::knit_date_output
 ---
 
 ```{r setup, include=FALSE, warning=FALSE}
@@ -126,19 +187,19 @@ sample <- read_excel("log.xlsx") %>%
     select(classe, gest, deg, cyc, sit, enf)
 
 #Variante classe ou variante totale
-p_all <- print("Les données concernent toutes les classes ayant participé à ce jour en 2020-2021.")
+p_all <- print("Les données concernent toutes les classes ayant participé à ce jour en 2021-2022.")
 p_classe <- print(paste0("Les données concernent la classe ", params$classe,"."))
 q_time <- print("Toutes les données sont fournies en comparant les temps 1 et 2.")
 q_no_time <- print(paste0("Les données de ce rapport concernent le temps ", params$temps,"."))
 
-if (isTRUE(params$all)) {
+if (isTRUE(params$classe_global)) {
   p <- p_all
 } else {
   p <- p_classe
 }
 
 
-if (isTRUE(params$time)) {
+if (isTRUE(params$time_global)) {
   q <- q_time
 } else {
   q <- q_no_time
@@ -147,9 +208,9 @@ if (isTRUE(params$time)) {
 
 ```
 
-```{r eval=params$save}
-export(peers, "peers_save.xlsx")
-export(teach, "teach_save.xlsx")
+```{r eval=params$save_global}
+export(peers, paste0("peers_save_",Sys.Date(),".xlsx"))
+export(teach, paste0("teach_save_",Sys.Date(),".xlsx"))
 
 ```
 
@@ -158,10 +219,10 @@ export(teach, "teach_save.xlsx")
 
 Les données ont les origines suivantes :
 
-- données de base : inscrites à la main dans un fichier Excel par les ERIE
-- données sur les élèves suivis : 2 échelles (Emotions et compétences psychosociales) dont les scores sont inscrits à la main par les ERIE
-- données sur les titulaires : 1 échelle (Sentiment d'efficacité) visible sur le système LimeSurvey
-- données sur les camarades de classe : 1 échelle (bien-être en classe) visible sur le système LimeSurvey
+- **données de base :** inscrites à la main dans un fichier Excel par les ERIE
+- **données sur les élèves suivis :** 2 échelles (Emotions et compétences psychosociales) dont les scores sont inscrits à la main par les ERIE
+- **données sur les titulaires :** 1 échelle (Sentiment d'efficacité) visible sur le système LimeSurvey
+- **données sur les camarades de classe :** 1 échelle (bien-être en classe) visible sur le système LimeSurvey
 
 Les données sont regroupées avec un système de code qui identifie la classe et le temps de mesure.
 <!-- le code est toujours <123[codeclasse][1|2]5> -->
@@ -170,7 +231,7 @@ Les données sont regroupées avec un système de code qui identifie la classe e
 
 `r q`
 
-```{r eval=params$all, echo=FALSE, warning=FALSE, message=FALSE}
+```{r eval=params$classe_global, echo=FALSE, warning=FALSE, message=FALSE}
 
 # teach - statistiques de base
 
@@ -233,11 +294,12 @@ be_vis <- peers %>%
   aes(x = classe, y = sco_be, fill = classe, color = classe, alpha = 0.8) +
   geom_boxplot(outlier.colour = NA) +
   geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
-  geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
+  # geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
   theme(legend.position='none') +
   ggtitle("Visualisation des scores dans les classes") +
   ylab("Score de bien-être") +
   xlab("classes") +
+  ylim(1,7) +
   theme(plot.title = element_text(hjust = 0.5))
 
 # peers vis - variante temps 1 et 2
@@ -247,11 +309,12 @@ be_vis_1_2 <- peers %>%
   aes(x = temps, y = sco_be, fill = temps, color = classe, alpha = 0.8) +
   geom_boxplot(outlier.colour = NA) +
   geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
-  geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
+  # geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
   theme(legend.position='none') +
   ggtitle("Visualisation des scores aux temps 1 et 2") +
   ylab("Score de bien-être") +
   xlab("Temps") +
+  ylim(1,7) +
   theme(plot.title = element_text(hjust = 0.5)) +
   scale_color_brewer("temps", palette = "Set1")
 
@@ -261,26 +324,28 @@ emo_vis <- erie %>%
   filter(temps == params$temps) %>% 
   ggplot() +
   aes(x = classe, y = emo_sco, fill = classe, color = classe, alpha = 0.8) +
-  geom_boxplot(outlier.colour = NA) +
+  # geom_boxplot(outlier.colour = NA) +
   geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
   geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
   theme(legend.position='none') +
   ggtitle("Visualisation") +
   ylab("Score de régulation émotionnelle") +
   xlab("élève(s) suivi(s)") +
+  ylim(1,5) +
   theme(plot.title = element_text(hjust = 0.5))  
 
 # ERIE - élèves emo - variante temps all
 emo_vis_1_2 <- erie %>% 
   ggplot() +
   aes(x = temps, y = emo_sco, fill = classe, color = classe, alpha = 0.8) +
-  geom_boxplot(outlier.colour = NA) +
+  # geom_boxplot(outlier.colour = NA) +
   geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
   geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
   theme(legend.position='none') +
   ggtitle("Visualisation") +
   ylab("Score de régulation émotionnelle") +
   xlab("élève(s) suivi(s)") +
+  ylim(1,5) +
   theme(plot.title = element_text(hjust = 0.5)) 
 
 
@@ -289,30 +354,32 @@ cps_vis <- erie %>%
   filter(temps == params$temps) %>% 
   ggplot() +
   aes(x = classe, y = cps_sco, fill = classe, color = classe, alpha = 0.8) +
-  geom_boxplot(outlier.colour = NA) +
+  # geom_boxplot(outlier.colour = NA) +
   geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
   geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
   theme(legend.position='none') +
   ggtitle("Visualisation") +
   ylab("Score de compétences psychosociales") +
   xlab("élève(s) suivi(s)") +
+  ylim(1,5) +
   theme(plot.title = element_text(hjust = 0.5)) 
 
 # ERIE - élève cps - variante temps all
 cps_vis_1_2 <- erie %>% 
   ggplot() +
   aes(x = temps, y = cps_sco, fill = classe, color = classe, alpha = 0.8) +
-  geom_boxplot(outlier.colour = NA) +
+  # geom_boxplot(outlier.colour = NA) +
   geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
   geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
   theme(legend.position='none') +
   ggtitle("Visualisation") +
   ylab("Score de compétences psychosociales") +
   xlab("élève(s) suivi(s)") +
+  ylim(1,5) +
   theme(plot.title = element_text(hjust = 0.5)) 
 ```
 
-```{r, eval=!params$all, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=!params$classe_global, echo=FALSE, warning=FALSE, message=FALSE}
 
 sample <- sample %>% 
   filter(classe == params$classe)
@@ -383,11 +450,12 @@ be_vis <- peers %>%
   aes(x = classe, y = sco_be, fill = classe, color = classe, alpha = 0.8) +
   geom_boxplot(outlier.colour = NA) +
   geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
-  geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
+  # geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
   theme(legend.position='none') +
   ggtitle("Visualisation des scores dans la classe") +
   ylab("Score de bien-être") +
   xlab("classe") +
+  ylim(1,7) +
   theme(plot.title = element_text(hjust = 0.5))
 
 # peers viz - temps 1 temps 2
@@ -398,11 +466,12 @@ be_vis_1_2 <- peers %>%
   aes(x = temps, y = sco_be, fill = temps, color = classe, alpha = 0.8) +
   geom_boxplot(outlier.colour = NA) +
   geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
-  geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
+  # geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
   theme(legend.position='none') +
   ggtitle("Visualisation des scores dans la classe") +
   ylab("Score de bien-être") +
   xlab("Temps") +
+  ylim(1,7) +
   theme(plot.title = element_text(hjust = 0.5))+
   scale_color_brewer("temps", palette = "Set1")
 
@@ -413,13 +482,14 @@ emo_vis <- erie %>%
   filter(temps == params$temps) %>% 
   ggplot() +
   aes(x = classe, y = emo_sco, fill = classe, color = classe, alpha = 0.8) +
-  geom_boxplot(outlier.colour = NA) +
+  # geom_boxplot(outlier.colour = NA) +
   geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
   geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
   theme(legend.position='none') +
   ggtitle("Visualisation") +
   ylab("Score de régulation émotionnelle") +
   xlab("élève(s) suivi(s)") +
+  ylim(1,5) +
   theme(plot.title = element_text(hjust = 0.5))  
 
 # ERIE - élèves emo - variante temps all
@@ -427,13 +497,14 @@ emo_vis_1_2 <- erie %>%
   filter(classe== params$classe) %>%
   ggplot() +
   aes(x = temps, y = emo_sco, fill = classe, color = classe, alpha = 0.8) +
-  geom_boxplot(outlier.colour = NA) +
+  # geom_boxplot(outlier.colour = NA) +
   geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
   geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
   theme(legend.position='none') +
   ggtitle("Visualisation") +
   ylab("Score de régulation émotionnelle") +
   xlab("élève(s) suivi(s)") +
+  ylim(1,5) +
   theme(plot.title = element_text(hjust = 0.5)) 
 
 
@@ -443,13 +514,14 @@ cps_vis <- erie %>%
   filter(temps == params$temps) %>% 
   ggplot() +
   aes(x = classe, y = cps_sco, fill = classe, color = classe, alpha = 0.8) +
-  geom_boxplot(outlier.colour = NA) +
+  # geom_boxplot(outlier.colour = NA) +
   geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
   geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
   theme(legend.position='none') +
   ggtitle("Visualisation") +
   ylab("Score de compétences psychosociales") +
   xlab("élève(s) suivi(s)") +
+  ylim(1,5) +
   theme(plot.title = element_text(hjust = 0.5)) 
 
 # ERIE - élève cps - variante temps all
@@ -457,13 +529,14 @@ cps_vis_1_2 <- erie %>%
   filter(classe== params$classe) %>%
   ggplot() +
   aes(x = temps, y = cps_sco, fill = classe, color = classe, alpha = 0.8) +
-  geom_boxplot(outlier.colour = NA) +
+  # geom_boxplot(outlier.colour = NA) +
   geom_jitter(position = pos, size = 5, alpha = .5, show.legend = FALSE) + 
   geom_label_repel(position = pos, aes(label=id), size = 4, color = "black", max.overlaps = Inf) +
   theme(legend.position='none') +
   ggtitle("Visualisation") +
   ylab("Score de compétences psychosociales") +
   xlab("élève(s) suivi(s)") +
+  ylim(1,5) +
   theme(plot.title = element_text(hjust = 0.5)) 
  
 
@@ -489,7 +562,7 @@ fl
 Le tableau \@ref(tab:teach) résume les scores à chacune des 4 dimensions de la gestion de classe (gestion proactive, gestion réactive, implication des parents, implication de personnes externes). Chaque score s'entend sur un maximum de 8.
 
 
-```{r teach, tab.id="teach", tab.cap = "Résumé des données concernant l'enseignement", tab.cap.style="caption_nb", eval=!params$time}
+```{r teach, tab.id="teach", tab.cap = "Résumé des données concernant l'enseignement", tab.cap.style="caption_nb", eval=!params$time_global}
 fl2_w <- 6.3/ncol(teach_sum)
 fl2 <- flextable::flextable(teach_sum)
 fl2 <- flextable::set_header_labels(fl2, classe="Classe", sco_gp="Gest. proactive", sco_gr="Gest. réactive", sco_ip="Impl. des parents", sco_ie="Impl. externe",sco_tot="Total")
@@ -500,7 +573,7 @@ fl2
 
 ```
 
-```{r teach_1, tab.id="teach", tab.cap = "Résumé des données concernant l'enseignement respectivement aux temps 1 et 2", tab.cap.style="caption_nb", eval=params$time}
+```{r teach_1, tab.id="teach", tab.cap = "Résumé des données concernant l'enseignement respectivement aux temps 1 et 2", tab.cap.style="caption_nb", eval=params$time_global}
 fl21_w <- 6.3/ncol(teach_sum_1)
 fl21 <- flextable::flextable(teach_sum_1)
 fl21 <- flextable::set_header_labels(fl21, classe="Classe", sco_gp="Gest. proactive", sco_gr="Gest. réactive", sco_ip="Impl. des parents", sco_ie="Impl. externe",sco_tot="Total")
@@ -512,7 +585,7 @@ fl21
 ```
 
 
-```{r teach_2, tab.id="teach", tab.cap = "Résumé des données concernant l'enseignement respectivement aux temps 1 et 2", tab.cap.style="caption_nb", eval=params$time}
+```{r teach_2, tab.id="teach", tab.cap = "Résumé des données concernant l'enseignement respectivement aux temps 1 et 2", tab.cap.style="caption_nb", eval=params$time_global}
 fl22_w <- 6.3/ncol(teach_sum_2)
 fl22 <- flextable::flextable(teach_sum_2)
 fl22 <- flextable::set_header_labels(fl22, classe="Classe", sco_gp="Gest. proactive", sco_gr="Gest. réactive", sco_ip="Impl. des parents", sco_ie="Impl. externe",sco_tot="Total")
@@ -528,9 +601,9 @@ fl22
 
 ## Echelle Bien-être à l'école
 
-Le tableau  \@ref(tab:peers) indique le niveau de bien-être par classe (le score maximal vaut 7).
+Le tableau  \@ref(tab:peers) indique le niveau de bien-être par classe. Le score maximal vaut 7.
 
-```{r peers, tab.id="peers", tab.cap = "Résumé des scores de bien-être", tab.cap.style="caption_nb", eval=!params$time}
+```{r peers, tab.id="peers", tab.cap = "Résumé des scores de bien-être", tab.cap.style="caption_nb", eval=!params$time_global}
 fl3_w <- 6.3/ncol(peers_sum)
 fl3 <- flextable::flextable(peers_sum)
 fl3 <- flextable::set_header_labels(fl3, classe = "Classe", mean = "Moyenne", max = "Score maxium", min = "Score minimum", median = "Médiane", std = "Ecart-type")
@@ -541,7 +614,7 @@ fl3
 
 ```
 
-```{r peers_1, tab.id="peers", tab.cap = "Résumé des scores de bien-être respectivement aux temps 1 et 2", tab.cap.style="caption_nb", eval=params$time}
+```{r peers_1, tab.id="peers", tab.cap = "Résumé des scores de bien-être respectivement aux temps 1 et 2", tab.cap.style="caption_nb", eval=params$time_global}
 fl31_w <- 6.3/ncol(peers_sum_1)
 fl31 <- flextable::flextable(peers_sum_1)
 fl31 <- flextable::set_header_labels(fl31, classe = "Classe", mean = "Moyenne", max = "Score maxium", min = "Score minimum", median = "Médiane", std = "Ecart-type")
@@ -552,7 +625,7 @@ fl31
 
 ```
 
-```{r peers_2, tab.id="peers", tab.cap = "Résumé des scores de bien-être respectivement aux temps 1 et 2", tab.cap.style="caption_nb", eval=params$time}
+```{r peers_2, tab.id="peers", tab.cap = "Résumé des scores de bien-être respectivement aux temps 1 et 2", tab.cap.style="caption_nb", eval=params$time_global}
 fl32_w <- 6.3/ncol(peers_sum_2)
 fl32 <- flextable::flextable(peers_sum_2)
 fl32 <- flextable::set_header_labels(fl32, classe = "Classe", mean = "Moyenne", max = "Score maxium", min = "Score minimum", median = "Médiane", std = "Ecart-type")
@@ -566,13 +639,13 @@ fl32
 
 La représentation graphique  \@ref(fig:vis) nous donne une idée de la distribution des scores.
 
-```{r vis, fig.id="vis", fig.align='center', out.width = "100%", fig.retina = 3, fig.show = "hold", fig.cap='distribution des scores', echo=FALSE, eval=!params$time}
+```{r vis, fig.id="vis", fig.align='center', out.width = "100%", fig.retina = 3, fig.show = "hold", fig.cap='distribution des scores', echo=FALSE, warning=FALSE, eval=!params$time_global}
 
 be_vis
 ```
 
 
-```{r vis_1_2,fig.id="vis", fig.align='center', out.width = "100%", fig.retina = 3, fig.show = "hold", fig.cap='distribution des scores', echo=FALSE, eval=params$time}
+```{r vis_1_2,fig.id="vis", fig.align='center', out.width = "100%", fig.retina = 3, fig.show = "hold", fig.cap='distribution des scores', echo=FALSE, warning=FALSE, eval=params$time_global}
 
 be_vis_1_2
 ```
@@ -581,30 +654,30 @@ be_vis_1_2
 
 ## Echelle de Régulation émotionnelle
 
-La représentation graphique  \@ref(fig:vis2) nous donne une idée de la distribution des scores.
+La représentation graphique  \@ref(fig:vis2) nous donne une idée de la distribution des scores. Le score maximal vaut 5.
 
-```{r vis2, fig.id="vis2", fig.align='center', out.width = "100%", fig.retina = 3, fig.show = "hold", fig.cap='distribution des scores', echo=FALSE, eval=!params$time}
+```{r vis2, fig.id="vis2", fig.align='center', out.width = "100%", fig.retina = 3, fig.show = "hold", fig.cap='distribution des scores', echo=FALSE, warning=FALSE, eval=!params$time_global}
 
 emo_vis
 ```
 
 
-```{r vis2_1_2,fig.id="vis2", fig.align='center', out.width = "100%", fig.retina = 3, fig.show = "hold", fig.cap='distribution des scores', echo=FALSE, eval=params$time}
+```{r vis2_1_2,fig.id="vis2", fig.align='center', out.width = "100%", fig.retina = 3, fig.show = "hold", fig.cap='distribution des scores', echo=FALSE, warning=FALSE, eval=params$time_global}
 
 emo_vis_1_2
 ```
 
 ## Echelle de compétences psychosociales
 
-La représentation graphique  \@ref(fig:vis3) nous donne une idée de la distribution des scores.
+La représentation graphique  \@ref(fig:vis3) nous donne une idée de la distribution des scores. Le score maximal vaut 5.
 
-```{r vis3, fig.id="vis3", fig.align='center', out.width = "100%", fig.retina = 3, fig.show = "hold", fig.cap='distribution des scores', echo=FALSE, eval=!params$time}
+```{r vis3, fig.id="vis3", fig.align='center', out.width = "100%", fig.retina = 3, fig.show = "hold", fig.cap='distribution des scores', echo=FALSE, warning=FALSE, eval=!params$time_global}
 
 cps_vis
 ```
 
 
-```{r vis3_1_2,fig.id="vis3", fig.align='center', out.width = "100%", fig.retina = 3, fig.show = "hold", fig.cap='distribution des scores', echo=FALSE, eval=params$time}
+```{r vis3_1_2,fig.id="vis3", fig.align='center', out.width = "100%", fig.retina = 3, fig.show = "hold", fig.cap='distribution des scores', echo=FALSE, warning=FALSE, eval=params$time_global}
 
 cps_vis_1_2
 ```
