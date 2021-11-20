@@ -9,6 +9,8 @@ output:
     reference_docx: "template2.docx"
     toc: true
     toc_depth: 2
+    page_margins: # à garder car officedown 0.2.3 respecte pas mon templacte (0.2.1 était ok)
+      right: 0.98
 params:
   classe_global: 
     label: "Le rapport doit englober toutes les classes"
@@ -606,7 +608,7 @@ Le tableau  \@ref(tab:peers) indique le niveau de bien-être par classe. Le scor
 ```{r peers, tab.id="peers", tab.cap = "Résumé des scores de bien-être", tab.cap.style="caption_nb", eval=!params$time_global}
 fl3_w <- 6.3/ncol(peers_sum)
 fl3 <- flextable::flextable(peers_sum)
-fl3 <- flextable::set_header_labels(fl3, classe = "Classe", mean = "Moyenne", max = "Score maxium", min = "Score minimum", median = "Médiane", std = "Ecart-type")
+fl3 <- flextable::set_header_labels(fl3, classe = "Classe", mean = "Moyenne", max = "Score maximum", min = "Score minimum", median = "Médiane", std = "Ecart-type")
 fl3 <- flextable::colformat_double(fl3, digits = 2)
 fl3 <- flextable::width(fl3, width = fl3_w)
 fl3 <- flextable::font(fl3, fontname="calibri")
@@ -617,7 +619,7 @@ fl3
 ```{r peers_1, tab.id="peers", tab.cap = "Résumé des scores de bien-être respectivement aux temps 1 et 2", tab.cap.style="caption_nb", eval=params$time_global}
 fl31_w <- 6.3/ncol(peers_sum_1)
 fl31 <- flextable::flextable(peers_sum_1)
-fl31 <- flextable::set_header_labels(fl31, classe = "Classe", mean = "Moyenne", max = "Score maxium", min = "Score minimum", median = "Médiane", std = "Ecart-type")
+fl31 <- flextable::set_header_labels(fl31, classe = "Classe", mean = "Moyenne", max = "Score maximum", min = "Score minimum", median = "Médiane", std = "Ecart-type")
 fl31 <- flextable::colformat_double(fl31, digits = 2)
 fl31 <- flextable::width(fl31, width = fl31_w)
 fl31 <- flextable::font(fl31, fontname="calibri")
@@ -628,7 +630,7 @@ fl31
 ```{r peers_2, tab.id="peers", tab.cap = "Résumé des scores de bien-être respectivement aux temps 1 et 2", tab.cap.style="caption_nb", eval=params$time_global}
 fl32_w <- 6.3/ncol(peers_sum_2)
 fl32 <- flextable::flextable(peers_sum_2)
-fl32 <- flextable::set_header_labels(fl32, classe = "Classe", mean = "Moyenne", max = "Score maxium", min = "Score minimum", median = "Médiane", std = "Ecart-type")
+fl32 <- flextable::set_header_labels(fl32, classe = "Classe", mean = "Moyenne", max = "Score maximum", min = "Score minimum", median = "Médiane", std = "Ecart-type")
 fl32 <- flextable::colformat_double(fl32, digits = 2)
 fl32 <- flextable::width(fl32, width = fl32_w)
 fl32 <- flextable::font(fl32, fontname="calibri")
@@ -680,5 +682,19 @@ cps_vis
 ```{r vis3_1_2,fig.id="vis3", fig.align='center', out.width = "100%", fig.retina = 3, fig.show = "hold", fig.cap='distribution des scores', echo=FALSE, warning=FALSE, eval=params$time_global}
 
 cps_vis_1_2
+```
+
+<!-- ## test Supplémentaire avec {gtsummary} -->
+
+```{r, eval = FALSE}
+library(gtsummary)
+a <- tbl_continuous(
+  data = peers,
+  variable = sco_be,
+  by = temps,
+  include = classe
+  )
+
+a
 ```
 
